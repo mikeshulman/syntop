@@ -106,31 +106,43 @@ We do not know any important examples of the extra generality afforded by promet
 
 On the other hand, in constructive mathematics a very different (and much more general) notion is obtained by allowing distances to take values in the (nonnegative extended) \emph{upper} real numbers (sets $U$ of rational numbers satisfying the single axiom ``$y\in U$ if and only if there is an $x\in U$ with $x<y$'', plus $0\notin U$ for nonnegativity).
 In this case we will speak of an \textbf{upper prometric space}.
-If necessary, we distinguish ordinary real numbers from upper ones by calling them \textbf{located}, and ordinary prometric spaces from upper ones by calling them \textbf{decomposable}.
+%If necessary, we distinguish ordinary real numbers from upper ones by calling them \textbf{located}, and ordinary prometric spaces from upper ones by calling them \textbf{decomposable}.
 
 The main difference is that unlike located real numbers, upper real numbers constructively admit arbitrary infima.
 Thus, for instance, any set $X$ admits a \emph{discrete} upper prometric with one distance defined by $d(x,y) = \inf \setof{ t | t=0 \land x=y }$, so that $d(x,x)=0$ but $d(x,y)=+\infty$ if $x\neq y$.
 This distance takes real values if and only if $X$ has decidable equality, since if $d(x,y)$ were real then it would be either $<2$ (in which case $x=y$) or $>1$ (in which case $x\neq y$).
 As we will see, locatedness of distances is crucial for the special behavior of (pro)metric spaces among arbitrary spaces in constructive mathematics.
+We will return to upper prometric spaces briefly in \cref{sec:uniformity}.
 
 We now review some of the fundamental concepts from metric spaces that one intends to capture for more general spaces, simultaneously generalizing them to prometric ones.
-In the following, $X$ and $Y$ denote (perhaps upper) prometric spaces; $\ep$ and $\de$ are assumed to range over $\Rp$; and $d_X$ and $d_Y$ are assumed to range over distances on $X$ and $Y$ respectively.
+In the following, $X$ and $Y$ denote prometric spaces; $\ep$ and $\de$ are assumed to range over $\Rp$; and $d_X$ and $d_Y$ are assumed to range over distances on $X$ and $Y$ respectively.
 We begin with continuity of functions.
 
 \begin{itemize}
 \item A function $f:X\to Y$ is \textbf{continuous} if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
 \item Similarly, $f:X\to Y$ is \textbf{uniformly continuous} if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
-\item We will say $f:X\to Y$ is \textbf{cocontinuous}\fxwarning{Does this have a standard name?} if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
-\item Similarly, $f:X\to Y$ is \textbf{uniformly cocontinuous} if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
+% \item We will say $f:X\to Y$ is \textbf{cocontinuous}\fxwarning{Does this have a standard name?} if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
+% \item Similarly, $f:X\to Y$ is \textbf{uniformly cocontinuous} if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
 \end{itemize}
 
-If $X$ is decomposable and $f$ is (uniformly) continuous, then it is also (uniformly) cocontinuous.
-For given $d_Y$ and $\ep$, let $d_X$ and $\de$ be as in (uniform) continuity; then if $d_Y(f(x),f(y)) > \ep$, we cannot have $d_X(x,y) < \de$, so we must have $d_X(x,y) > \frac{\de}{2}$.
+The locatedness of distances enables us to characterize continuity in a converse fashion:
 
-On the other hand, if $Y$ is decomposable and $f$ is (uniformly) cocontinuous, then it is also (uniformly) continuous.
-For given $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\frac{\ep}{2} \Rightarrow d_X(x,y)>\de$; then if $d_X(x,y)<\de$, we cannot have $d_Y(f(x),f(y))>\frac{\ep}{2}$, so we must have $d_Y(f(x),f(y))<\ep$.
+\begin{lem}\label{thm:cocontinuous}
+  For prometric spaces $X$ and $Y$, a function $f:X\to Y$ is continuous if and only if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
+\end{lem}
+\begin{proof}
+  If $f$ is continuous, then given $d_Y$ and $\ep$, let $d_X$ and $\de$ be as in the definition of continuity.
+  Then if $d_Y(f(x),f(y)) > \ep$, we cannot have $d_X(x,y) < \de$, so we must have $d_X(x,y) > \frac{\de}{2}$.
 
-Thus, for prometric spaces continuity and cocontinuity coincide; but this need not be the case for upper prometric spaces.
+  Conversely, if the stated condition holds, then given $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\frac{\ep}{2} \Rightarrow d_X(x,y)>\de$.
+  Then if $d_X(x,y)<\de$, we cannot have $d_Y(f(x),f(y))>\frac{\ep}{2}$, so we must have $d_Y(f(x),f(y))<\ep$.
+\end{proof}
+
+Similarly we have:
+
+\begin{lem}\label{thm:unif-cocontinuous}
+  For prometric spaces $X$ and $Y$, a function $f:X\to Y$ is uniformly continuous if and only if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.\qed
+\end{lem}
 
 We continue with notions of convergence and completeness.
 
@@ -161,49 +173,90 @@ In general the way we do this is by considering \emph{relations} between points 
 \label{sec:order}
 
 There are two important relations between points in a prometric space.
+As always, $d_X$ will range over distances in a prometric space $X$.
 
 \begin{defn}
-  Let $x,y\in X$ be points of an upper prometric space.
+  Let $x,y\in X$ be points of a prometric space.
   \begin{itemize}
-  \item We say $x\le y$ if $d(y,x)=0$ for all distances $d$.\fxwarning{ordering convention?}
-  \item We say $x<y$ if $d(x,y)>0$ for some distance $d$.
+  \item We say $x\le y$ if $\forall d_X, d_X(y,x)=0$.\fxwarning{ordering convention?}
+  \item We say $x<y$ if $\exists d_X, d_X(x,y)>0$.
   \end{itemize}
 \end{defn}
 
-Reflexivity and transitivity (i.e.\ the triangle inequality) of an upper prometric imply that $\le$ is a \textbf{preorder}, i.e.\ a reflexive and transitive relation, and that $<$ is irreflexive ($x\not<x$).
-As we will see later, the preorder $\le$ is an instance of the \emph{specialization order} underlying a topology.
-(The notation for $<$ is somewhat misleading; in particular it is rarely transitive.)
+\begin{thm}
+  For any prometric space $X$, the relation $\le$ is a preorder.
+  If $X$ is symmetric, then $\le$ is a symmetric relation, and hence an \textbf{equivalence relation} (which we will usually write as $\approx$).
+\end{thm}
+\begin{proof}
+  Reflexivity and transitivity of $\le$ follow from reflexivity and transitivity (i.e.\ the triangle inequality) of a prometric, and likewise for symmetry.
+\end{proof}
 
-If $X$ is decomposable (that is, it is a prometric space rather than just an upper prometric space), then $<$ is also a \emph{comparison}, i.e.\ if $x<z$ then for any $y$ we have $x<y$ or $y<z$.
-For if $d(x,z)>0$, we have another distance $d'$ with $d'(x,y)+d'(y,z)\ge d(x,z)$.
-By locatedness, $d'(x,y)$ and $d'(y,z)$ are both either $>0$ or $<\frac12 d(x,z)$; thus either $x<y$ or $y<z$ or $d'(x,y)+d'(y,z) < d(x,z)$, but the latter case is a contradiction.
-(By analogy with the previous and following sections, we might also call an irreflexive relation \textbf{decomposable} if it is a comparison in this sense.)
+As we will see later, $\le$ is an instance of the \emph{specialization order} underlying a topology.
 
-Finally, if $X$ is symmetric, then $\le$ and $<$ are both symmetric relations.
-A reflexive, transitive, and symmetric relation is of course called an \textbf{equivalence relation}; we will write it as $x\approx y$.
-An irreflexive, symmetric, comparison relation is called an \textbf{apartness relation}, usually written $x\apart y$.
+\begin{thm}
+  For any prometric space $X$, the relation $<$ is an \emph{irreflexive comparison}, i.e.\ it satisfies:
+  \begin{enumerate}
+  \item $\neg(x<x)$ for all $x$ (irreflexivity), and
+  \item if $x<z$ then for any $y$ we have $x<y$ or $y<z$ (comparison).
+  \end{enumerate}
+  If $X$ is symmetric, then $<$ is also a symmetric relation, and hence an \textbf{apartness relation} (usually written $\apart$).
+\end{thm}
+\begin{proof}
+  Irreflexivity of $<$ follows directly from reflexivity of a prometric.
+  Comparison is rather trickier: if $d(x,z)>0$, we have another distance $d'$ with $d'(x,y)+d'(y,z)\ge d(x,z)$.
+  By locatedness of real numbers, $d'(x,y)$ and $d'(y,z)$ are both either $>0$ or $<\frac12 d(x,z)$.
+  Thus either $x<y$ or $y<z$ or $d'(x,y)+d'(y,z) < d(x,z)$; but the latter case is a contradiction.
+\end{proof}
 
-For \emph{located} real numbers, $\neg(a<b)$ is equivalent to $b\le a$.
-(For upper real numbers, we define $U_1 < U_2$ if $U_1\setminus U_2$ is inhabited, and $U_2\le U_1$ if $U_1 \subseteq U_2$; neither of these is the negation of the other.)
-Thus, if $X$ is decomposable, $x\approx y$ is equivalent to $\neg(x\apart y)$.
-However, even in this case, $\apart$ cannot constructively be expressed in terms of $\approx$; to say $x\apart y$ is stronger than $x\neq y$.
+The notation $x<y$ is somewhat misleading; in particular this relation is rarely transitive.
+By analogy with the previous and following sections, we might also call a comparison a 
+\textbf{decomposable} relation.
 
-If $X$ is also separated, then $x\approx y$ (and even $x\le y$, in the non-symmetric case) implies $x=y$.
+For located real numbers, $\neg(a<b)$ is equivalent to $b\le a$.
+%(For upper real numbers, we define $U_1 < U_2$ if $U_1\setminus U_2$ is inhabited, and $U_2\le U_1$ if $U_1 \subseteq U_2$; neither of these is the negation of the other.)
+Thus $x\approx y$ in a prometric space is equivalent to $\neg(x\apart y)$.
+However, $\apart$ cannot constructively be expressed in terms of $\approx$; to say $x\apart y$ is stronger than $x\neq y$.
+
+If $X$ is separated, then $x\approx y$ (and even $x\le y$, in the non-symmetric case) implies $x=y$.
 An apartness relation such that $\neg(x\apart y)$ implies $x=y$ is called \textbf{tight}.
 In particular, the equality relation of a separated prometric space is $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\apart y)$, hence $x\approx y$ and thus $x=y$.
 
 Finally, we observe that the point-point relations underlying a prometric space vary appropriately with continuous functions, so that they really are a topological invariant.
-On one hand, if $f:X\to Y$ is a continuous map of upper prometric spaces, then $x\le y$ in $X$ implies $f(x)\le f(y)$ in $Y$, i.e.\ $f$ induces a map of posets (and hence a map of equivalence relations, if $X$ and $Y$ are symmetric).
-Of course, in the separated case this is trivial.
 
-On the other hand, if $f:X\to Y$ is \emph{cocontinuous}, then $f(x)<f(y)$ in $Y$ implies $x<y$ in $X$.
-In general, a function between sets with apartness relations such that $f(x)\apart f(y)$ implies $x\apart y$ is called \textbf{strongly extensional}.
-Thus, any cocontinuous function between symmetric upper prometric spaces (hence any continuous function between symmetric prometric spaces) is strongly extensional.
+\begin{thm}
+  Let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a continuous function.
+  Then:
+  \begin{enumerate}
+  \item $f$ is a \textbf{monotone map} of preorders, i.e.\ if $x\le y$ then $f(x)\le f(y)$.
+  \item $f$ is a \textbf{strongly extensional} map of comparisons, i.e.\ if $f(x)<f(y)$ then $x<y$.
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  For the first, given any $d_Y$ and $\ep>0$ we have a $d_X$ and $\de>0$ such that $d_X(x,y)<\de$ implies $d_Y(f(x),f(y))<\ep$.
+  But $d_X(x,y)<\de$ is always true if $x\le y$; hence so is $d_Y(f(x),f(y))<\ep$, and thus $f(x)\le f(y)$.
+
+  For the second, if $f(x)<f(y)$ we have $d_Y(f(x),f(y))>0$ for some $d_Y$.
+  Let $\ep = \frac12 \,d_Y(f(x),f(y))$; then by \cref{thm:cocontinuous} we have a $d_X$ and a $\de>0$ such that if $d_Y(f(x),f(y))>\ep$ (which is true) then $d_X(x,y)>\de$, hence $x<y$.
+\end{proof}
 
 
 \section{Point-set relations: topology}
 \label{sec:point-set}
 \label{sec:topology}
+
+The specialization order and the apartness relation, while important, do not generally capture very much of the topological information in a prometric space.
+The crucial step that brings us into the world of general topology is to consider relations involving \emph{sets} as well as points.
+There are three fundamental relations between a point and a set that can be defined in a prometric space $X$ (with $d_X$ ranging over distances and $\ep$ over positive reals, as always):
+
+\begin{defn}
+  Let $x\in X$ and $A\subseteq X$.
+  \begin{enumerate}
+  \item We say $x\approx A$ if $\forall d_X, \forall \ep, \exists y, (y\in A \land d_X(x,y)<\ep)$.
+  \item We say $x\bowtie A$ if $\exists d_X, \exists \ep, \forall y, (y\in A \Rightarrow d_X(x,y)>\ep)$.
+  \item We say $x\ll A$ if $\exists d_X, \exists \ep, \forall y, (d_X(x,y)<\ep \Rightarrow y\in A)$.
+  \end{enumerate}
+\end{defn}
+
 
   % Define these when we introduce their abstract versions.
 % \item $U\subseteq X$ is a \textbf{neighborhood} of $x\in U$ if there is an $\ep>0$ such that for all $y$, if $d(x,y)<\ep$ then $y\in U$.
@@ -220,10 +273,22 @@ Thus, any cocontinuous function between symmetric upper prometric spaces (hence 
 \label{sec:uniformity}
 
 
+TODO: Upper prometric spaces are equivalent to uniform spaces; lower prometric spaces are equivalent to uniform apartness spaces.
+
+
+\section{Approach spaces and filters of point-set relations}
+\label{sec:approach}
+
+
+
 \section{Set-set relations: proximity}
 \label{sec:set-set}
 \label{sec:proximity}
 
+
+
+\section{Filters of set-set relations: syntopogeny}
+\label{sec:syntop}
 
 
 
