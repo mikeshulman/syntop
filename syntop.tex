@@ -68,10 +68,14 @@ In fact, most topological constructions on metric spaces can easily be generaliz
   \item there exists some gauging distance (nullary filtration), and
   \item if $d_1$ and $d_2$ are gauging distances, there is a gauging distance $d_3$ such that $d_1(x,y)\le d_3(x,y)$ and $d_2(x,y)\le d_3(x,y)$ for all $x,y\in X$ (binary filtration).
   \end{enumerate}
+  A gauge space is \textbf{separated} if
+  \begin{enumerate}[resume]
+  \item for any $x,y\in X$, if $d(x,y)=0$ for all gauging distances $d$, then $x=y$.
+  \end{enumerate}
 \end{defn}
 
 In other words, a gauge is a filterbase in the poset of (extended quasi-)pseudo-metrics.
-Note that the qualifiers ``extended'' and ``quasi-'' carry over from the metrics to the gauge, but all the metrics in a gauge space are automatically assumed to be pseudo.
+Note that the qualifiers ``extended'' and ``quasi-'' carry over from the metrics to the gauge, but all the metrics in a gauge space are automatically assumed to be pseudo; separatedness is named as an additional property.
 
 Of course, any (extended quasi-)pseudo-metric space defines an (extended quasi-)gauge space with exactly one gauging distance.
 The essential difference between gauge spaces and metric spaces is that gauge spaces need not be ``countable'' in any of the senses that metric spaces must.
@@ -92,6 +96,10 @@ Yet more general than gauge spaces are prometric spaces~\cite{cht:one-setting}:
   \begin{enumerate}[resume]
   \item for any distance $d_1$ there is a distance $d_2$ such that $d_1(x,y)\le d_2(y,x)$ for all $x,y\in X$ (symmetry).
   \end{enumerate}
+  It is \textbf{separated} if
+  \begin{enumerate}[resume]
+  \item for any $x,y\in X$, if $d(x,y)=0$ for all distances $d$, then $x=y$.
+  \end{enumerate}
 \end{defn}
 
 Since the terminology for prometric spaces is not well-established, we follow~\cite{cht:one-setting} in taking the ``extended quasi'' case to be the default, with symmetry stated explicitly whenever assumed.
@@ -99,7 +107,7 @@ Obviously any extended quasi-gauge is also a prometric.
 We do not know any important examples of the extra generality afforded by prometric spaces, but they seem a natural level of generality; everything we have to say about metric spaces or gauge spaces in this paper applies just as well to prometric ones.
 
 On the other hand, in constructive mathematics a very different (and much more general) notion is obtained by allowing distances to take values in the (nonnegative extended) \emph{upper} real numbers (sets $U$ of rational numbers satisfying the single axiom ``$y\in U$ if and only if there is an $x\in U$ with $x<y$'', plus $0\notin U$ for nonnegativity).
-In this case we will speak of an \textbf{upper prometric space}.
+In this case we will speak of an \textbf{upper prometric space}; if we want to say that an upper prometric space is a prometric space we will say that it \textbf{has located distances}.
 
 The difference is that unlike real numbers, upper real numbers constructively admit arbitrary infima.
 Thus, for instance, any set $X$ admits a \emph{discrete} upper prometric with one distance defined by $d(x,y) = \inf \setof{ t | t=0 \land x=y }$, so that $d(x,x)=0$ but $d(x,y)=+\infty$ if $x\neq y$.
@@ -142,29 +150,49 @@ In particular, prometric spaces that are topologically isomorphic (by continuous
 In general the way we do this is by considering \emph{relations} between points or subsets rather than distances between them.
 
 
-\section{Point-point relations: order}
+\section{Point-point relations: order and apartness}
 \label{sec:point-point}
+\label{sec:order}
 
-TODO: Define the inequalities first, then observe their behavior under symmetry.
-
-
+There are two important relations between points in a prometric space.
 
 \begin{defn}
-  Two points $x,y\in X$ are \textbf{apart}, written $x\apart y$, if $d(x,y)>0$.
+  Let $x,y\in X$ be points of an upper prometric space.
+  \begin{itemize}
+  \item We say $x\le y$ if $d(y,x)=0$ for all distances $d$.\fxwarning{ordering convention?}
+  \item We say $x<y$ if $d(x,y)>0$ for some distance $d$.
+  \end{itemize}
 \end{defn}
 
-Classically, the separation axiom of a non-pseudo metric space says that apartness $x\apart y$ coincides with disequality $x\neq y$ (meaning $\neg(x=y)$); but constructively it is a stronger statement even there.
-For instance, if $x\apart y$, then for any $z$ we have either $x\apart z$ or $z\apart y$, since $d(x,z)$ must be either $\ge \frac12 d(x,y)$ (in which case it is also $>0$ since $d(x,y)>0$). or $< d(x,y)$ (in which case $d(z,y) \ge d(x,y) - d(x,z) > 0$ by the triangle inequality).
-Disequality does not in general have this property.
-Constructively, the separation axiom says that $\neg(x\apart y)$ implies $x=y$.
+Reflexivity and transitivity (i.e.\ the triangle inequality) of an upper prometric imply that $\le$ is a \textbf{preorder}, i.e.\ a reflexive and transitive relation, and that $<$ is irreflexive ($x\not<x$).
+As we will see later, the preorder $\le$ is an instance of the \emph{specialization order} underlying a topology.
+(The notation for $<$ is somewhat misleading; in particular it is rarely transitive.)
 
-% (Wait on this until the proximity section?)
-% The following notion is nontrivial even classically:
-% \begin{defn}
-%   Two subsets $A,B$ are \textbf{apart}, written $A\bowtie B$, if there is an $\ep>0$ such that $d(x,y)>\ep$ for all $x\in A$ and $y\in B$.
-% \end{defn}
+If $X$ has located distances, then $<$ is also a \emph{comparison}, i.e.\ if $x<z$ then for any $y$ we have $x<y$ or $y<z$.
+For if $d(x,z)>0$, we have another distance $d'$ with $d'(x,y)+d'(y,z)\ge d(x,z)$.
+By locatedness, $d'(x,y)$ and $d'(y,z)$ are both either $>0$ or $<\frac12 d(x,z)$; thus either $x<y$ or $y<z$ or $d'(x,y)+d'(y,z) < d(x,z)$, but the latter case is a contradiction.
 
-\fxwarning{Should we use that notation and name even in the non-symmetric case?  Should we postpone apartness to the section on point-point relations: order?}
+Finally, if $X$ is symmetric, then $\le$ and $<$ are both symmetric relations.
+A reflexive, transitive, and symmetric relation is of course called an \textbf{equivalence relation}; we will write it as $x\approx y$.
+An irreflexive, symmetric, comparison relation is called an \textbf{apartness relation}, usually written $x\apart y$.
+
+If $X$ is separated, then $x\approx y$ (and even $x\le y$, in the non-symmetric case) implies $x=y$.
+Note also that $x\approx y$ is equivalent to $\neg(x\apart y)$, but $\apart$ cannot constructively be expressed in terms of $\approx$; to say $x\apart y$ is stronger than $x\neq y$.
+In particular, if $X$ is separated, then the equality in its underlying set is $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\apart y)$, hence $x\approx y$ and thus $x=y$.
+
+\section{Point-set relations: topology}
+\label{sec:point-set}
+\label{sec:topology}
+
+
+\section{Filters of point-point relations: uniformity}
+\label{sec:uniformity}
+
+
+\section{Set-set relations: proximity}
+\label{sec:set-set}
+\label{sec:proximity}
+
 
 
 
@@ -184,7 +212,8 @@ However, constructively there are ``wild'' subsets such as $\setof{x\in X | P}$,
 
 Note: approach spaces have a distance between points and sets, definable from a metric space by infima.
 Constructively this produces only an upper-real-valued distance, unless all subsets are located.
-How are these related to syntopogenous spaces?
+Presumably there are ``pro-approach spaces'' that arise from prometric spaces, or at least from gauge spaces.
+Upper pro-approach spaces also give rise to syntopogenous spaces, but not decomposable ones.
 
 
 \bibliographystyle{alpha}
