@@ -18,8 +18,6 @@
 \section{Metric, gauge, and prometric spaces}
 \label{sec:metric}
 
-\fxwarning{Do we want this section at all?}
-
 Arguably, the goal of general topology is to describe ``spaces'' that are not metrizable but share many attributes of metric spaces.
 Thus, it is worth recalling the basic definitions and properties of metric spaces in a constructive context.
 We write $\Re$ for the set of extended Dedekind real numbers; these are pairs $(L,U)$ of sets of rational numbers such that:
@@ -107,28 +105,36 @@ Obviously any extended quasi-gauge is also a prometric.
 We do not know any important examples of the extra generality afforded by prometric spaces, but they seem a natural level of generality; everything we have to say about metric spaces or gauge spaces in this paper applies just as well to prometric ones.
 
 On the other hand, in constructive mathematics a very different (and much more general) notion is obtained by allowing distances to take values in the (nonnegative extended) \emph{upper} real numbers (sets $U$ of rational numbers satisfying the single axiom ``$y\in U$ if and only if there is an $x\in U$ with $x<y$'', plus $0\notin U$ for nonnegativity).
-In this case we will speak of an \textbf{upper prometric space}; if we want to say that an upper prometric space is a prometric space we will say that it \textbf{has located distances}.
+In this case we will speak of an \textbf{upper prometric space}.
+If necessary, we distinguish ordinary real numbers from upper ones by calling them \textbf{located}, and ordinary prometric spaces from upper ones by calling them \textbf{decomposable}.
 
-The difference is that unlike real numbers, upper real numbers constructively admit arbitrary infima.
+The main difference is that unlike located real numbers, upper real numbers constructively admit arbitrary infima.
 Thus, for instance, any set $X$ admits a \emph{discrete} upper prometric with one distance defined by $d(x,y) = \inf \setof{ t | t=0 \land x=y }$, so that $d(x,x)=0$ but $d(x,y)=+\infty$ if $x\neq y$.
 This distance takes real values if and only if $X$ has decidable equality, since if $d(x,y)$ were real then it would be either $<2$ (in which case $x=y$) or $>1$ (in which case $x\neq y$).
-As we will see, this sort of ``locatedness'' for real numbers is crucial for the special behavior of (pro)metric spaces among arbitrary spaces in constructive mathematics.
+As we will see, locatedness of distances is crucial for the special behavior of (pro)metric spaces among arbitrary spaces in constructive mathematics.
 
 We now review some of the fundamental concepts from metric spaces that one intends to capture for more general spaces, simultaneously generalizing them to prometric ones.
-In the following, $X$ and $Y$ denote prometric spaces; $\ep$ and $\de$ are assumed to range over $\Rp$; and $d_X$ and $d_Y$ are assumed to range over distances on $X$ and $Y$ respectively.
+In the following, $X$ and $Y$ denote (perhaps upper) prometric spaces; $\ep$ and $\de$ are assumed to range over $\Rp$; and $d_X$ and $d_Y$ are assumed to range over distances on $X$ and $Y$ respectively.
+We begin with continuity of functions.
 
 \begin{itemize}
-\item A function $f:X\to Y$ is \textbf{continuous} if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, $d_X(x,y)<\de$ implies $d_Y(f(x),f(y))<\ep$.
-\item Similarly, $f:X\to Y$ is \textbf{uniformly continuous} if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, $d_X(x,y)<\de$ implies $d_Y(f(x),f(y))<\ep$.
-  % Define these when we introduce their abstract versions.
-% \item $U\subseteq X$ is a \textbf{neighborhood} of $x\in U$ if there is an $\ep>0$ such that for all $y$, if $d(x,y)<\ep$ then $y\in U$.
-% \item $U\subseteq X$ is \textbf{open} if it is a neighborhood of each of its points, i.e.\ for all $x\in U$ there is an $\ep>0$ such that for all $y$, if $d(x,y)<\ep$ then $y\in U$.
-% \item $C\subseteq X$ is \textbf{weakly closed} if whenever for all $\ep>0$ there is a $y\in C$ with $d(x,y)<\ep$, then $x\in C$.
-%   It is \textbf{strongly closed} if $C=X\setminus U$ for some open set $U$.
-% \item The \textbf{weak closure} of $C\subseteq X$ is the set of all $x$ such that for all $\ep>0$ there is a $y\in C$ with $d(x,y)<\ep$.
-%   Thus $C$ is weakly closed iff it is equal to its weak closure.
-% \item $A\subseteq X$ is \textbf{strongly dense} if for any $x\in X$ and $\ep>0$, there is an $a\in A$ with $d(x,a)<\ep$.
-%   It is \textbf{weakly dense} if there does not exist an $x$ and an $\ep>0$ such that $d(x,y)<\ep$ implies $y\notin A$.
+\item A function $f:X\to Y$ is \textbf{continuous} if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
+\item Similarly, $f:X\to Y$ is \textbf{uniformly continuous} if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
+\item We will say $f:X\to Y$ is \textbf{cocontinuous}\fxwarning{Does this have a standard name?} if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
+\item Similarly, $f:X\to Y$ is \textbf{uniformly cocontinuous} if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
+\end{itemize}
+
+If $X$ is decomposable and $f$ is (uniformly) continuous, then it is also (uniformly) cocontinuous.
+For given $d_Y$ and $\ep$, let $d_X$ and $\de$ be as in (uniform) continuity; then if $d_Y(f(x),f(y)) > \ep$, we cannot have $d_X(x,y) < \de$, so we must have $d_X(x,y) > \frac{\de}{2}$.
+
+On the other hand, if $Y$ is decomposable and $f$ is (uniformly) cocontinuous, then it is also (uniformly) continuous.
+For given $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\frac{\ep}{2} \Rightarrow d_X(x,y)>\de$; then if $d_X(x,y)<\de$, we cannot have $d_Y(f(x),f(y))>\frac{\ep}{2}$, so we must have $d_Y(f(x),f(y))<\ep$.
+
+Thus, for prometric spaces continuity and cocontinuity coincide; but this need not be the case for upper prometric spaces.
+
+We continue with notions of convergence and completeness.
+
+\begin{itemize}
 \item $X$ is \textbf{totally bounded} if for all $d_X$ and $\ep>0$ there is a finite set $F\subseteq X$ such that for all $y\in X$ there is an $x\in F$ such that $d_X(x,y)<\ep$.
 \item A sequence $\setof{x_n}$ in $X$ \textbf{converges} to $x\in X$ if for every $d_X$ and $\ep>0$ there is an $N$ such that for any $n$, if $n>N$ then $d_X(x,x_n)<\ep$.
 \item More generally, a filter $\F$ in $X$ \textbf{converges} to $x\in X$ if for every $d_X$ and $\ep>0$ there is an $A\in\F$ such that for all $y\in A$ we have $d_X(x,y)<\ep$.
@@ -168,7 +174,7 @@ Reflexivity and transitivity (i.e.\ the triangle inequality) of an upper prometr
 As we will see later, the preorder $\le$ is an instance of the \emph{specialization order} underlying a topology.
 (The notation for $<$ is somewhat misleading; in particular it is rarely transitive.)
 
-If $X$ has located distances, then $<$ is also a \emph{comparison}, i.e.\ if $x<z$ then for any $y$ we have $x<y$ or $y<z$.
+If $X$ is decomposable (that is, it is a prometric space rather than just an upper prometric space), then $<$ is also a \emph{comparison}, i.e.\ if $x<z$ then for any $y$ we have $x<y$ or $y<z$.
 For if $d(x,z)>0$, we have another distance $d'$ with $d'(x,y)+d'(y,z)\ge d(x,z)$.
 By locatedness, $d'(x,y)$ and $d'(y,z)$ are both either $>0$ or $<\frac12 d(x,z)$; thus either $x<y$ or $y<z$ or $d'(x,y)+d'(y,z) < d(x,z)$, but the latter case is a contradiction.
 
@@ -176,13 +182,37 @@ Finally, if $X$ is symmetric, then $\le$ and $<$ are both symmetric relations.
 A reflexive, transitive, and symmetric relation is of course called an \textbf{equivalence relation}; we will write it as $x\approx y$.
 An irreflexive, symmetric, comparison relation is called an \textbf{apartness relation}, usually written $x\apart y$.
 
-If $X$ is separated, then $x\approx y$ (and even $x\le y$, in the non-symmetric case) implies $x=y$.
-Note also that $x\approx y$ is equivalent to $\neg(x\apart y)$, but $\apart$ cannot constructively be expressed in terms of $\approx$; to say $x\apart y$ is stronger than $x\neq y$.
-In particular, if $X$ is separated, then the equality in its underlying set is $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\apart y)$, hence $x\approx y$ and thus $x=y$.
+For \emph{located} real numbers, $\neg(a<b)$ is equivalent to $b\le a$.
+(For upper real numbers, we define $U_1 < U_2$ if $U_1\setminus U_2$ is inhabited, and $U_2\le U_1$ if $U_1 \subseteq U_2$; neither of these is the negation of the other.)
+Thus, if $X$ is decomposable, $x\approx y$ is equivalent to $\neg(x\apart y)$.
+However, even in this case, $\apart$ cannot constructively be expressed in terms of $\approx$; to say $x\apart y$ is stronger than $x\neq y$.
+
+If $X$ is also separated, then $x\approx y$ (and even $x\le y$, in the non-symmetric case) implies $x=y$.
+An apartness relation such that $\neg(x\apart y)$ implies $x=y$ is called \textbf{tight}.
+In particular, the equality relation of a separated prometric space is $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\apart y)$, hence $x\approx y$ and thus $x=y$.
+
+Finally, we observe that the point-point relations underlying a prometric space vary appropriately with continuous functions, so that they really are a topological invariant.
+On one hand, if $f:X\to Y$ is a continuous map of upper prometric spaces, then $x\le y$ in $X$ implies $f(x)\le f(y)$ in $Y$, i.e.\ $f$ induces a map of posets (and hence a map of equivalence relations, if $X$ and $Y$ are symmetric).
+Of course, in the separated case this is trivial.
+
+On the other hand, if $f:X\to Y$ is \emph{cocontinuous}, then $f(x)<f(y)$ in $Y$ implies $x<y$ in $X$.
+In general, a function between sets with apartness relations such that $f(x)\apart f(y)$ implies $x\apart y$ is called \textbf{strongly extensional}.
+Thus, any cocontinuous function between symmetric upper prometric spaces (hence any continuous function between symmetric prometric spaces) is strongly extensional.
+
 
 \section{Point-set relations: topology}
 \label{sec:point-set}
 \label{sec:topology}
+
+  % Define these when we introduce their abstract versions.
+% \item $U\subseteq X$ is a \textbf{neighborhood} of $x\in U$ if there is an $\ep>0$ such that for all $y$, if $d(x,y)<\ep$ then $y\in U$.
+% \item $U\subseteq X$ is \textbf{open} if it is a neighborhood of each of its points, i.e.\ for all $x\in U$ there is an $\ep>0$ such that for all $y$, if $d(x,y)<\ep$ then $y\in U$.
+% \item $C\subseteq X$ is \textbf{weakly closed} if whenever for all $\ep>0$ there is a $y\in C$ with $d(x,y)<\ep$, then $x\in C$.
+%   It is \textbf{strongly closed} if $C=X\setminus U$ for some open set $U$.
+% \item The \textbf{weak closure} of $C\subseteq X$ is the set of all $x$ such that for all $\ep>0$ there is a $y\in C$ with $d(x,y)<\ep$.
+%   Thus $C$ is weakly closed iff it is equal to its weak closure.
+% \item $A\subseteq X$ is \textbf{strongly dense} if for any $x\in X$ and $\ep>0$, there is an $a\in A$ with $d(x,a)<\ep$.
+%   It is \textbf{weakly dense} if there does not exist an $x$ and an $\ep>0$ such that $d(x,y)<\ep$ implies $y\notin A$.
 
 
 \section{Filters of point-point relations: uniformity}
