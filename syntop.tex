@@ -9,6 +9,15 @@
 %\def\Rpf{[0,\infty)}
 \def\F{\mathcal{F}}
 \def\apart{\mathrel{\#}}
+\def\napprox{\not\approx}
+\def\nle{\not\le}
+\def\oapt{\mathrel{\!\not\,\not\ge}}
+\def\int{\mathrm{int}}
+\def\ext{\mathrm{ext}}
+\def\cl{\mathrm{cl}}
+\def\cpl#1{\neg #1}
+\let\implies\Rightarrow
+\def\inv{^{-1}}
 \begin{document}
 \maketitle
 
@@ -32,6 +41,7 @@ In classical mathematics, $\Re$ differs from $\R$ only by including $+\infty = (
 Constructively, we can say that $\R = \setof{ x\in \Re | -\infty < x < \infty }$.
 We also write
 \[\Rp = \setof{x\in\Re | x\ge 0 }.\]
+We remind the reader that constructively, the real numbers admit both a strict order $<$ and a non-strict order $\le$, where $x\le y$ is equivalent to $\neg(y<x)$, but $x<y$ is stronger than $\neg(y\le x)$, and $x\le y$ is weaker than $(x=y)\lor (x<y)$.
 
 \begin{defn}
   An \textbf{extended quasi-pseudo-metric space} is a set $X$ together with a function $d:X\times X \to \Rp$ such that
@@ -134,7 +144,7 @@ The locatedness of distances enables us to characterize continuity in a converse
   If $f$ is continuous, then given $d_Y$ and $\ep$, let $d_X$ and $\de$ be as in the definition of continuity.
   Then if $d_Y(f(x),f(y)) > \ep$, we cannot have $d_X(x,y) < \de$, so we must have $d_X(x,y) > \frac{\de}{2}$.
 
-  Conversely, if the stated condition holds, then given $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\frac{\ep}{2} \Rightarrow d_X(x,y)>\de$.
+  Conversely, if the stated condition holds, then given $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\frac{\ep}{2} \implies d_X(x,y)>\de$.
   Then if $d_X(x,y)<\de$, we cannot have $d_Y(f(x),f(y))>\frac{\ep}{2}$, so we must have $d_Y(f(x),f(y))<\ep$.
 \end{proof}
 
@@ -145,13 +155,14 @@ Similarly we have:
 \end{lem}
 
 We continue with notions of convergence and completeness.
+When there is only one prometric space $X$, we assume that the letter $d$ ranges over distances on $X$.
 
 \begin{itemize}
-\item $X$ is \textbf{totally bounded} if for all $d_X$ and $\ep>0$ there is a finite set $F\subseteq X$ such that for all $y\in X$ there is an $x\in F$ such that $d_X(x,y)<\ep$.
-\item A sequence $\setof{x_n}$ in $X$ \textbf{converges} to $x\in X$ if for every $d_X$ and $\ep>0$ there is an $N$ such that for any $n$, if $n>N$ then $d_X(x,x_n)<\ep$.
-\item More generally, a filter $\F$ in $X$ \textbf{converges} to $x\in X$ if for every $d_X$ and $\ep>0$ there is an $A\in\F$ such that for all $y\in A$ we have $d_X(x,y)<\ep$.
-\item A sequence $\setof{x_n}$ in $X$ is \textbf{Cauchy} if for every $d_X$ and $\ep>0$ there is an $N$ such that for any $n,m$, if $n,m>N$ then $d_X(x_n,x_m)<\ep$.
-\item A filter $\F$ in $X$ is \textbf{Cauchy} if for every $d_X$ and $\ep>0$ there is an $A\in\F$ such that for all $x,y\in A$ we have $d_X(x,y)<\ep$.
+\item $X$ is \textbf{totally bounded} if for all $d$ and $\ep>0$ there is a finite set $F\subseteq X$ such that for all $y\in X$ there is an $x\in F$ such that $d(x,y)<\ep$.
+\item A sequence $\setof{x_n}$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $N$ such that for any $n$, if $n>N$ then $d(x,x_n)<\ep$.
+\item More generally, a filter $\F$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $y\in A$ we have $d(x,y)<\ep$.
+\item A sequence $\setof{x_n}$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $N$ such that for any $n,m$, if $n,m>N$ then $d(x_n,x_m)<\ep$.
+\item A filter $\F$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $x,y\in A$ we have $d(x,y)<\ep$.
 \item $X$ is \textbf{complete} if every Cauchy filter converges to some point.
 \end{itemize}
 
@@ -173,13 +184,13 @@ In general the way we do this is by considering \emph{relations} between points 
 \label{sec:order}
 
 There are two important relations between points in a prometric space.
-As always, $d_X$ will range over distances in a prometric space $X$.
+As always, $d$ will range over distances in a prometric space $X$.
 
 \begin{defn}
   Let $x,y\in X$ be points of a prometric space.
   \begin{itemize}
-  \item We say $x\le y$ if $\forall d_X, d_X(y,x)=0$.\fxwarning{ordering convention?}
-  \item We say $x<y$ if $\exists d_X, d_X(x,y)>0$.
+  \item We say $x\le y$ if $\forall d, d(y,x)=0$.\fxwarning{ordering convention?}
+  \item We say $x\oapt y$ if $\exists d, d(x,y)>0$.
   \end{itemize}
 \end{defn}
 
@@ -194,32 +205,33 @@ As always, $d_X$ will range over distances in a prometric space $X$.
 As we will see later, $\le$ is an instance of the \emph{specialization order} underlying a topology.
 
 \begin{thm}
-  For any prometric space $X$, the relation $<$ is an \emph{irreflexive comparison}, i.e.\ it satisfies:
+  For any prometric space $X$, the relation $\oapt$ is an \emph{irreflexive comparison}, i.e.\ it satisfies:
   \begin{enumerate}
-  \item $\neg(x<x)$ for all $x$ (irreflexivity), and
-  \item if $x<z$ then for any $y$ we have $x<y$ or $y<z$ (comparison).
+  \item $\neg(x\oapt x)$ for all $x$ (irreflexivity), and
+  \item if $x\oapt z$ then for any $y$ we have $x\oapt y$ or $y\oapt z$ (comparison).
   \end{enumerate}
-  If $X$ is symmetric, then $<$ is also a symmetric relation, and hence an \textbf{apartness relation} (usually written $\apart$).
+  If $X$ is symmetric, then $\oapt $ is also a symmetric relation, and hence an \textbf{apartness relation} (usually written $\apart$).
 \end{thm}
 \begin{proof}
-  Irreflexivity of $<$ follows directly from reflexivity of a prometric.
+  Irreflexivity of $\oapt $ follows directly from reflexivity of a prometric.
   Comparison is rather trickier: if $d(x,z)>0$, we have another distance $d'$ with $d'(x,y)+d'(y,z)\ge d(x,z)$.
   By locatedness of real numbers, $d'(x,y)$ and $d'(y,z)$ are both either $>0$ or $<\frac12 d(x,z)$.
-  Thus either $x<y$ or $y<z$ or $d'(x,y)+d'(y,z) < d(x,z)$; but the latter case is a contradiction.
+  Thus either $x\oapt y$ or $y\oapt z$ or $d'(x,y)+d'(y,z) < d(x,z)$; but the latter case is a contradiction.
 \end{proof}
 
-The notation $x<y$ is somewhat misleading; in particular this relation is rarely transitive.
-By analogy with the previous and following sections, we might also call a comparison a 
-\textbf{decomposable} relation.
+By analogy with later sections, we might also call a comparison a \textbf{locally decomposable} relation.
 
-For located real numbers, $\neg(a<b)$ is equivalent to $b\le a$.
-%(For upper real numbers, we define $U_1 < U_2$ if $U_1\setminus U_2$ is inhabited, and $U_2\le U_1$ if $U_1 \subseteq U_2$; neither of these is the negation of the other.)
-Thus $x\approx y$ in a prometric space is equivalent to $\neg(x\apart y)$.
-However, $\apart$ cannot constructively be expressed in terms of $\approx$; to say $x\apart y$ is stronger than $x\neq y$.
+Since $\neg(a<b)$ is equivalent to $b\le a$ for located real numbers, $x\le y$ in a prometric space is equivalent to $\neg(x\oapt y)$.
+However, $\oapt$ cannot constructively be expressed in terms of $\le$; to say $x\oapt y$ is stronger than $x\neq y$ or even $x\nle y$.
 
-If $X$ is separated, then $x\approx y$ (and even $x\le y$, in the non-symmetric case) implies $x=y$.
-An apartness relation such that $\neg(x\apart y)$ implies $x=y$ is called \textbf{tight}.
-In particular, the equality relation of a separated prometric space is $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\apart y)$, hence $x\approx y$ and thus $x=y$.
+\begin{warn}
+  Some constructive mathematicians write $\neq$ for an arbitrary apartness relation.
+  We will always reserve slashed symbols such as $\neq,\nle,\napprox,\notin$ for logical negations (i.e.\ $x\neq y$ means $\neg(x=y)$, $x\nle y$ means $\neg(x\le y)$, etc.), and use other symbols such as $\apart$ and $\oapt$ for stronger ``positive'' relations.
+\end{warn}
+
+If $X$ is separated, then $x\le y$ (and hence equivalently $\neg(x\oapt y)$) implies $x=y$.
+A relation $\oapt$ (such as an apartness relation) such that $\neg(x\oapt y)$ implies $x=y$ is sometimes called \textbf{tight} or \textbf{connected}.
+In particular, the equality relation of a separated prometric space is $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)$, hence $x\le y$ and thus $x=y$.
 
 Finally, we observe that the point-point relations underlying a prometric space vary appropriately with continuous functions, so that they really are a topological invariant.
 
@@ -228,15 +240,15 @@ Finally, we observe that the point-point relations underlying a prometric space 
   Then:
   \begin{enumerate}
   \item $f$ is a \textbf{monotone map} of preorders, i.e.\ if $x\le y$ then $f(x)\le f(y)$.
-  \item $f$ is a \textbf{strongly extensional} map of comparisons, i.e.\ if $f(x)<f(y)$ then $x<y$.
+  \item $f$ is a \textbf{strongly extensional} map of comparisons, i.e.\ if $f(x)\oapt f(y)$ then $x\oapt y$.
   \end{enumerate}
 \end{thm}
 \begin{proof}
   For the first, given any $d_Y$ and $\ep>0$ we have a $d_X$ and $\de>0$ such that $d_X(x,y)<\de$ implies $d_Y(f(x),f(y))<\ep$.
   But $d_X(x,y)<\de$ is always true if $x\le y$; hence so is $d_Y(f(x),f(y))<\ep$, and thus $f(x)\le f(y)$.
 
-  For the second, if $f(x)<f(y)$ we have $d_Y(f(x),f(y))>0$ for some $d_Y$.
-  Let $\ep = \frac12 \,d_Y(f(x),f(y))$; then by \cref{thm:cocontinuous} we have a $d_X$ and a $\de>0$ such that if $d_Y(f(x),f(y))>\ep$ (which is true) then $d_X(x,y)>\de$, hence $x<y$.
+  For the second, if $f(x)\oapt f(y)$ we have $d_Y(f(x),f(y))>0$ for some $d_Y$.
+  Let $\ep = \frac12 \,d_Y(f(x),f(y))$; then by \cref{thm:cocontinuous} we have a $d_X$ and a $\de>0$ such that if $d_Y(f(x),f(y))>\ep$ (which is true) then $d_X(x,y)>\de$, hence $x\oapt y$.
 \end{proof}
 
 
@@ -244,29 +256,158 @@ Finally, we observe that the point-point relations underlying a prometric space 
 \label{sec:point-set}
 \label{sec:topology}
 
-The specialization order and the apartness relation, while important, do not generally capture very much of the topological information in a prometric space.
+The specialization order and the apartness relation, while important, do not usually capture very much of the topological information in a prometric space.
 The crucial step that brings us into the world of general topology is to consider relations involving \emph{sets} as well as points.
-There are three fundamental relations between a point and a set that can be defined in a prometric space $X$ (with $d_X$ ranging over distances and $\ep$ over positive reals, as always):
+There are three fundamental relations between a point and a set that can be defined in a prometric space $X$ (with $d$ ranging over distances and $\ep$ over positive reals, as always):
 
-\begin{defn}
+\begin{defn}\label{defn:toprels}
   Let $x\in X$ and $A\subseteq X$.
   \begin{enumerate}
-  \item We say $x\approx A$ if $\forall d_X, \forall \ep, \exists y, (y\in A \land d_X(x,y)<\ep)$.
-  \item We say $x\bowtie A$ if $\exists d_X, \exists \ep, \forall y, (y\in A \Rightarrow d_X(x,y)>\ep)$.
-  \item We say $x\ll A$ if $\exists d_X, \exists \ep, \forall y, (d_X(x,y)<\ep \Rightarrow y\in A)$.
+  \item $x\ll A$ if $\exists d, \exists \ep, \forall y, (d(x,y)<\ep \implies y\in A)$ ($A$ is a \textbf{neighborhood} of $x$).
+  \item $x\bowtie A$ if $\exists d, \exists \ep, \forall y, (y\in A \implies d(x,y)>\ep)$ ($x$ is \textbf{apart} from $A$).
+  \item $x\approx A$ if $\forall d, \forall \ep, \exists y, (y\in A \land d(x,y)<\ep)$ ($x$ is \textbf{close} to $A$).
   \end{enumerate}
 \end{defn}
 
+We can now axiomatize the basic properties of these relations.
 
-  % Define these when we introduce their abstract versions.
-% \item $U\subseteq X$ is a \textbf{neighborhood} of $x\in U$ if there is an $\ep>0$ such that for all $y$, if $d(x,y)<\ep$ then $y\in U$.
-% \item $U\subseteq X$ is \textbf{open} if it is a neighborhood of each of its points, i.e.\ for all $x\in U$ there is an $\ep>0$ such that for all $y$, if $d(x,y)<\ep$ then $y\in U$.
-% \item $C\subseteq X$ is \textbf{weakly closed} if whenever for all $\ep>0$ there is a $y\in C$ with $d(x,y)<\ep$, then $x\in C$.
-%   It is \textbf{strongly closed} if $C=X\setminus U$ for some open set $U$.
-% \item The \textbf{weak closure} of $C\subseteq X$ is the set of all $x$ such that for all $\ep>0$ there is a $y\in C$ with $d(x,y)<\ep$.
-%   Thus $C$ is weakly closed iff it is equal to its weak closure.
-% \item $A\subseteq X$ is \textbf{strongly dense} if for any $x\in X$ and $\ep>0$, there is an $a\in A$ with $d(x,a)<\ep$.
-%   It is \textbf{weakly dense} if there does not exist an $x$ and an $\ep>0$ such that $d(x,y)<\ep$ implies $y\notin A$.
+\begin{defn}
+  A \textbf{topological neighborhood space} (or simply a \textbf{topological space} --- see below) is a set $X$ with a relation $\ll$ between points and subsets such that
+  \begin{enumerate}
+  \item If $x\ll A$ and $A\subseteq B$, then $x\ll B$ (isotony).
+  \item If $x\ll A$, then $x\in A$ (reflexivity).
+  \item $x\ll X$ for all $x\in X$ (nullary additivity).
+  \item If $x\ll A$ and $x\ll B$, then $x\ll A\cap B$ (binary additivity).
+  \item If $x\ll A$, then $x \ll \setof{ y | y\ll A}$ (transitivity).
+  \end{enumerate}
+  If $X$ and $Y$ are topological neighborhood spaces, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\ll A$ implies $x\ll f\inv(A)$.
+\end{defn}
+
+\begin{defn}
+  A \textbf{topological apartness space} (or sometimes a \textbf{point-set apartness space}) is a set $X$ with a relation $\bowtie$ between points and subsets such that
+  \begin{enumerate}
+  \item If $x\bowtie A$ and $B\subseteq A$, then $x\bowtie B$ (isotony).
+  \item If $x\bowtie A$, then $x\notin A$ (reflexivity).
+  \item $x\bowtie \emptyset$ for all $x\in X$ (nullary additivity).
+  \item If $x\bowtie A$ and $x\bowtie B$, then $x\bowtie A\cup B$ (binary additivity).
+  \item If $x\bowtie A$, then $x\bowtie \setof{ y | y \not\bowtie A }$ (transitivity).
+  \end{enumerate}
+  If $X$ and $Y$ are topological apartness space, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\bowtie A$ implies $x\bowtie f\inv(A)$.
+\end{defn}
+
+\begin{defn}
+  A \textbf{topological closure space} is a set $X$ with a relation $\approx$ between points and subsets such that
+  \begin{enumerate}
+  \item If $x\approx A$ and $A\subseteq B$, then $x\approx B$ (isotony).
+  \item If $x\in A$, then $x\approx A$ (reflexivity).
+  \item $x\napprox \emptyset$ for all $x\in X$ (nullary additivity).
+  \item If $x\approx A\cup B$, then $x\approx A$ or $x\approx B$ (binary additivity).
+  \item If $x\approx \setof{ y | y\approx A}$, then $x\approx A$ (transitivity).
+  \end{enumerate}
+  If it satisfies all the above axioms except binary additivity, we call it a \textbf{Moore closure space}.
+  If $X$ and $Y$ are topological or Moore closure spaces, a function $f:X\to Y$ is \textbf{continuous} if $x\approx A$ implies $f(x) \approx f(A)$.
+\end{defn}
+
+A relation between points and subsets can equivalently be defined in terms of an operation taking each subset to the subset of points related to it.
+For instance, in a topological neighborhood space, the \textbf{interior} of a set $A$ is
+\[ \int(A) = \setof{ x | x\ll A } \]
+The axioms of $\ll$ say exactly that $\int$ is a left-exact monad on the powerset of $X$.
+Hence it is determined by its fixed points, which are called \textbf{open sets}, and are closed under arbitrary unions and finite intersections.
+This is, of course, the usual definition of a topological space.
+
+Similarly, in a topological or Moore closure space, the \textbf{closure} of a set $A$ is
+\[ \cl(A) = \setof{x | x \approx A } \]
+The axioms of $\approx$ say exactly that $\cl$ is a comonad on the powerset of $X$, which is right-exact iff $X$ is topological.
+Hence it is determined by its fixed points, which are called \textbf{closed sets}, and are closed under arbitrary intersections (and finite unions, if $X$ is topological).
+
+Finally, in a topological apartness space, the \textbf{exterior} of a set $A$ is
+\[ \ext(A) = \setof{ x | x\bowtie A } \]
+It is less natural to rephrase the axioms of $\bowtie$ in terms of $\ext$, however.
+
+\begin{thm}
+  If $X$ is a prometric space, then the relations $\ll$, $\bowtie$, and $\approx$ from \cref{defn:toprels} make it into a topological neighborhood space, a topological apartness space, and a Moore closure space, plus a topological closure space if excluded middle holds.
+\end{thm}
+\begin{proof}
+  In all cases, isotony and nullary additivity are obvious, while reflexivity follows directly from prometric reflexivity ($d(x,x)=0$).
+  Binary additivity for $\ll$ and $\bowtie$ follow directly from the definitions of $\cap$ and $\cup$.
+
+  Binary additivity for $\approx$, however, requires that if $\forall d,\forall \ep, \exists y\in A\cup B, d(x,y)<\ep$, then either $\forall d,\forall \ep, \exists y\in A, d(x,y)<\ep$ or $\forall d,\forall \ep, \exists y\in B, d(x,y)<\ep$.
+  If excluded middle holds, we can prove this by contradiction: if neither of the two desired conclusions holds, then there are $d_1,\ep_1$ such that $d_1(x,y)\ge \ep_1$ for all $y\in A$, and also $d_2,\ep_2$ such that $d_2(x,y)\ge\ep_2$ for all $y\in B$.
+  Then by binary filtration, there is a $d_3$ such that $d_1\le d_3$ and $d_2\le d_3$, and by assumption there is a $y\in A\cup B$ such that $d_3(x,y)<\min(\ep_1,\ep_2)$.
+  But our assumptions show that this $y$ cannot be in $A$ or in $B$, a contradiction.
+  Constructively, however, it seems impossible to prove this axiom.
+
+  For transitivity for $\ll$, if $x\ll A$ then we have a $d,\ep$ with $d(x,y)<\ep \implies y\in A$.
+  Let $d'$ be as in prometric transitivity for $d$; then if $d'(x,y)<\frac{\ep}{2}$ and $d'(y,z)<\frac{\ep}{2}$, we have $d(x,z) \le d'(x,y)+d'(y,z) <\ep$, so $z\in A$.
+  Thus, $y\ll A$.
+  Therefore, for any $y$ we have $d'(x,y)<\frac{\ep}{2} \implies y\in \setof{ y | y\ll A }$, so $x\ll \setof{ y | y\ll A }$.
+  Transitivity for $\bowtie$ and $\approx$ is analogous.
+\end{proof}
+
+In classical mathematics, all three notions of topological space are equivalent, via the following definitions (where $\cpl{A} = \setof{x\in X | x\notin A}$ means the relative complement of a subset $A\subseteq X$):
+\[
+\begin{array}{ccccc}
+  x\ll A & \iff & x \bowtie \cpl{A} & \iff & x\napprox \cpl{A}\\
+  x\bowtie A & \iff & x\napprox A & \iff & x \ll \cpl{A}\\
+  x\approx A & \iff & x \not\ll \cpl{A} & \iff & x \not\bowtie A
+\end{array}
+\]
+Constructively, this is no longer so, but we can say the following:
+
+\begin{thm}\ 
+  \begin{enumerate}
+  \item If $X$ is a topological neighborhood space, define $x\approx A$ to mean
+    \[\forall B, (x\ll B \implies A\cap B \text{ is inhabited})\]
+    Then $X$ becomes a Moore closure space.\label{item:top-ll-wkcl}
+    Its closed sets are called \textbf{weakly closed} in $X$.
+  \item If $X$ is a topological neighborhood space, define $x\approx A$ to mean
+    \[\forall B, (x\ll B \implies A\cap B \neq \emptyset)\]
+    Then $X$ becomes a Moore closure space.\label{item:top-ll-strcl}
+    Its closed sets are called \textbf{strongly closed} in $X$ (they are the complements of the open sets).
+  \item If $X$ is a topological neighborhood space, define $x\bowtie A$ to mean $x\ll \cpl{A}$.
+    Then $X$ becomes a topological apartness space.\label{item:top-ll-bowtie}
+  \item If $X$ is a topological apartness space, define $x\ll A$ to mean
+    \[\exists B, (x\bowtie B \land \forall y, (y\bowtie B \implies y\in A).\]
+    Then $X$ becomes a topological neighborhood space.\label{item:top-bowtie-ll}
+  \end{enumerate}
+  Moreover, all these constructions are functorial, and~\ref{item:top-ll-bowtie} and~\ref{item:top-bowtie-ll} describe topological apartness spaces as a (full) reflective subcategory of topological neighborhood spaces.
+\end{thm}
+\begin{proof}
+  In all cases, all the axioms are easy except binary additivity and transitivity.
+  Binary additivity for~\ref{item:top-ll-wkcl} and~\ref{item:top-ll-strcl} fails constructively for essentially the same reason that it failed for prometric spaces, while for~\ref{item:top-ll-bowtie} it is easy since $\cpl{(A\cup B)} = \cpl{A} \cap \cpl{B}$.
+
+  For transitivity of~\ref{item:top-ll-wkcl}, if $x\approx \setof{y | y\approx A}$, then whenever $x\ll B$, we also have $x\ll \int(B)$ by transitivity for $\ll$.
+  Hence there is a $y\in \int(B)$ such that $y\approx A$; but then $y\ll \int(B)$, and so by definition of $\approx$ there is a $z\in\int(B)$ with $z\in A$.
+  Since then $z\in B$ too, we have $x\approx A$.
+
+  For transitivity of~\ref{item:top-ll-strcl}, let $x\approx \setof{y | y\approx A}$ and suppose for contraction that $x\ll B$ and $A\cap B =\emptyset$.
+  Then also $x\ll \int(B)$ and $A\cap \int(B)=\emptyset$.
+  We will show that $\setof{y | y\approx A} \cap \int(B) = \emptyset$, for which purpose suppose it contains an element $y$.
+  But then $y\approx A$ and $y\in \int(B)$, hence $y\ll \int(B)$; thus by definition of $\approx$ we have $A\cap \int(B) \neq \emptyset$, a contradiction.
+
+  For transitivity of~\ref{item:top-ll-bowtie}, suppose $x\bowtie A$, i.e.\ $x\ll \cpl{A}$; to show $x\bowtie \setof{y|\neg(y\bowtie A)}$ means to show $x\ll \setof{y|\neg\neg(y\bowtie A)} = \setof{y|\neg\neg(y\ll \cpl{A})}$.
+  But $x\ll \setof{y|y\ll \cpl{A}}$ by transitivity for $\ll$, and $(y\ll \cpl{A})\implies\neg\neg(y\ll\cpl{A})$, so the result follows by isotony.
+
+  For transitivity of~\ref{item:top-bowtie-ll}, suppose $x\ll A$, witnessed by $B$ such that $x\bowtie B$ and $\forall y,(y\bowtie B \implies y\in A)$, i.e.\ $\setof{y|y\bowtie B} \subseteq A$.
+  By transitivity for $\bowtie$, we have $x\bowtie \setof{y|y\not\bowtie B}$, so to show $x\ll \setof{y|y\ll A}$ it suffices to show $z\bowtie \setof{y|y\not\bowtie B} \implies z\in \setof{y|y\ll A}$.
+  But if $z\bowtie \setof{y|y\not\bowtie B}$, then $z\bowtie B$ by isotony, and so $z\ll A$ by definition of $\ll$ and our assumption about $B$.
+
+  For functoriality, suppose first that $X$ and $Y$ are topological neighborhood spaces and $f:X\to Y$ is $\ll$-continuous.
+  If $x\approx A$ weakly, suppose given $B\subseteq Y$ with $f(x)\ll B$; then by $\ll$-continuity, we have $x\ll f\inv(B)$.
+  Since $x\approx A$, we have $A\cap f\inv(B)$ inhabited, hence $f(A) \cap B$ inhabited.
+  Thus, $f(x)\approx f(A)$.
+  The proof for strong $\approx$ is essentially the same, and for $\bowtie$ it follows immediately from the fact that $f\inv(\cpl{A}) = \cpl{f\inv(A)}$.
+
+  Now suppose $X$ and $Y$ are topological apartness spaces and $f$ is $\bowtie$-continuous.
+  If $f(x)\ll A$ according to~\ref{item:top-bowtie-ll}, then there is a $B\subseteq Y$ with $f(x)\bowtie B$ and $\forall y, (y\bowtie B \implies y\in A)$.
+  By $\bowtie$-continuity, we have $x\bowtie f\inv(B)$, and for any $z\in X$ such that $z\bowtie f\inv(B)$, we \emph{want to have } $z\in f\inv(A)$, i.e.\ $f(z) \in A$, for which it suffices to show $f(z)\bowtie B$.\dots
+\end{proof}
+
+Local decomposability (any prometric space)
+
+Functoriality for prometric spaces
+
+Regularity (any symmetric prometric space) and complete regularity (any symmetric gauge space)
 
 
 \section{Filters of point-point relations: uniformity}
