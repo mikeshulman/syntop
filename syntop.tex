@@ -442,12 +442,12 @@ A natural condition that ensures this is the following.
 \begin{defn}\ \fxnote{cite Bridges}
   \begin{enumerate}
   \item A topological apartness space $X$ is \textbf{locally decomposable} if whenever $x\bowtie A$, there is a subset $B$ such that $x\bowtie B$ and $\forall y, (y\in B \lor y\bowtie A)$.
-  \item A topological neighborhood space $X$ is \textbf{locally decomposable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll B$ and $\forall y, (y \ll A \lor y\not\ll B)$.\fxerror{Should be $x\notin B$; fix later}
+  \item A topological neighborhood space $X$ is \textbf{locally decomposable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll B$ and $\forall y, (y\notin B \lor y \ll A)$.
   \end{enumerate}
 \end{defn}
 
 Note that local decomposability (for both sorts of space) is actually a strengthening of transitivity.
-The assumption $\forall y, (y\in B \lor y\bowtie A)$ gives $\setof{y|y\not\bowtie A} \subseteq B$, while the assumption $\forall y, (y \ll A \lor y\not\ll B)$ gives $B\subseteq \setof{y|y\ll A}$, so in both cases transitivity follows from isotony.
+The assumption $\forall y, (y\in B \lor y\bowtie A)$ gives $\setof{y|y\not\bowtie A} \subseteq B$, while the assumption $\forall y, (y\notin B \lor y \ll A)$ gives $B\subseteq \setof{y|y\ll A}$, so in both cases transitivity follows from isotony.
 
 \begin{thm}\label{thm:top-locdec-equiv}
   The categories of
@@ -465,25 +465,25 @@ The assumption $\forall y, (y\in B \lor y\bowtie A)$ gives $\setof{y|y\not\bowti
   By local decomposability we have a $C$ with $x\bowtie C$ and $\forall y, (y\in C \lor y\bowtie B)$; but then $\forall y, (y\in C \lor y\in A)$, giving~\eqref{eq:top-bowtie-ll-2}.
 
   It remains to show that local decomposability is preserved in both directions, and that the round-trip composite is the identity on locally decomposable neighborhood spaces.
-  Suppose first that $\ll$ is locally decomposable and $x \bowtie A$, so that $x\ll \cpl{A}$; then we have a $B$ with $x\ll B$ and $\forall y, (y\ll \cpl{A} \lor y\not\ll B)$.
-  Let $C = \cpl{\int(B)}$; then $x\ll \int(B)$ by transitivity, so $x\ll \cpl{C}$ by isotony, i.e.\ $x\bowtie C$.
-  Moreover, any $y$ satisfies either $y\ll\cpl{A}$, i.e.\ $y\bowtie A$, or $y\not\ll B$, hence $y\notin \int(B)$, i.e.\ $y\in C$.
+  Suppose first that $\ll$ is locally decomposable and $x \bowtie A$, so that $x\ll \cpl{A}$; then we have a $B$ with $x\ll B$ and $\forall y, (y\notin B \lor y\ll \cpl{A})$.
+  Let $C = \cpl{B}$; then $x\ll \cpl{C}$ by isotony, i.e.\ $x\bowtie C$.
+  Moreover, any $y$ satisfies either $y\ll\cpl{A}$, i.e.\ $y\bowtie A$, or $y\notin B$, i.e.\ $y\in C$.
   Thus, $\bowtie$ is locally decomposable.
 
   On the other hand, suppose $\bowtie$ is locally decomposable and $x\ll A$, so that (by~\eqref{eq:top-bowtie-ll-2}) we have a $B$ with $x\bowtie B$ and $\forall y, (y\in A \lor y\in B)$.
   Then by local decomposability for $\bowtie$ we have a $C$ with $x\bowtie C$ and $\forall y, (y\in C \lor y\bowtie B)$.
   Using it again, we have a $D$ with $x\bowtie D$ and $\forall y, (y\in D \lor y\bowtie C)$.
   Thus $D$ exhibits $x\ll \setof{y|y\bowtie C}$.
-  Let $z\in X$; it remains to show $z\ll A$ or $z\not\ll \setof{y|y\bowtie C}$.
+  Let $z\in X$; it remains to show $z\ll A$ or $z\notin \setof{y|y\bowtie C}$.
   We have either $z\in C$ or $z\bowtie B$, and if $z\bowtie B$ and hence $z\ll A$ (exhibited by $B$).
-  But if $z\in C$, then $z\not\bowtie C$, hence $z\notin \setof{y|y\bowtie C}$ and thus $z\not\ll \setof{y|y\bowtie C}$.
+  But if $z\in C$, then $z\not\bowtie C$, hence $z\notin \setof{y|y\bowtie C}$.
 
   Finally, suppose given a locally decomposable $\ll$; we must show that $x\ll A$ if and only if
   \[ \exists B, (x\ll \cpl{B} \land \forall y, (y\in A \lor y\in B)) \]
   This statement clearly implies $\cpl{B}\subseteq A$, hence $x\ll A$ by isotony.
-  Conversely, if $x\ll A$ then we have a $C$ with $x\ll C$ and $\forall y, (y\ll A \lor y\not\ll C)$, since $\ll$ is locally decomposable.
-  Let $B = \cpl{\int(C)}$; then $x\ll \int(C)$ by transitivity, so $x\ll \cpl{B} = \cpl{\cpl{\int(C)}}$ by isotony.
-  And any $y$ satisfies either $y\ll A$ (hence $y\in A$) or $y\not\ll C$ (hence $y\in B$).
+  Conversely, if $x\ll A$ then we have a $C$ with $x\ll C$ and $\forall y, (y\ll A \lor y\notin C)$, since $\ll$ is locally decomposable.
+  Let $B = \cpl{C}$; then $x\ll \cpl{B} = \cpl{\cpl{C}}$ by isotony,
+  and any $y$ satisfies either $y\ll A$ (hence $y\in A$) or $y\notin C$ (hence $y\in B$).
 \end{proof}
 
 Local decomposability is classically trivial (take $B=\setof{y|y\bowtie A}$ for $\bowtie$, or $B=A$ for $\ll$).
@@ -504,7 +504,7 @@ Constructively, it is an extra condition, but is not too strong; it is satisfied
   Let $d'$ be as in prometric transitivity for $d$, and let $B = \setof{y|d'(x,y)<\hfep}$; then $x\ll B$ is exhibited by $d',\hfep$.
   Now for any $y$, we have either $d'(x,y)<\frac{2\ep}{3}$ or $d'(x,y)>\hfep$.
   In the former case $y\ll A$ is exhibited by $d'$ and $\frac{\ep}{3}$, since if $d'(y,z)<\frac{\ep}{3}$ then $d(x,z)<\ep$ so $z\in A$.
-  And in the latter case $y\notin B$, so $y\not\ll B$.
+  And in the latter case $y\notin B$ by definition.
 
   Finally, let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a function.
   Suppose first that $f$ is prometrically continuous, and let $f(x)\ll A$, so that we have $d_Y,\ep$ with $d_Y(f(x),y)< \ep \implies y\in A$ for any $y\in Y$.
