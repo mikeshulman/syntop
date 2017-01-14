@@ -590,19 +590,106 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   Obvious.
 \end{proof}
 
-Regularity (any symmetric prometric space) and complete regularity (any symmetric gauge space)
+The other pair of separation axioms we will be interested in are regularity and complete regularity.
+
+\begin{defn}
+  Let $X$ be a topological neighborhood space.
+  \begin{enumerate}
+  \item $X$ is \textbf{regular} if whenever $x\ll A$, there are a $B$ and $C$ such that $x\ll B$, $B\cap C = \emptyset$, and $\forall y, (y\ll A \lor y\ll C)$.
+  \item $X$ is \textbf{completely regular} if whenever $x\ll A$, there is a continuous function $f:X\to \R$ such that $f(x)=0$ and $\forall y, (f(y)<1 \implies y\in A)$.
+  \end{enumerate}
+\end{defn}
+
+\begin{lem}\label{thm:creg-reg}
+  A completely regular space is regular.
+\end{lem}
+\begin{proof}
+  Given $x\ll A$, find $f$ as in complete regularity, and let $B = \setof{y|f(y)<\frac12}$ and $C = \setof{y|f(y)>\frac12}$.
+  Then $x\ll B$ by continuity of $f$ and the assumption $f(x)=0$, and clearly $B\cap C = \emptyset$.
+  For any $y$, we have either $f(y)>\frac12$ or $f(y)<1$.
+  In the former case, we have $y \ll C$ by continuity.
+  In the latter case, we have $y \ll \setof{z|f(z)<1}$ by continuity, hence $y\ll A$ by isotony and the assumption on $f$.
+\end{proof}
+
+\begin{thm}
+  A regular space is both locally decomposable and strongly $R_0$.
+\end{thm}
+\begin{proof}
+  Local decomposability is clear since $B\cap C=\emptyset$ means that $y\ll C \implies y\notin B$.
+  For strong $R_0$, suppose $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$, i.e.\ $x\ll \cpl{\singleton{y}}$.
+  By regularity we have $B,C$ with $x\ll B$, $B\cap C = \emptyset$, and $\forall z, (z\ll \cpl{\singleton{y}} \lor z\ll C)$.
+  Since $y\not\ll \cpl{\singleton{y}}$, we have $y\ll C$; but $x\notin C$ so $C\subseteq \cpl{\singleton{x}}$.
+  Thus $y\ll\cpl{\singleton{x}}$ by isotony, so $y\oapt x$.
+\end{proof}
+
+\begin{thm}\label{thm:sympmet-reg}
+  If $X$ is a symmetric prometric space, then its underlying topology is regular.
+\end{thm}
+\begin{proof}
+  Given $x\ll A$, we have $d_1,\ep$ such that $\forall y, (d_1(x,y)<\ep \implies y\in A)$.
+  Let $d_2$ be as in prometric transitivity for $d_1$, and define $B = \setof{y|d_2(x,y)<\hfep}$ and $C = \setof{y|d_2(x,y)>\hfep}$.
+  Then clearly $x\ll B$ and $B\cap C = \emptyset$.
+
+  Now for any $y$, we have either $d_2(x,y)<\frac{2\ep}3$ or $d_2(x,y)>\hfep$.
+  First suppose $d_2(x,y)<\frac{2\ep}3$; we claim $y\ll A$.
+  Suppose $z$ is such that $d_2(y,z)<\frac{\ep}{3}$; then $d_1(x,z) \le d_2(x,y)+d_2(y,z) < \frac{2\ep}{3} + \frac{\ep}{3} = \ep$.
+  Hence, by assumption, $z\in A$.
+  Thus $\forall z, (d_2(y,z)<\frac{\ep}{3} \implies z\in A)$, so $y\ll A$.
+
+  Now suppose $d_2(x,y)>\hfep$; we claim $y\ll C$.
+  Let $0<\ep' < d_2(x,y)-\hfep$, let $d_3$ be as in prometric transitivity for $d_2$, and let $d_4$ be as in prometric symmetry for $d_3$.
+  Suppose $z$ is such that $d_4(y,z)<\ep'$; then $d_3(z,y)<\ep'$.
+  Moreover, $d_2(x,y) \le d_3(x,z) + d_3(z,y) < d_3(x,z) + \ep'$, so $d_3(x,z) > d_2(x,y) - \ep' > \hfep$.
+  Thus $z\in C$.
+  Therefore $\forall z, (d_4(y,z)<\ep' \implies z\in C)$, so $y\ll C$.
+\end{proof}
+
+Note the similarity between the proofs of \cref{thm:creg-reg} and \cref{thm:sympmet-reg}: in the latter we use a distance whereas in the former we use an unknown continuous function.
+This suggests that prometric spaces should in fact be completely regular with distances playing the role of the separating functions; but only in the gauge case can we show that distances are continuous.
+
+\begin{thm}\label{thm:symgauge-creg}
+  If $X$ is a (symmetric) gauge space, then its underlying topology is completely regular.
+\end{thm}
+\begin{proof}
+  Given $x\ll A$, we have a gauging distance $d$ and an $\eta>0$ such that $\forall y, (d(x,y)<\eta \implies y\in A)$.
+  Let $f(y) = \frac1{\eta} d(x,y)$; it clearly suffices to show that $f$ is continuous.
+  In fact we will show that $f$ is uniformly continuous.
+  Thus, suppose given $\ep$; we must find a gauging distance $d'$ and a $\de>0$ such that for any $y,z\in X$, if $d'(y,z)<\de$ then $|f(y)-f(z)|<\ep$.
+  Let $d'$ be a gauging distance such that $d(u,v)\le d'(u,v)$ and also $d(v,u) \le d'(u,v)$ for all $u,v\in X$, which exists by symmetry and binary filtration, and let $\de = \eta\ep$.
+  Suppose $d'(y,z)< \de= \eta\ep$; then by the triangle inequality we have
+  \begin{gather*}
+    d(x,z) \le d(x,y)+d(y,z) < d(x,y) + d'(y,z) < d(x,y)+\eta\ep\\
+    d(x,y) \le d(x,z)+d(z,y) < d(x,z) + d'(y,z) < d(x,z)+\eta\ep
+  \end{gather*}
+  Thus
+  \[ |f(y)-f(z)| = |\textstyle\frac1{\eta}d(x,y) - \frac1{\eta}d(x,z)| < \ep \]
+  as desired.
+\end{proof}
+
+In classical mathematics, prometric spaces are also completely regular (with a less direct proof), since they are uniformizable (see \cref{sec:uniformity}).
+But in the absence of excluded middle and countable choice, this seems no longer true.
+
+Classically, complete regularity also completely determines the gauge spaces: every completely regular space can be given by a gauge.
+\fxnote{Is that also true constructively?}
+
+\cref{thm:sympmet-reg} and \cref{thm:symgauge-creg} do depend crucially on symmetry.
+Classically, \emph{any} topological space can be given by a quasi-gauge (although constructively, even a prometric space satisfies the nontrivial condition of local decomposability).
 
 
-\section{Filters of point-point relations: uniformity}
+\section{Families of point-point relations: uniformity}
 \label{sec:uniformity}
 
 
-TODO: Upper prometric spaces are equivalent to uniform spaces; lower prometric spaces are equivalent to uniform apartness spaces.
+TODO: Upper prometric spaces are equivalent to quasi-uniform spaces; lower prometric spaces are equivalent to quasi-uniform apartness spaces.
 
 
-\section{Approach spaces and filters of point-set relations}
+\section{Families of point-set relations: approach}
 \label{sec:approach}
 
+Approach spaces have a distance between points and sets, definable from a metric space by infima.
+Constructively this produces only an upper-real-valued distance, unless all subsets are located.
+Presumably there are ``pro-approach spaces'' that arise from prometric spaces, or at least from gauge spaces.
+Upper pro-approach spaces also give rise to syntopogenous spaces, but not decomposable ones.
 
 
 \section{Set-set relations: proximity}
@@ -629,11 +716,6 @@ Classically, the poset $\Rp$ is a complete lattice, and thus every subset is loc
 This is one good reason for allowing infinite distances.)
 However, constructively there are ``wild'' subsets such as $\setof{x\in X | P}$, for some undecidable proposition $P$, that cannot be shown to be located in general.
 \fxnote{Mention some theorems about located subsets.}
-
-Note: approach spaces have a distance between points and sets, definable from a metric space by infima.
-Constructively this produces only an upper-real-valued distance, unless all subsets are located.
-Presumably there are ``pro-approach spaces'' that arise from prometric spaces, or at least from gauge spaces.
-Upper pro-approach spaces also give rise to syntopogenous spaces, but not decomposable ones.
 
 
 \bibliographystyle{alpha}
