@@ -560,6 +560,8 @@ The first two are naturally phrased using the fact that point-set relations give
   \end{enumerate}
 \end{defn}
 
+Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conversely $\apart$-$\mathbf{T_1}$ for some tight $\apart$ implies $T_1$.
+
 \begin{thm}
   If $X$ is a locally decomposable topological space, then for any $x,y\in X$ we have
   \[ (x\leapx y) \iff \neg(x\oapt y) \]
@@ -570,7 +572,11 @@ The first two are naturally phrased using the fact that point-set relations give
   The latter means by definition that $x\ll \cpl{\singleton{y}}$, so by assumption we have $y\ll \cpl{\singleton{y}}$, a contradiction since $y\notin \cpl{\singleton{y}}$.
 
   On the other hand, suppose $\neg(x\oapt y)$, and let $x\ll A$; we will show $y\ll A$.
-  By local decomposability we have a $B$ with \fxerror{finish}
+  By local decomposability we have a $B$ with $x\ll B$ and $\forall z, (z\ll A \lor z\notin B)$.
+  Thus, to show $y\ll A$ it suffices to show that $y\notin B$ leads to a contradiction.
+  But if $y\notin B$ then $B\subseteq \cpl{\singleton{y}}$, so $x\ll \cpl{\singleton{y}}$ by isotony and thus $x\bowtie \singleton{y}$, contradicting $\neg(x\oapt y)$.
+
+  The remaining statements are obvious.
 \end{proof}
 
 \begin{thm}
@@ -581,7 +587,7 @@ The first two are naturally phrased using the fact that point-set relations give
   \end{enumerate}
 \end{thm}
 \begin{proof}
-  \fxerror{finish}
+  Obvious.
 \end{proof}
 
 Regularity (any symmetric prometric space) and complete regularity (any symmetric gauge space)
