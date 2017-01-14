@@ -32,6 +32,7 @@
 
 Arguably, the goal of general topology is to describe ``spaces'' that are not metrizable but share many attributes of metric spaces.
 Thus, it is worth recalling the basic definitions and properties of metric spaces in a constructive context.
+
 We write $\Re$ for the set of extended Dedekind real numbers; these are pairs $(L,U)$ of sets of rational numbers such that:
 \begin{enumerate}
 \item if $x\in L$ and $y\in U$ then $x<y$,
@@ -69,7 +70,7 @@ We remind the reader that constructively, the real numbers admit both a strict o
 Most of the above terminology is so well-established that we have not attempted to depart from it, but despite their derogatory-sounding name it is really the extended quasi-pseudo-metric spaces that are the fundamental notion.
 The additional requirements imposed on a pseudo-metric or metric space are really \emph{separation axioms}, and experience in general topology has shown that a better category is obtained by only imposing separation axioms when necessary rather than including them in definitions.
 And allowing infinite distances is arguably of little import topologically.
-Moreover, Lawvere~\cite{lawvere:metric-spaces} exhibited extended quasi-pseudo-metric spaces as categories enriched over $(\Rp,\ge,+)$, placing them in a wider context.
+Moreover, Lawvere~\cite{lawvere:metric-spaces} exhibited extended quasi-pseudo-metric spaces as categories enriched over $(\Rp,\ge,+)$, placing them in a wider context.\fxnote{Should we mention the enriched-multicategory approach to other topological structures?}
 
 In fact, most topological constructions on metric spaces can easily be generalized to the following structures.
 
@@ -86,11 +87,11 @@ In fact, most topological constructions on metric spaces can easily be generaliz
 \end{defn}
 
 In other words, a gauge is a filterbase in the poset of (extended quasi-)pseudo-metrics.
-Note that the qualifiers ``extended'' and ``quasi-'' carry over from the metrics to the gauge, but all the metrics in a gauge space are automatically assumed to be pseudo; separatedness is named as an additional property.
+Note that the qualifiers ``extended'' and ``quasi-'' carry over from the metrics to the gauge, but all the metrics in a gauge space are automatically assumed to be pseudo; separatedness is named as an additional property that involves all the gauging distances at once.
 
 Of course, any (extended quasi-)pseudo-metric space defines an (extended quasi-)gauge space with exactly one gauging distance.
 The essential difference between gauge spaces and metric spaces is that gauge spaces need not be ``countable'' in any of the senses that metric spaces must.
-For instance, any family of gauge spaces $\setof{X_k}_{k\in K}$ has a product $\prod_k X_k$ with gauging distances of the form $d(x,y) = \max(d_1(\pi_{k_1}(x),\pi_{k_1}(y)),\dots,d_n(\pi_{k_n}(x),\pi_{k_n}(y)))$ where each $d_i$ is a gauging distance on $X_{k_i}$.
+For instance, any family of gauge spaces $\{X_k\}_{k\in K}$ has a product $\prod_k X_k$ with gauging distances of the form $d(x,y) = \max(d_1(\pi_{k_1}(x),\pi_{k_1}(y)),\dots,d_n(\pi_{k_n}(x),\pi_{k_n}(y)))$ where each $d_i$ is a gauging distance on $X_{k_i}$.
 An analogous construction for metric spaces only works if $K$ is finite (a slightly subtler one works if it is countable).
 
 Yet more general than gauge spaces are prometric spaces~\cite{cht:one-setting}:
@@ -105,7 +106,7 @@ Yet more general than gauge spaces are prometric spaces~\cite{cht:one-setting}:
   \end{enumerate}
   A prometric space is \textbf{symmetric} if
   \begin{enumerate}[resume]
-  \item for any distance $d_1$ there is a distance $d_2$ such that $d_1(x,y)\le d_2(y,x)$ for all $x,y\in X$ (symmetry).
+  \item for any distance $d_1$ there is a distance $d_2$ such that $d_1(x,y)\le d_2(y,x)$ for all $x,y\in X$.
   \end{enumerate}
   It is \textbf{separated} if
   \begin{enumerate}[resume]
@@ -115,14 +116,14 @@ Yet more general than gauge spaces are prometric spaces~\cite{cht:one-setting}:
 
 Since the terminology for prometric spaces is not well-established, we follow~\cite{cht:one-setting} in taking the ``extended quasi'' case to be the default, with symmetry stated explicitly whenever assumed.
 Obviously any extended quasi-gauge is also a prometric.
-We do not know any important examples of the extra generality afforded by prometric spaces, but they seem a natural level of generality; everything we have to say about metric spaces or gauge spaces in this paper applies just as well to prometric ones.
+We do not know any important examples of the extra generality afforded by prometric spaces, but they seem a natural level of generality; almost everything we have to say about metric spaces or gauge spaces in this paper applies just as well to prometric ones.
 
 On the other hand, in constructive mathematics a very different (and much more general) notion is obtained by allowing distances to take values in the (nonnegative extended) \emph{upper} real numbers (sets $U$ of rational numbers satisfying the single axiom ``$y\in U$ if and only if there is an $x\in U$ with $x<y$'', plus $0\notin U$ for nonnegativity).
 In this case we will speak of an \textbf{upper prometric space}.
 %If necessary, we distinguish ordinary real numbers from upper ones by calling them \textbf{located}, and ordinary prometric spaces from upper ones by calling them \textbf{decomposable}.
 
 The main difference is that unlike located real numbers, upper real numbers constructively admit arbitrary infima.
-Thus, for instance, any set $X$ admits a \emph{discrete} upper prometric with one distance defined by $d(x,y) = \inf \setof{ t | t=0 \land x=y }$, so that $d(x,x)=0$ but $d(x,y)=+\infty$ if $x\neq y$.
+Thus, for instance, any set $X$ admits a \emph{discrete} upper prometric with one distance defined by $d(x,y) = \inf \setof{ 0 | x=y }$, so that $d(x,x)=0$ but $d(x,y)=+\infty$ if $x\neq y$.
 This distance takes real values if and only if $X$ has decidable equality, since if $d(x,y)$ were real then it would be either $<2$ (in which case $x=y$) or $>1$ (in which case $x\neq y$).
 As we will see, locatedness of distances is crucial for the special behavior of (pro)metric spaces among arbitrary spaces in constructive mathematics.
 We will return to upper prometric spaces briefly in \cref{sec:uniformity}.
@@ -155,23 +156,31 @@ The locatedness of distances enables us to characterize continuity in a converse
 \end{proof}
 
 \begin{lem}\label{thm:unif-cocontinuous}
-  For prometric spaces $X$ and $Y$, a function $f:X\to Y$ is uniformly continuous if and only if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.\qed
+  For prometric spaces $X$ and $Y$, a function $f:X\to Y$ is uniformly continuous if and only if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
 \end{lem}
+\begin{proof}
+  Entirely analogous.
+\end{proof}
 
 Among the notions that are invariants of continuity or uniform continuity are convergence and completeness.
 When there is only one prometric space $X$, we assume that the letter $d$ ranges over distances on $X$.
 
 \begin{itemize}
 \item $X$ is \textbf{totally bounded} if for all $d$ and $\ep>0$ there is a finite set $F\subseteq X$ such that for all $y\in X$ there is an $x\in F$ such that $d(x,y)<\ep$.
-\item A sequence $\setof{x_n}$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $N$ such that for any $n$, if $n>N$ then $d(x,x_n)<\ep$.
+\item A sequence $\{x_n\}$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $N$ such that for any $n$, if $n>N$ then $d(x,x_n)<\ep$.
 \item More generally, a filter $\F$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $y\in A$ we have $d(x,y)<\ep$.
-\item A sequence $\setof{x_n}$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $N$ such that for any $n,m$, if $n,m>N$ then $d(x_n,x_m)<\ep$.
+\item A sequence $\{x_n\}$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $N$ such that for any $n,m$, if $n,m>N$ then $d(x_n,x_m)<\ep$.
 \item A filter $\F$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $x,y\in A$ we have $d(x,y)<\ep$.
 \item $X$ is \textbf{complete} if every Cauchy filter converges to some point.
 \end{itemize}
 
-For metric spaces, it suffices to consider convergent and Cauchy \emph{sequences}, but in the gauge and prometric cases we must deal with filters (or nets).
-Note that the above definitions of Cauchy filter and complete space are only really sensible in the symmetric case; we will return to this later.\fxnote{Do that}
+For metric spaces in classical mathematics, it suffices to consider convergent and Cauchy \emph{sequences}.
+However, in the gauge and prometric cases we must deal with filters (or nets); and constructively (specifically, in the absence of both excluded middle and countable choice) this is true even for metric spaces.
+For instance, the completion of the metric space $\mathbb{Q}$ under limits of Cauchy sequences (the ``Cauchy real numbers'') is potentially much smaller than its full completion under limits of Cauchy filters (the Dedekind real numbers $\R$).
+In fact, there may not even be ``enough'' Cauchy filters, so that the completion is properly a non-spatial locale; we will return to this in \cref{sec:completion}.
+
+Note also that the above definitions of Cauchy filter and complete space are only really sensible in the symmetric case.
+We will also return to this later.\fxnote{Do that}
 
 In classical mathematics, a metric space is \emph{compact} if and only if it is complete and totally bounded.
 Constructively, this is not so; thus one generally either uses ``complete and totally bounded'' as a replacement for ``compact'', or passes to locales instead of spaces (see \cref{sec:locales}).
@@ -206,7 +215,7 @@ As always, $d$ will range over distances in a prometric space $X$.
   Reflexivity and transitivity of $\leapx$ follow from reflexivity and transitivity (i.e.\ the triangle inequality) of a prometric, and likewise for symmetry.
 \end{proof}
 
-As we will see later, $\leapx$ is an instance of the \emph{specialization order} underlying a topology.
+Of course, $\leapx$ is an instance of the \emph{specialization order} underlying a topology; we will return to this in \cref{sec:point-point}.
 
 \begin{thm}
   For any prometric space $X$, the relation $\oapt$ is an \emph{irreflexive comparison}, i.e.\ it satisfies:
@@ -266,7 +275,7 @@ The crucial step that brings us into the world of general topology is to conside
 There are three fundamental relations between a point and a set that can be defined in a prometric space $X$ (with $d$ ranging over distances and $\ep$ over positive reals, as always):
 
 \begin{defn}\label{defn:toprels}
-  Let $x\in X$ and $A\subseteq X$.
+  Let $X$ be a prometric space, $x\in X$, and $A\subseteq X$.
   \begin{enumerate}
   \item $x\ll A$ if $\exists d, \exists \ep, \forall y, (d(x,y)<\ep \implies y\in A)$ ($A$ is a \textbf{neighborhood} of $x$).
   \item $x\bowtie A$ if $\exists d, \exists \ep, \forall y, (y\in A \implies d(x,y)>\ep)$ ($x$ is \textbf{apart} from $A$).
@@ -316,14 +325,14 @@ We can now axiomatize the basic properties of these relations.
 A relation between points and subsets can equivalently be defined in terms of an operation taking each subset to the subset of points related to it.
 For instance, in a topological neighborhood space, the \textbf{interior} of a set $A$ is
 \[ \int(A) = \setof{ x | x\ll A } \]
-The axioms of $\ll$ say exactly that $\int$ is a left-exact monad on the powerset of $X$.
+The axioms of $\ll$ say exactly that $\int(-)$ is a left-exact monad on the powerset of $X$.
 Hence it is determined by its fixed points, which are called \textbf{open sets}, and are closed under arbitrary unions and finite intersections.
 This is, of course, the usual definition of a topological space.
 We will stick to working directly with $\ll$, however, since it generalizes better.
 
-Similarly, in a topological or Moore closure space, the \textbf{closure} of a set $A$ is
+Similarly, in a Moore closure space, the \textbf{closure} of a set $A$ is
 \[ \cl(A) = \setof{x | x \approx A } \]
-The axioms of $\approx$ say exactly that $\cl$ is a comonad on the powerset of $X$, which is right-exact iff $X$ is topological.
+The axioms of $\approx$ say exactly that $\cl(-)$ is a comonad on the powerset of $X$, which is right-exact exactly when $X$ is topological.
 Hence it is determined by its fixed points, which are called \textbf{closed sets}, and are closed under arbitrary intersections (and finite unions, if $X$ is topological).
 
 Finally, in a topological apartness space, the \textbf{exterior} of a set $A$ is
@@ -518,8 +527,9 @@ Constructively, it is an extra condition, but is not too strong; it is satisfied
 Henceforth we will simply speak of a \textbf{locally decomposable topological space}, which comes with both a $\ll$ and a $\bowtie$ that are interdefinable.
 Such spaces thus fully capture the topological structure of prometric spaces, where ``topological structure'' is defined by the notion of continuous function.
 
-Of course, even topologically prometric spaces are very special among the topological spaces, and much of their specialness is captured by \emph{separation axioms}.
-Local decomposability itself is naturally regarded as a separation axiom, albeit one that is only nontrivial constructively.
+Of course, prometric spaces are still very special among the locally decomposable topological spaces, and much of their specialness is captured by additional \emph{separation axioms}.
+(Local decomposability itself is also naturally regarded as a separation axiom, albeit one that is only nontrivial constructively.
+This will be clearer in later sections, when its close relationship with regularity becomes evident.)
 
 We will not exhaustively survey separation axioms, but there are a few others worth mentioning.
 The first two are naturally phrased using the fact that point-set relations give rise to point-point relations.
@@ -527,7 +537,7 @@ The first two are naturally phrased using the fact that point-set relations give
 \begin{thm}\label{thm:top-ord}\ 
   \begin{enumerate}
   \item If $X$ is a topological neighborhood space, define $x\leapx y$ to mean that $\forall A, (x\ll A \to y\ll A)$.
-    Then $\leapx$ is a preorder.
+    Then $\leapx$ is a preorder, called the \textbf{specialization order} of $X$.
   \item If $X$ is a topological apartness space, define $x\oapt y$ to mean $x \bowtie \singleton{y}$.
     Then $\oapt$ is irreflexive, and if $X$ is locally decomposable then it is a comparison.
   \end{enumerate}
@@ -539,11 +549,17 @@ The first two are naturally phrased using the fact that point-set relations give
   Let $d'$ be as in prometric transitivity for $d$; then $d'(x,y)=0$, so if $d'(y,z)<\ep$ we have $d(x,z)<\ep$, hence $z\in A$.
   Thus $d',\ep$ exhibit $y\ll A$.
 
+  Conversely, if $\forall A, (x\ll A \implies y\ll A)$, then for any $d,\ep$ let $A = \setof{z|d(x,z)<\ep}$.
+  Then $x\ll A$, so $y\ll A$, and in particular $y\in A$, so $d(x,y)<\ep$.
+  Since this is true for all $\ep$, we have $d(x,y)=0$ for all $d$.
+
   In the apartness case, irreflexivity is obvious.
   For the comparison axiom, we note first that local decomposability implies the following property that we call \textbf{weak local decomposability}: if $x\bowtie A$, then $\forall y, (x\bowtie \singleton{y} \lor y\bowtie A)$.
-  This follows from isotony: if $x\bowtie B$ and $y\in B$, then $x\bowtie \singleton{y}$.
+  For if $x\bowtie B$ and $y\in B$ as in local decomposability, then $x\bowtie \singleton{y}$.
   Moreover, weak local decomposability implies that $\oapt$ is a comparison, by taking $A = \singleton{y}$.
+
   Finally, if $X$ is a prometric space and we have a $d$ with $d(x,y)>0$, then taking $\ep=\frac12 d(x,y)$ we find $x\bowtie \singleton{y}$.
+  Conversely, if $x\bowtie \singleton{y}$, then we have $d,\ep$ with $\forall z, (z\in \singleton{y} \implies d(x,z)>\ep)$, which is to say $d(x,y)>\ep$, hence $d(x,y)>0$.
 \end{proof}
 
 \begin{defn}
@@ -560,7 +576,7 @@ The first two are naturally phrased using the fact that point-set relations give
   \end{enumerate}
 \end{defn}
 
-Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conversely $\apart$-$\mathbf{T_1}$ for some tight $\apart$ implies $T_1$.
+Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conversely $\apart$-$T_1$ for any tight $\apart$ implies ordinary $T_1$.
 
 \begin{thm}
   If $X$ is a locally decomposable topological space, then for any $x,y\in X$ we have
@@ -593,19 +609,21 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
 \begin{rmk}
   Our definition of topological apartness space is inspired by the point-set apartness spaces of Bridges et.~al.\fxerror{cite}, but their definition differs from ours in a number of ways.
   Firstly, they include $\apart$-$T_1$ (though without the assumption that $\apart$ is tight) and weak local decomposability (see the proof of \cref{thm:top-ord}) as part of their definition of ``point-set apartness space''.
-  We follow instead the lesson learned by classical topologists that separation axioms should only be assumed when necessary, not included in the definition of space.
+  We follow instead the lesson of classical topology that separation axioms should only be assumed when necessary, not included in the definition of space.
   
   Secondly, they assume $\exists x \exists y,(x\apart y)$.
   We follow instead the lesson of category theory that trivial examples should not be arbitrarily excluded, since they are necessary to have a complete and cocomplete category.
 
   Thirdly, they omit nullary additivity entirely.
-  This is probably an oversight; it follows from isotony \emph{if} $\forall x \exists A(x\bowtie A)$.
+  This is probably an oversight; it follows from isotony \emph{if} we have $\forall x \exists A, x\bowtie A$.
 
   Finally, they weaken transitivity to ``if $x\bowtie A$ and $\forall y, (y\bowtie A \implies \forall z\in B, y\apart z)$, then $x\bowtie B$''.
-  Perhaps this is due to a desire to use $\apart$ instead of $\neq$ whenever possible (although they don't similarly modify reflexivity to $x\bowtie A \implies \forall y\in A, x\apart y$), but it seems rather \emph{ad hoc}, and also unnecessary since any locally decomposable space satisfies the stronger version.
+  Perhaps this is due to a desire to use $\apart$ instead of $\neq$ whenever possible (although they don't similarly modify reflexivity to $x\bowtie A \implies \forall y\in A, x\apart y$, which together with $\apart$-$T_1$ would imply that $\oapt$ coincides with $\apart$).
+  However, it seems rather \emph{ad hoc}, and also unnecessary since any locally decomposable space satisfies the stronger version.
 \end{rmk}
 
 The other pair of separation axioms we will be interested in are regularity and complete regularity.
+We define them only for neighborhood spaces, since as we will see below they both imply local decomposability.
 
 \begin{defn}
   Let $X$ be a topological neighborhood space.
