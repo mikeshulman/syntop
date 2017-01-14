@@ -498,7 +498,7 @@ The assumption $\forall y, (y\in B \lor y\bowtie A)$ gives $\setof{y|y\not\bowti
 Local decomposability is classically trivial (take $B=\setof{y|y\bowtie A}$ for $\bowtie$, or $B=A$ for $\ll$).
 Constructively, it is an extra condition, but is not too strong; it is satisfied by any prometric space.
 
-\begin{thm}
+\begin{thm}\label{thm:promet-top}
   The $\bowtie$ and $\ll$ underlying any prometric space are locally decomposable, and identified with each other by the equivalence of \cref{thm:top-locdec-equiv}.
   Moreover, this defines a fully faithful functor from prometric spaces and continuous functions to the category of \cref{thm:top-locdec-equiv}.
 \end{thm}
@@ -712,8 +712,13 @@ Classically, \emph{any} topological space can be given by a quasi-gauge (althoug
 \section{Families of point-point relations: uniformity}
 \label{sec:uniformity}
 
+\cref{thm:promet-top} shows that topological neighborhood or apartness spaces are sufficient to capture the topological information in a prometric space.
+However, there is also the stronger \emph{uniform} information, as defined by the category of uniformly continuous functions.
+The standard way to divorce uniformity from real numbers is to consider \emph{families} of point-point relations.
 
-TODO: Upper prometric spaces are equivalent to quasi-uniform spaces; lower prometric spaces are equivalent to quasi-uniform apartness spaces.
+
+
+% TODO: Upper prometric spaces are equivalent to quasi-uniform spaces; lower prometric spaces are equivalent to quasi-uniform apartness spaces.
 
 
 \section{Families of point-set relations: approach}
