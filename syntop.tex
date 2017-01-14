@@ -524,7 +524,7 @@ Local decomposability itself is naturally regarded as a separation axiom, albeit
 We will not exhaustively survey separation axioms, but there are a few others worth mentioning.
 The first two are naturally phrased using the fact that point-set relations give rise to point-point relations.
 
-\begin{thm}\ 
+\begin{thm}\label{thm:top-ord}\ 
   \begin{enumerate}
   \item If $X$ is a topological neighborhood space, define $x\leapx y$ to mean that $\forall A, (x\ll A \to y\ll A)$.
     Then $\leapx$ is a preorder.
@@ -589,6 +589,21 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
 \begin{proof}
   Obvious.
 \end{proof}
+
+\begin{rmk}
+  Our definition of topological apartness space is inspired by the point-set apartness spaces of Bridges et.~al.\fxerror{cite}, but their definition differs from ours in a number of ways.
+  Firstly, they include $\apart$-$T_1$ (though without the assumption that $\apart$ is tight) and weak local decomposability (see the proof of \cref{thm:top-ord}) as part of their definition of ``point-set apartness space''.
+  We follow instead the lesson learned by classical topologists that separation axioms should only be assumed when necessary, not included in the definition of space.
+  
+  Secondly, they assume $\exists x \exists y,(x\apart y)$.
+  We follow instead the lesson of category theory that trivial examples should not be arbitrarily excluded, since they are necessary to have a complete and cocomplete category.
+
+  Thirdly, they omit nullary additivity entirely.
+  This is probably an oversight; it follows from isotony \emph{if} $\forall x \exists A(x\bowtie A)$.
+
+  Finally, they weaken transitivity to ``if $x\bowtie A$ and $\forall y, (y\bowtie A \implies \forall z\in B, y\apart z)$, then $x\bowtie B$''.
+  Perhaps this is due to a desire to use $\apart$ instead of $\neq$ whenever possible (although they don't similarly modify reflexivity to $x\bowtie A \implies \forall y\in A, x\apart y$), but it seems rather \emph{ad hoc}, and also unnecessary since any locally decomposable space satisfies the stronger version.
+\end{rmk}
 
 The other pair of separation axioms we will be interested in are regularity and complete regularity.
 
