@@ -11,13 +11,16 @@
 \def\apart{\mathrel{\#}}
 \def\napprox{\not\approx}
 \def\nle{\not\le}
-\def\oapt{\mathrel{\!\not\,\not\ge}}
+\def\oapt{\mathrel{\!\not\,\not\lesssim}}
+\def\leapx{\lesssim}
 \def\int{\mathrm{int}}
 \def\ext{\mathrm{ext}}
 \def\cl{\mathrm{cl}}
 \def\cpl#1{\neg #1}
 \let\implies\Rightarrow
 \def\inv{^{-1}}
+\def\hfep{\frac{\ep}{2}}
+\def\singleton#1{\{#1\}}
 \begin{document}
 \maketitle
 
@@ -124,9 +127,12 @@ This distance takes real values if and only if $X$ has decidable equality, since
 As we will see, locatedness of distances is crucial for the special behavior of (pro)metric spaces among arbitrary spaces in constructive mathematics.
 We will return to upper prometric spaces briefly in \cref{sec:uniformity}.
 
-We now review some of the fundamental concepts from metric spaces that one intends to capture for more general spaces, simultaneously generalizing them to prometric ones.
-In the following, $X$ and $Y$ denote prometric spaces; $\ep$ and $\de$ are assumed to range over $\Rp$; and $d_X$ and $d_Y$ are assumed to range over distances on $X$ and $Y$ respectively.
-We begin with continuity of functions.
+A metric space, and even a prometric space, contains a lot of information.
+Some of that information is \emph{numerical}, since points are compared by real number distances.
+However, for some purposes we are only interested in ``topological'' or ``geometric'' features that are, for instance, invariant with respect to scaling of distances.
+Category-theoretically, this means we consider (pro)metric spaces as the objects of various different categories.
+The two primary types of morphism we will be interested in are the following.
+(Here $X$ and $Y$ denote prometric spaces; $\ep$ and $\de$ are assumed to range over $\Rp$; and $d_X$ and $d_Y$ are assumed to range over distances on $X$ and $Y$ respectively.)
 
 \begin{itemize}
 \item A function $f:X\to Y$ is \textbf{continuous} if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
@@ -144,17 +150,15 @@ The locatedness of distances enables us to characterize continuity in a converse
   If $f$ is continuous, then given $d_Y$ and $\ep$, let $d_X$ and $\de$ be as in the definition of continuity.
   Then if $d_Y(f(x),f(y)) > \ep$, we cannot have $d_X(x,y) < \de$, so we must have $d_X(x,y) > \frac{\de}{2}$.
 
-  Conversely, if the stated condition holds, then given $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\frac{\ep}{2} \implies d_X(x,y)>\de$.
-  Then if $d_X(x,y)<\de$, we cannot have $d_Y(f(x),f(y))>\frac{\ep}{2}$, so we must have $d_Y(f(x),f(y))<\ep$.
+  Conversely, if the stated condition holds, then given $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\hfep \implies d_X(x,y)>\de$.
+  Then if $d_X(x,y)<\de$, we cannot have $d_Y(f(x),f(y))>\hfep$, so we must have $d_Y(f(x),f(y))<\ep$.
 \end{proof}
-
-Similarly we have:
 
 \begin{lem}\label{thm:unif-cocontinuous}
   For prometric spaces $X$ and $Y$, a function $f:X\to Y$ is uniformly continuous if and only if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.\qed
 \end{lem}
 
-We continue with notions of convergence and completeness.
+Among the notions that are invariants of continuity or uniform continuity are convergence and completeness.
 When there is only one prometric space $X$, we assume that the letter $d$ ranges over distances on $X$.
 
 \begin{itemize}
@@ -186,23 +190,23 @@ In general the way we do this is by considering \emph{relations} between points 
 There are two important relations between points in a prometric space.
 As always, $d$ will range over distances in a prometric space $X$.
 
-\begin{defn}
+\begin{defn}\label{def:promet-ord}
   Let $x,y\in X$ be points of a prometric space.
   \begin{itemize}
-  \item We say $x\le y$ if $\forall d, d(y,x)=0$.\fxwarning{ordering convention?}
+  \item We say $x\leapx y$ if $\forall d, d(x,y)=0$.\fxwarning{ordering convention?}
   \item We say $x\oapt y$ if $\exists d, d(x,y)>0$.
   \end{itemize}
 \end{defn}
 
 \begin{thm}
-  For any prometric space $X$, the relation $\le$ is a preorder.
-  If $X$ is symmetric, then $\le$ is a symmetric relation, and hence an \textbf{equivalence relation} (which we will usually write as $\approx$).
+  For any prometric space $X$, the relation $\leapx$ is a preorder.
+  If $X$ is symmetric, then $\leapx$ is a symmetric relation, and hence an \textbf{equivalence relation} (which we will usually write as $\approx$).
 \end{thm}
 \begin{proof}
-  Reflexivity and transitivity of $\le$ follow from reflexivity and transitivity (i.e.\ the triangle inequality) of a prometric, and likewise for symmetry.
+  Reflexivity and transitivity of $\leapx$ follow from reflexivity and transitivity (i.e.\ the triangle inequality) of a prometric, and likewise for symmetry.
 \end{proof}
 
-As we will see later, $\le$ is an instance of the \emph{specialization order} underlying a topology.
+As we will see later, $\leapx$ is an instance of the \emph{specialization order} underlying a topology.
 
 \begin{thm}
   For any prometric space $X$, the relation $\oapt$ is an \emph{irreflexive comparison}, i.e.\ it satisfies:
@@ -221,17 +225,18 @@ As we will see later, $\le$ is an instance of the \emph{specialization order} un
 
 By analogy with later sections, we might also call a comparison a \textbf{locally decomposable} relation.
 
-Since $\neg(a<b)$ is equivalent to $b\le a$ for located real numbers, $x\le y$ in a prometric space is equivalent to $\neg(x\oapt y)$.
-However, $\oapt$ cannot constructively be expressed in terms of $\le$; to say $x\oapt y$ is stronger than $x\neq y$ or even $x\nle y$.
+Since $\neg(a<b)$ is equivalent to $b\le a$ for located real numbers, in a prometric space we have
+\[ (x\leapx y) \iff \neg(x\oapt y). \]
+However, $\oapt$ cannot constructively be expressed in terms of $\leapx$; to say $x\oapt y$ is stronger than $x\neq y$ or even $x\not\leapx y$.
 
 \begin{warn}
   Some constructive mathematicians write $\neq$ for an arbitrary apartness relation.
-  We will always reserve slashed symbols such as $\neq,\nle,\napprox,\notin$ for logical negations (i.e.\ $x\neq y$ means $\neg(x=y)$, $x\nle y$ means $\neg(x\le y)$, etc.), and use other symbols such as $\apart$ and $\oapt$ for stronger ``positive'' relations.
+  We will always reserve slashed symbols such as $\neq,\not\leapx,\napprox,\notin$ for logical negations (i.e.\ $x\neq y$ means $\neg(x=y)$, $x\not\leapx y$ means $\neg(x\leapx y)$, etc.), and use other symbols such as $\apart$ and $\oapt$ for stronger ``positive'' relations.
 \end{warn}
 
-If $X$ is separated, then $x\le y$ (and hence equivalently $\neg(x\oapt y)$) implies $x=y$.
-A relation $\oapt$ (such as an apartness relation) such that $\neg(x\oapt y)$ implies $x=y$ is sometimes called \textbf{tight} or \textbf{connected}.
-In particular, the equality relation of a separated prometric space is $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)$, hence $x\le y$ and thus $x=y$.
+If $X$ is separated, then $x\leapx y$ (and hence equivalently $\neg(x\oapt y)$) implies $x=y$.
+A relation $\oapt$ (such as an apartness relation) with the property that $\neg(x\oapt y)$ implies $x=y$ is sometimes called \textbf{tight} or \textbf{connected}.
+In particular, the equality relation of a separated prometric space is $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)$, hence $x\leapx y$ and thus $x=y$.
 
 Finally, we observe that the point-point relations underlying a prometric space vary appropriately with continuous functions, so that they really are a topological invariant.
 
@@ -239,13 +244,13 @@ Finally, we observe that the point-point relations underlying a prometric space 
   Let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a continuous function.
   Then:
   \begin{enumerate}
-  \item $f$ is a \textbf{monotone map} of preorders, i.e.\ if $x\le y$ then $f(x)\le f(y)$.
+  \item $f$ is a \textbf{monotone map} of preorders, i.e.\ if $x\leapx y$ then $f(x)\leapx f(y)$.
   \item $f$ is a \textbf{strongly extensional} map of comparisons, i.e.\ if $f(x)\oapt f(y)$ then $x\oapt y$.
   \end{enumerate}
 \end{thm}
 \begin{proof}
   For the first, given any $d_Y$ and $\ep>0$ we have a $d_X$ and $\de>0$ such that $d_X(x,y)<\de$ implies $d_Y(f(x),f(y))<\ep$.
-  But $d_X(x,y)<\de$ is always true if $x\le y$; hence so is $d_Y(f(x),f(y))<\ep$, and thus $f(x)\le f(y)$.
+  But $d_X(x,y)<\de$ is always true if $x\leapx y$; hence so is $d_Y(f(x),f(y))<\ep$, and thus $f(x)\leapx f(y)$.
 
   For the second, if $f(x)\oapt f(y)$ we have $d_Y(f(x),f(y))>0$ for some $d_Y$.
   Let $\ep = \frac12 \,d_Y(f(x),f(y))$; then by \cref{thm:cocontinuous} we have a $d_X$ and a $\de>0$ such that if $d_Y(f(x),f(y))>\ep$ (which is true) then $d_X(x,y)>\de$, hence $x\oapt y$.
@@ -292,7 +297,7 @@ We can now axiomatize the basic properties of these relations.
   \item If $x\bowtie A$ and $x\bowtie B$, then $x\bowtie A\cup B$ (binary additivity).
   \item If $x\bowtie A$, then $x\bowtie \setof{ y | y \not\bowtie A }$ (transitivity).
   \end{enumerate}
-  If $X$ and $Y$ are topological apartness space, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\bowtie A$ implies $x\bowtie f\inv(A)$.
+  If $X$ and $Y$ are topological apartness space, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\bowtie f(A)$ implies $x\bowtie A$.
 \end{defn}
 
 \begin{defn}
@@ -314,6 +319,7 @@ For instance, in a topological neighborhood space, the \textbf{interior} of a se
 The axioms of $\ll$ say exactly that $\int$ is a left-exact monad on the powerset of $X$.
 Hence it is determined by its fixed points, which are called \textbf{open sets}, and are closed under arbitrary unions and finite intersections.
 This is, of course, the usual definition of a topological space.
+We will stick to working directly with $\ll$, however, since it generalizes better.
 
 Similarly, in a topological or Moore closure space, the \textbf{closure} of a set $A$ is
 \[ \cl(A) = \setof{x | x \approx A } \]
@@ -338,9 +344,9 @@ It is less natural to rephrase the axioms of $\bowtie$ in terms of $\ext$, howev
   Constructively, however, it seems impossible to prove this axiom.
 
   For transitivity for $\ll$, if $x\ll A$ then we have a $d,\ep$ with $d(x,y)<\ep \implies y\in A$.
-  Let $d'$ be as in prometric transitivity for $d$; then if $d'(x,y)<\frac{\ep}{2}$ and $d'(y,z)<\frac{\ep}{2}$, we have $d(x,z) \le d'(x,y)+d'(y,z) <\ep$, so $z\in A$.
+  Let $d'$ be as in prometric transitivity for $d$; then if $d'(x,y)<\hfep$ and $d'(y,z)<\hfep$, we have $d(x,z) \le d'(x,y)+d'(y,z) <\ep$, so $z\in A$.
   Thus, $y\ll A$.
-  Therefore, for any $y$ we have $d'(x,y)<\frac{\ep}{2} \implies y\in \setof{ y | y\ll A }$, so $x\ll \setof{ y | y\ll A }$.
+  Therefore, for any $y$ we have $d'(x,y)<\hfep \implies y\in \setof{ y | y\ll A }$, so $x\ll \setof{ y | y\ll A }$.
   Transitivity for $\bowtie$ and $\approx$ is analogous.
 \end{proof}
 
@@ -354,7 +360,7 @@ In classical mathematics, all three notions of topological space are equivalent,
 \]
 Constructively, this is no longer so, but we can say the following:
 
-\begin{thm}\ 
+\begin{thm}\label{thm:toprels}\ 
   \begin{enumerate}
   \item If $X$ is a topological neighborhood space, define $x\approx A$ to mean
     \[\forall B, (x\ll B \implies A\cap B \text{ is inhabited})\]
@@ -366,11 +372,8 @@ Constructively, this is no longer so, but we can say the following:
     Its closed sets are called \textbf{strongly closed} in $X$ (they are the complements of the open sets).
   \item If $X$ is a topological neighborhood space, define $x\bowtie A$ to mean $x\ll \cpl{A}$.
     Then $X$ becomes a topological apartness space.\label{item:top-ll-bowtie}
-  \item If $X$ is a topological apartness space, define $x\ll A$ to mean
-    \[\exists B, (x\bowtie B \land \forall y, (y\bowtie B \implies y\in A).\]
-    Then $X$ becomes a topological neighborhood space.\label{item:top-bowtie-ll}
   \end{enumerate}
-  Moreover, all these constructions are functorial, and~\ref{item:top-ll-bowtie} and~\ref{item:top-bowtie-ll} describe topological apartness spaces as a (full) reflective subcategory of topological neighborhood spaces.
+  Moreover, all these constructions are functorial.
 \end{thm}
 \begin{proof}
   In all cases, all the axioms are easy except binary additivity and transitivity.
@@ -388,24 +391,198 @@ Constructively, this is no longer so, but we can say the following:
   For transitivity of~\ref{item:top-ll-bowtie}, suppose $x\bowtie A$, i.e.\ $x\ll \cpl{A}$; to show $x\bowtie \setof{y|\neg(y\bowtie A)}$ means to show $x\ll \setof{y|\neg\neg(y\bowtie A)} = \setof{y|\neg\neg(y\ll \cpl{A})}$.
   But $x\ll \setof{y|y\ll \cpl{A}}$ by transitivity for $\ll$, and $(y\ll \cpl{A})\implies\neg\neg(y\ll\cpl{A})$, so the result follows by isotony.
 
-  For transitivity of~\ref{item:top-bowtie-ll}, suppose $x\ll A$, witnessed by $B$ such that $x\bowtie B$ and $\forall y,(y\bowtie B \implies y\in A)$, i.e.\ $\setof{y|y\bowtie B} \subseteq A$.
-  By transitivity for $\bowtie$, we have $x\bowtie \setof{y|y\not\bowtie B}$, so to show $x\ll \setof{y|y\ll A}$ it suffices to show $z\bowtie \setof{y|y\not\bowtie B} \implies z\in \setof{y|y\ll A}$.
-  But if $z\bowtie \setof{y|y\not\bowtie B}$, then $z\bowtie B$ by isotony, and so $z\ll A$ by definition of $\ll$ and our assumption about $B$.
-
-  For functoriality, suppose first that $X$ and $Y$ are topological neighborhood spaces and $f:X\to Y$ is $\ll$-continuous.
+  For functoriality, suppose $X$ and $Y$ are topological neighborhood spaces and $f:X\to Y$ is $\ll$-continuous.
   If $x\approx A$ weakly, suppose given $B\subseteq Y$ with $f(x)\ll B$; then by $\ll$-continuity, we have $x\ll f\inv(B)$.
   Since $x\approx A$, we have $A\cap f\inv(B)$ inhabited, hence $f(A) \cap B$ inhabited.
   Thus, $f(x)\approx f(A)$.
   The proof for strong $\approx$ is essentially the same, and for $\bowtie$ it follows immediately from the fact that $f\inv(\cpl{A}) = \cpl{f\inv(A)}$.
-
-  Now suppose $X$ and $Y$ are topological apartness spaces and $f$ is $\bowtie$-continuous.
-  If $f(x)\ll A$ according to~\ref{item:top-bowtie-ll}, then there is a $B\subseteq Y$ with $f(x)\bowtie B$ and $\forall y, (y\bowtie B \implies y\in A)$.
-  By $\bowtie$-continuity, we have $x\bowtie f\inv(B)$, and for any $z\in X$ such that $z\bowtie f\inv(B)$, we \emph{want to have } $z\in f\inv(A)$, i.e.\ $f(z) \in A$, for which it suffices to show $f(z)\bowtie B$.\dots
 \end{proof}
 
-Local decomposability (any prometric space)
+Since topological closure spaces fail to include the most interesting examples constructively, while Moore closure spaces don't contain enough topological information, we will say no more about closure spaces.
+But topological neighborhood spaces and topological apartness spaces are both reasonable constructive notions.
 
-Functoriality for prometric spaces
+There is a certain sense in which topological apartness spaces can be regarded as a subclass of topological neighborhood spaces, namely:
+
+\begin{lem}\label{thm:top-bowtie-ll}
+  If $X$ is a topological apartness space and we define $x\ll A$ to mean
+  \begin{equation}
+    \exists B, (x\bowtie B \land \forall y, (y\bowtie B \implies y\in A)),\label{eq:top-bowtie-ll-1}
+  \end{equation}
+  then $X$ becomes a topological neighborhood space.
+  Moreover, we can reconstruct the original $\bowtie$ as in \cref{thm:toprels}\ref{item:top-ll-bowtie}.
+\end{lem}
+\begin{proof}
+  As usual, the interesting axiom is transitivity.
+  Thus, suppose $x\ll A$, witnessed by $B$ such that $x\bowtie B$ and $\forall y,(y\bowtie B \implies y\in A)$, i.e.\ $\setof{y|y\bowtie B} \subseteq A$.
+  By transitivity for $\bowtie$, we have $x\bowtie \setof{y|y\not\bowtie B}$, so to show $x\ll \setof{y|y\ll A}$ it suffices to show $z\bowtie \setof{y|y\not\bowtie B} \implies z\in \setof{y|y\ll A}$.
+  But if $z\bowtie \setof{y|y\not\bowtie B}$, then $z\bowtie B$ by isotony, and so $z\ll A$ by definition of $\ll$ and our assumption about $B$.
+  
+  For the second assertion, we have to show that $x\bowtie A$ is equivalent to
+  \[\exists B, (x\bowtie B \land \forall y, (y\bowtie B \implies y\notin A)).\]
+  This is certainly true if $x\bowtie A$ (take $B=A$).
+  Conversely, the above assumption implies $A \subseteq \setof{y|y\not\bowtie B}$, so we have $x\bowtie A$ by isotony and transitivity.
+\end{proof}
+
+However, the construction of \cref{thm:top-bowtie-ll} is apparently not functorial: a $\bowtie$-continuous map need not induce a $\ll$-continuous map.
+Thus, categorically it is at least dubious to regard topological apartness spaces as a subclass of topological neighborhood spaces.
+
+There is a way to define $\ll$ in terms of $\bowtie$ that is functorial: let $x\ll A$ mean
+\begin{equation}
+  \exists B, (x\bowtie B \land \forall y, (y\in A \lor y\in B)).\label{eq:top-bowtie-ll-2}
+\end{equation}
+For if $f:X\to Y$ is $\bowtie$-continuous, i.e.\ $f(x)\bowtie f(A)$ implies $x\bowtie A$, and if we suppose $f(x)\ll C$, then we have by definition $B\subseteq Y$ with $f(x)\bowtie B$ and $\forall y, (y\in C \lor y\in B)$.
+Since $f(f\inv(B))\subseteq B$, we have $f(x)\bowtie f(f\inv(B))$, so $x\bowtie f\inv(B)$.
+Moreover, for all $y\in X$ we have $f(y)\in C$ or $f(y)\in B$, hence $y\in f\inv(C)$ or $y\in f\inv(B)$.
+Thus, $f\inv(B)$ exhibits $x\ll f\inv(C)$, so $f$ is $\ll$-continuous.
+
+However, \eqref{eq:top-bowtie-ll-2} apparently fails to satisfy transitivity in general, so it does not define a topological neighborhood space.
+This suggests that a natural subclass of topological apartness spaces to compare with topological neighborhood spaces would be those for which these two definitions of $\ll$ coincide.\fxnote{Is there an adjunction or something else nicer?}
+A natural condition that ensures this is the following.
+
+\begin{defn}\ \fxnote{cite Bridges}
+  \begin{enumerate}
+  \item A topological apartness space $X$ is \textbf{locally decomposable} if whenever $x\bowtie A$, there is a subset $B$ such that $x\bowtie B$ and $\forall y, (y\in B \lor y\bowtie A)$.
+  \item A topological neighborhood space $X$ is \textbf{locally decomposable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll B$ and $\forall y, (y \ll A \lor y\not\ll B)$.\fxerror{Should be $x\notin B$; fix later}
+  \end{enumerate}
+\end{defn}
+
+Note that local decomposability (for both sorts of space) is actually a strengthening of transitivity.
+The assumption $\forall y, (y\in B \lor y\bowtie A)$ gives $\setof{y|y\not\bowtie A} \subseteq B$, while the assumption $\forall y, (y \ll A \lor y\not\ll B)$ gives $B\subseteq \setof{y|y\ll A}$, so in both cases transitivity follows from isotony.
+
+\begin{thm}\label{thm:top-locdec-equiv}
+  The categories of
+  \begin{enumerate}
+  \item locally decomposable topological neighborhood spaces and
+  \item locally decomposable topological apartness spaces
+  \end{enumerate}
+  are equivalent.
+\end{thm}
+\begin{proof}
+  By \ref{thm:toprels}\ref{item:top-ll-bowtie}, we have a functor from neighborhood spaces to apartness spaces.
+  We claim that local decomposability makes~\eqref{eq:top-bowtie-ll-1} and~\eqref{eq:top-bowtie-ll-2} coincide, giving a functor in the other direction.
+  Evidently~\eqref{eq:top-bowtie-ll-2} always implies~\eqref{eq:top-bowtie-ll-1}.
+  Conversely, suppose $x\ll A$ by~\eqref{eq:top-bowtie-ll-1}, so that $x\bowtie B$ and $\forall y, (y\bowtie B \implies y\in A)$.
+  By local decomposability we have a $C$ with $x\bowtie C$ and $\forall y, (y\in C \lor y\bowtie B)$; but then $\forall y, (y\in C \lor y\in A)$, giving~\eqref{eq:top-bowtie-ll-2}.
+
+  It remains to show that local decomposability is preserved in both directions, and that the round-trip composite is the identity on locally decomposable neighborhood spaces.
+  Suppose first that $\ll$ is locally decomposable and $x \bowtie A$, so that $x\ll \cpl{A}$; then we have a $B$ with $x\ll B$ and $\forall y, (y\ll \cpl{A} \lor y\not\ll B)$.
+  Let $C = \cpl{\int(B)}$; then $x\ll \int(B)$ by transitivity, so $x\ll \cpl{C}$ by isotony, i.e.\ $x\bowtie C$.
+  Moreover, any $y$ satisfies either $y\ll\cpl{A}$, i.e.\ $y\bowtie A$, or $y\not\ll B$, hence $y\notin \int(B)$, i.e.\ $y\in C$.
+  Thus, $\bowtie$ is locally decomposable.
+
+  On the other hand, suppose $\bowtie$ is locally decomposable and $x\ll A$, so that (by~\eqref{eq:top-bowtie-ll-2}) we have a $B$ with $x\bowtie B$ and $\forall y, (y\in A \lor y\in B)$.
+  Then by local decomposability for $\bowtie$ we have a $C$ with $x\bowtie C$ and $\forall y, (y\in C \lor y\bowtie B)$.
+  Using it again, we have a $D$ with $x\bowtie D$ and $\forall y, (y\in D \lor y\bowtie C)$.
+  Thus $D$ exhibits $x\ll \setof{y|y\bowtie C}$.
+  Let $z\in X$; it remains to show $z\ll A$ or $z\not\ll \setof{y|y\bowtie C}$.
+  We have either $z\in C$ or $z\bowtie B$, and if $z\bowtie B$ and hence $z\ll A$ (exhibited by $B$).
+  But if $z\in C$, then $z\not\bowtie C$, hence $z\notin \setof{y|y\bowtie C}$ and thus $z\not\ll \setof{y|y\bowtie C}$.
+
+  Finally, suppose given a locally decomposable $\ll$; we must show that $x\ll A$ if and only if
+  \[ \exists B, (x\ll \cpl{B} \land \forall y, (y\in A \lor y\in B)) \]
+  This statement clearly implies $\cpl{B}\subseteq A$, hence $x\ll A$ by isotony.
+  Conversely, if $x\ll A$ then we have a $C$ with $x\ll C$ and $\forall y, (y\ll A \lor y\not\ll C)$, since $\ll$ is locally decomposable.
+  Let $B = \cpl{\int(C)}$; then $x\ll \int(C)$ by transitivity, so $x\ll \cpl{B} = \cpl{\cpl{\int(C)}}$ by isotony.
+  And any $y$ satisfies either $y\ll A$ (hence $y\in A$) or $y\not\ll C$ (hence $y\in B$).
+\end{proof}
+
+Local decomposability is classically trivial (take $B=\setof{y|y\bowtie A}$ for $\bowtie$, or $B=A$ for $\ll$).
+Constructively, it is an extra condition, but is not too strong; it is satisfied by any prometric space.
+
+\begin{thm}
+  The $\bowtie$ and $\ll$ underlying any prometric space are locally decomposable, and identified with each other by the equivalence of \cref{thm:top-locdec-equiv}.
+  Moreover, this defines a fully faithful functor from prometric spaces and continuous functions to the category of \cref{thm:top-locdec-equiv}.
+\end{thm}
+\begin{proof}
+  Let $X$ be a prometric space; we first show that $x\bowtie A$ if and only if $x\ll \cpl{A}$ according to \cref{defn:toprels}, so that the two structures correspond under \cref{thm:top-locdec-equiv}.
+  If $x\bowtie A$, we have $d,\ep$ such that $y\in A \implies d(x,y)>\ep$ for any $y$.
+  By a contrapositive, it follows that $d(x,y)\le \ep \implies y\notin A$, giving $x\ll \cpl{A}$.
+  Conversely, if $x\ll\cpl{A}$, we have $d,\ep$ such that $d(x,y)< \ep \implies y\notin A$ for any $y$.
+  The contrapositive is now $\neg\neg(y\in A) \implies d(x,y)\ge \ep$, which implies $y\in A \implies d(x,y)> \hfep$, so $x\bowtie A$.
+
+  For local decomposability, let $x\ll A$ so we have $d,\ep$ with $d(x,y)< \ep \implies y\in A$ for any $y$.
+  Let $d'$ be as in prometric transitivity for $d$, and let $B = \setof{y|d'(x,y)<\hfep}$; then $x\ll B$ is exhibited by $d',\hfep$.
+  Now for any $y$, we have either $d'(x,y)<\frac{2\ep}{3}$ or $d'(x,y)>\hfep$.
+  In the former case $y\ll A$ is exhibited by $d'$ and $\frac{\ep}{3}$, since if $d'(y,z)<\frac{\ep}{3}$ then $d(x,z)<\ep$ so $z\in A$.
+  And in the latter case $y\notin B$, so $y\not\ll B$.
+
+  Finally, let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a function.
+  Suppose first that $f$ is prometrically continuous, and let $f(x)\ll A$, so that we have $d_Y,\ep$ with $d_Y(f(x),y)< \ep \implies y\in A$ for any $y\in Y$.
+  By continuity, there is a $d_X$ and a $\de$ such that $d_X(x,x')<\de \implies d_Y(f(x),f(x'))<\ep$ for any $x'\in X$, and hence $d_X(x,x')<\de \implies x'\in f\inv(A)$.
+  Thus $x\ll f\inv(A)$, so $f$ is $\ll$-continuous.
+
+  On the other hand, if $f$ is $\ll$-continuous, for any $x$ and any $d_Y,\ep$ we have $f(x)\ll \setof{y|d_Y(f(x),y)<\ep}$.
+  Thus $x\ll \setof{x'|d_Y(f(x),f(x'))<\ep}$, which means (by definition of $\ll$) we have $d_X,\de$ such that $d_X(x,x')<\de \implies d_Y(f(x),f(x'))<\ep$, giving prometric continuity.
+\end{proof}
+
+Henceforth we will simply speak of a \textbf{locally decomposable topological space}, which comes with both a $\ll$ and a $\bowtie$ that are interdefinable.
+Such spaces thus fully capture the topological structure of prometric spaces, where ``topological structure'' is defined by the notion of continuous function.
+
+Of course, even topologically prometric spaces are very special among the topological spaces, and much of their specialness is captured by \emph{separation axioms}.
+Local decomposability itself is naturally regarded as a separation axiom, albeit one that is only nontrivial constructively.
+
+We will not exhaustively survey separation axioms, but there are a few others worth mentioning.
+The first two are naturally phrased using the fact that point-set relations give rise to point-point relations.
+
+\begin{thm}\ 
+  \begin{enumerate}
+  \item If $X$ is a topological neighborhood space, define $x\leapx y$ to mean that $\forall A, (x\ll A \to y\ll A)$.
+    Then $\leapx$ is a preorder.
+  \item If $X$ is a topological apartness space, define $x\oapt y$ to mean $x \bowtie \singleton{y}$.
+    Then $\oapt$ is irreflexive, and if $X$ is locally decomposable then it is a comparison.
+  \end{enumerate}
+  Moreover, if $X$ is a prometric space then both of these relations agree with those defined in \cref{def:promet-ord}.
+\end{thm}
+\begin{proof}
+  In the neighborhood case, reflexivity and transitivity of $\leapx$ follow directly from reflexivity and transitivity of $\implies$.
+  If $X$ is a prometric space and $\forall d, d(x,y)=0$, then whenever $x\ll A$ we have $d,\ep$ with $d(x,z)<\ep \implies z\in A$ for any $z$.
+  Let $d'$ be as in prometric transitivity for $d$; then $d'(x,y)=0$, so if $d'(y,z)<\ep$ we have $d(x,z)<\ep$, hence $z\in A$.
+  Thus $d',\ep$ exhibit $y\ll A$.
+
+  In the apartness case, irreflexivity is obvious.
+  For the comparison axiom, we note first that local decomposability implies the following property that we call \textbf{weak local decomposability}: if $x\bowtie A$, then $\forall y, (x\bowtie \singleton{y} \lor y\bowtie A)$.
+  This follows from isotony: if $x\bowtie B$ and $y\in B$, then $x\bowtie \singleton{y}$.
+  Moreover, weak local decomposability implies that $\oapt$ is a comparison, by taking $A = \singleton{y}$.
+  Finally, if $X$ is a prometric space and we have a $d$ with $d(x,y)>0$, then taking $\ep=\frac12 d(x,y)$ we find $x\bowtie \singleton{y}$.
+\end{proof}
+
+\begin{defn}
+  Let $X$ be a topological neighborhood space.
+  \begin{enumerate}
+  \item $X$ is $\mathbf{T_1}$ if $x\leapx y \implies x=y$.
+  \item $X$ is $\mathbf{R_0}$ if $\leapx$ is symmetric (hence an equivalence relation).
+  \end{enumerate}
+  Let $X$ be a topological apartness space.
+  \begin{enumerate}
+  \item $X$ is $\mathbf{T_1}$ if $\neg(x\oapt y)\implies x=y$ (i.e.\ $\oapt$ is tight).
+  \item $X$ is $\apart$-$\mathbf{T_1}$ if $x\apart y \implies x\oapt y$, for some tight relation $\apart$.
+  \item $X$ is \textbf{strongly} $\mathbf{R_0}$ if $\oapt$ is symmetric (hence an apartness relation).
+  \end{enumerate}
+\end{defn}
+
+\begin{thm}
+  If $X$ is a locally decomposable topological space, then for any $x,y\in X$ we have
+  \[ (x\leapx y) \iff \neg(x\oapt y) \]
+  and the two definitions of $T_1$ above agree, while strong $R_0$ implies $R_0$.
+\end{thm}
+\begin{proof}
+  First let $x\leapx y$, so that $\forall A, (x\ll A \implies y\ll A)$, and suppose for contradiction that $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$.
+  The latter means by definition that $x\ll \cpl{\singleton{y}}$, so by assumption we have $y\ll \cpl{\singleton{y}}$, a contradiction since $y\notin \cpl{\singleton{y}}$.
+
+  On the other hand, suppose $\neg(x\oapt y)$, and let $x\ll A$; we will show $y\ll A$.
+  By local decomposability we have a $B$ with \fxerror{finish}
+\end{proof}
+
+\begin{thm}
+  Let $X$ be a prometric space.
+  \begin{enumerate}
+  \item $X$ is separated if and only if it is $T_1$.
+  \item If $X$ is symmetric, then its underlying topology is strongly $R_0$.
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  \fxerror{finish}
+\end{proof}
 
 Regularity (any symmetric prometric space) and complete regularity (any symmetric gauge space)
 
