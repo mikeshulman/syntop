@@ -688,6 +688,23 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   Moreover, it seems insufficient for our proof of \cref{thm:top-topconcrete}, though an alternative proof might be possible.
 \end{rmk}
 
+\begin{rmk}
+  Conversely to \cref{thm:top-ord}, any preorder $\leapx$ induces a topological neighborhood relation where $x\ll A$ means $\forall y, (x\leapx y \implies y\in A)$, giving a left adjoint to the functor taking a topological neighborhood space to its underlying $\leapx$.
+  This is the standard \textbf{Alexandrov topology} of a poset, and the spaces obtained in this way are precisely those with the property that whenever $x\ll A_i$ for all $i$ we have $x\ll \bigcap_i A_i$.
+  
+  % isotony and additivity are obvious, while reflexivity for $\ll$ follows from reflexivity for $\leapx$.
+  % For transitivity, if $x\ll A$, so that $\forall y, (x\leapx y \implies y\in A)$, to show $x\ll \setof{y|y\ll A}$ we must show that if $x\leapx y$ then $y\ll A$, i.e.\ if $y\leapx z$ then $z\in A$.
+  % But transitivity of $\leapx$ gives $x\leapx z$, so $z\in A$ by assumption.
+  % Note that this \emph{Alexandrov neighborhood space} is locally decomposable if and only if $\leapx$ is decidable, i.e.\ $\forall x\forall y, (x\leapx y \lor x\not\leapx y )$.
+
+  % If $X$ is a preorder and $Y$ a topological neighborhood space, then $f:X\to Y$ is continuous for this structure if and only if $f(x) \ll A$ implies $\forall y, (x\leapx y \implies y\in f\inv(A))$.
+  % Put differently, this means that if $x\leapx y$, then $f(x)\ll A$ implies $f(y)\ll A$, i.e.\ $x\leapx y \implies f(x)\leapx_Y f(y)$, where $\leapx_Y$ is defined as in \cref{thm:top-ord}.
+  % This gives adjointness.
+
+  However, it is unclear how to construct an ``Alexandrov apartness'' from an irreflexive comparison $\oapt$; the comparison property $x\oapt y \lor y\oapt z$ seems insufficient, constructively, to ensure transitivity of any $\bowtie$ defined naturally from it.
+  This may be related to the fact that the Alexandrov space of a poset is locally decomposable if and only if $\leapx$ is decidable.
+\end{rmk}
+
 The other pair of separation axioms we will be interested in are regularity and complete regularity.
 We define them only for neighborhood spaces, since as we will see below they both imply local decomposability.
 
