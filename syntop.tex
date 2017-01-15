@@ -413,7 +413,13 @@ In support of this we note the following:
 
 \begin{thm}\label{thm:top-topconcrete}
   The categories of topological neighborhood spaces and topological apartness spaces are ``topological over $\mathbf{Set}$'', i.e.\ their forgetful functor to $\mathbf{Set}$ has initial lifts for all sources and (hence) final lifts for all sinks.
-  In particular, they are complete and cocomplete.
+  In particular:
+  \begin{enumerate}
+  \item They are complete and cocomplete.
+  \item Induced and coinduced structures exist.
+  \item The forgetful functor to $\mathbf{Set}$ has both a left adjoint (discrete spaces) and a right adjoint (indiscrete spaces).
+  \item Every continuous function factors uniquely as a surjection followed by an embedding (an inclusion with the induced structure), and also as a quotient (a surjection with the coinduced structure) followed by an injection.
+  \end{enumerate}
 \end{thm}
 \begin{proof}
   Note that topological neighborhood and apartness relations are closed under directed unions of point-set relations.
