@@ -409,6 +409,41 @@ Constructively, this is no longer so, but we can say the following:
 
 Since topological closure spaces fail to include the most interesting examples constructively, while Moore closure spaces don't contain enough topological information, we will say no more about closure spaces.
 But topological neighborhood spaces and topological apartness spaces are both reasonable constructive notions.
+In support of this we note the following:
+
+\begin{thm}\label{thm:top-topconcrete}
+  The categories of topological neighborhood spaces and topological apartness spaces are ``topological over $\mathbf{Set}$'', i.e.\ their forgetful functor to $\mathbf{Set}$ has initial lifts for all sources and (hence) final lifts for all sinks.
+  In particular, they are complete and cocomplete.
+\end{thm}
+\begin{proof}
+  Note that topological neighborhood and apartness relations are closed under directed unions of point-set relations.
+  Directedness is necessary for preservation of additivity.
+  However, any family of such relations still has a join in the poset of such relations, constructed explicitly by closing up under finite additivity.
+
+  Explicitly, given a family $\{\ll_i\}$ of topological neighborhood relations, define $x\ll A$ to mean that there exists a finite family $i_1,\dots,i_n$ and sets $B_1,\dots, B_n$ such that $\bigcap_{j=1}^n B_j \subseteq A$ and $x\ll_{i_j} B_j$ for all $j$.
+  This satisfies isotony and additivity essentially by construction, and satisfies reflexivity since all the $\ll_i$ do.
+  For transitivity, if $x\ll A$ as above, then $x\ll_{i_j} \setof{y|y\ll_{i_j} B_j}$ by transitivity for $\ll_{i_j}$, while $\bigcap_{j=1}^n \setof{y|y\ll_{i_j} B_j} \subseteq \setof{y|y\ll A}$ essentially by the above definition of $\ll$; thus $x\ll \setof{y|y\ll A}$.
+
+  The argument for apartness is similar: define $x\bowtie A$ to mean that there exist $i_1,\dots,i_n$ and $B_1,\dots, B_n$ such that $A\subseteq \bigcup_{j=1}^n B_j$ and $x\bowtie_{i_j} B_j$ for all $j$.
+  We then have $x\bowtie_{i_j} \setof{y|y\not\bowtie_{i_j} B_j}$, while $\setof{y|y\not\bowtie A} \subseteq \bigcup_{j=1}^n\setof{y|y\not\bowtie_{i_j} B_j}$ by construction, so $x\bowtie \setof{y|y\not\bowtie A}$.
+  Note that we did not actually need the relations $\ll_i$ or $\bowtie_i$ to satisfy additivity or isotony, only reflexivity and transitivity.
+
+  Next, if $(Y,\ll_Y)$ is a topological neighborhood space and $f:X\to Y$ is any function, define $x\ll_f A$ to mean that $f\inv(B)\subseteq A$ for some $B$ such that $f(x)\ll_Y B$.
+  This is a topological neighborhood relation on $X$: isotony is by construction, reflexivity is obvious, and additivity follows since $f\inv$ preserves intersections.
+  For transitivity, if $f(x)\ll_Y B$ and $f\inv(B)\subseteq A$, then $f(x)\ll_Y \setof{y|y\ll_Y B}$; but $f\inv(\setof{y|y\ll_Y B}) \subseteq \setof{z|z\ll_f A}$ essentially by definition of $\ll_f$, so $x \ll_f \setof{z|z\ll_f A}$.
+
+  Moreover, $f$ is continuous for some topological neighborhood relation $\ll_X$ on $X$ if and only $\ll_f$ is contained in $\ll_X$.
+  More generally, for any topological neighborhood space $(Z,\ll_Z)$ and function $g:Z\to X$, the composite $f g$ is continuous if and only if $\ll_{f g}$ (which coincides with $(\ll_f)_g$) is contained in $\ll_Z$.
+  Thus, any source $\{ f_i : X \to Y_i \}$, where each $Y_i$ is a topological neighborhood space, has an initial lift, consisting of the join of all the $\ll_{f_i}$ constructed as above.
+
+  The argument for apartness is analogous, using the relation $x\bowtie_f A$ defined to mean $f(x)\bowtie_Y f(A)$.
+  This is a topological apartness relation on $X$: reflexivity is obvious, while isotony and additivity follow since direct images of subsets preserve containment and unions.
+  For transitivity, if $f(x)\bowtie_Y f(A)$, then $f(x) \ll_Y \setof{y|y\not\bowtie_Y f(A)}$; but $f(\setof{z|z\not\bowtie_f A}) \subseteq \setof{y|y\not\bowtie_Y f(A)}$ essentially by definition of $\bowtie_f$, so $x\bowtie_f \setof{z|z\not\bowtie_f A}$.
+  Again $f$ is continuous for $\bowtie_X$ iff $\bowtie_f$ is contained in $\bowtie_X$, and similarly for $f g$, so to construct an initial lift we can join all the $\bowtie_{f_i}$.
+
+  Note that an analogous argument for closure \emph{doesn't} work, since binary additivity is no longer a closure condition.
+  This is another reason closure spaces are unsatisfactory, and the analogous proofs for $\bowtie$ and $\ll$ is one reason we have chosen to work with $\ll$ rather than open sets.
+\end{proof}
 
 There is a certain sense in which topological apartness spaces can be regarded as a subclass of topological neighborhood spaces, namely:
 
@@ -525,9 +560,38 @@ Constructively, it is an extra condition, but is not too strong; it is satisfied
 \end{proof}
 
 Henceforth we will simply speak of a \textbf{locally decomposable topological space}, which comes with both a $\ll$ and a $\bowtie$ that are interdefinable.
-Such spaces thus fully capture the topological structure of prometric spaces, where ``topological structure'' is defined by the notion of continuous function.
+We note that they also form a well-behaved category.
 
-Of course, prometric spaces are still very special among the locally decomposable topological spaces, and much of their specialness is captured by additional \emph{separation axioms}.
+\begin{thm}\label{thm:ldtop-topconcrete}
+  Locally decomposable topological spaces are topological over $\mathbf{Set}$, hence complete and cocomplete.
+  Moreover, they form a reflective subcategory of both topological neighborhood spaces and topological apartness spaces, and the units of the reflection are bijective (i.e.\ the reflection retopologizes the same set).
+\end{thm}
+\begin{proof}
+  First, we show that if $\bowtie$ or $\ll$ is locally decomposable, then so are $\bowtie_f$ and $\ll_f$ as defined in \cref{thm:top-topconcrete}.
+  For $\ll$, if $x\ll_f A$, meaning $f\inv(C)\subseteq A$ with $f(x)\ll C$, then we have a $B$ with $f(x)\ll B$ and $\forall y, (y\notin B \lor y\ll C)$.
+  But then $x\ll_f f\inv(B)$ and $\forall z, (f(z)\notin B \lor f(z) \ll C)$, hence $\forall z, (z\notin f\inv(B) \lor z \ll_f A)$.
+
+  For $\bowtie$, if $x\bowtie_f A$, meaning $f(x)\bowtie f(A)$, we have a $B$ with $f(x)\bowtie B$ and $\forall y,(y\in B \lor y\bowtie f(A))$.
+  Thus $\forall z, (f(z)\in B \lor f(z)\bowtie f(A))$, hence $\forall z, (z\in f\inv(B) \lor z\bowtie_f A)$, while $f(x) \bowtie f(f\inv(B))$ by isotony and thus $x \bowtie_f f\inv(B)$.
+
+  Second, we show that the join of any family of locally decomposable point-set relations (in either sense) is again locally decomposable.
+  Recall that for the join of $\{\ll_i\}$, we define $x\ll A$ to mean that there exist $i_1,\dots,i_n$ and sets $B_1,\dots, B_n$ such that $\bigcap_{j=1}^n B_j \subseteq A$ and $x\ll_{i_j} B_j$ for all $j$.
+  If all the $\ll_i$ are locally decomposable, then in this case we have $C_j$ such that $x\ll_{i_j} C_j$ and $\forall y, (y\notin C_j \lor y\ll_{i_j} B_j)$.
+  Then $x \ll \bigcap_{j=1}^n C_j$, while any $y$ must either be in all the $B_j$ (hence in $A$) or not in some $C_j$ (hence not in $\bigcap_{j=1}^n C_j$).
+  Thus $\bigcap_{j=1}^n C_j$ exhibits local decomposability of $\ll$.
+
+  Similarly, for the join of $\{\bowtie_i\}$ we defined $x\bowtie A$ to mean that there exist $i_1,\dots,i_n$ and $B_1,\dots, B_n$ such that $A\subseteq \bigcup_{j=1}^n B_j$ and $x\bowtie_{i_j} B_j$ for all $j$.
+  If all the $\bowtie_i$ are locally decomposable, we then have $C_j$ such that $x\bowtie_{i_j} C_j$ and $\forall y, (y\in C_j \lor y\bowtie_{i_j} B_j)$.
+  Then $x\bowtie \bigcup_{j=1}^n C_j$, while any $y$ must be either in some $C_j$ (hence in $\bigcup_{j=1}^n C_j$) or satisfy $y\bowtie_{i_j} B_j$ for all $j$, hence $y\bowtie A$.
+
+  Since initial lifts were constructed in \cref{thm:top-topconcrete} by restricting along functions and then joining in a poset of point-set relations, it follows that local decomposability is preserved by initial lifts of sources.
+  This implies the first statement of the theorem.
+  The second is a straightforward argument for any subcategory of a topological category closed under initial lifts: the locally decomposable reflection of a topological relation is the join of all locally decomposable relations contained in it.
+  (This is, of course, very inexplicit and impredicative.)
+\end{proof}
+
+Thus, locally decomposable topological spaces form a well-behaved category that fully captures the topological structure of prometric spaces, where ``topological structure'' is defined by the notion of continuous function.
+Of course, prometric spaces are still very special objects of this category, and much of their specialness is captured by additional \emph{separation axioms}.
 (Local decomposability itself is also naturally regarded as a separation axiom, albeit one that is only nontrivial constructively.
 This will be clearer in later sections, when its close relationship with regularity becomes evident.)
 
@@ -612,7 +676,8 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   We follow instead the lesson of classical topology that separation axioms should only be assumed when necessary, not included in the definition of space.
   
   Secondly, they assume $\exists x \exists y,(x\apart y)$.
-  We follow instead the lesson of category theory that trivial examples should not be arbitrarily excluded, since they are necessary to have a complete and cocomplete category.
+  We follow instead the lesson of category theory that trivial examples should not be arbitrarily excluded, since they are necessary to have a well-behaved category.
+  In particular, such a condition would destroy \cref{thm:top-topconcrete}, by in particular removing both the initial and the terminal object.
 
   Thirdly, they omit nullary additivity entirely.
   This is probably an oversight; it follows from isotony \emph{if} we have $\forall x \exists A, x\bowtie A$.
@@ -620,6 +685,7 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   Finally, they weaken transitivity to ``if $x\bowtie A$ and $\forall y, (y\bowtie A \implies \forall z\in B, y\apart z)$, then $x\bowtie B$''.
   Perhaps this is due to a desire to use $\apart$ instead of $\neq$ whenever possible (although they don't similarly modify reflexivity to $x\bowtie A \implies \forall y\in A, x\apart y$, which together with $\apart$-$T_1$ would imply that $\oapt$ coincides with $\apart$).
   However, it seems rather \emph{ad hoc}, and also unnecessary since any locally decomposable space satisfies the stronger version.
+  Moreover, it seems insufficient for our proof of \cref{thm:top-topconcrete}, though an alternative proof might be possible.
 \end{rmk}
 
 The other pair of separation axioms we will be interested in are regularity and complete regularity.
