@@ -80,14 +80,18 @@ In fact, most topological constructions on metric spaces can easily be generaliz
   \item there exists some gauging distance (nullary filtration), and
   \item if $d_1$ and $d_2$ are gauging distances, there is a gauging distance $d_3$ such that $d_1(x,y)\le d_3(x,y)$ and $d_2(x,y)\le d_3(x,y)$ for all $x,y\in X$ (binary filtration).
   \end{enumerate}
-  A gauge space is \textbf{separated} if
+  An extended quasi-gauge space is\dots
   \begin{enumerate}[resume]
-  \item for any $x,y\in X$, if $d(x,y)=0$ for all gauging distances $d$, then $x=y$.
+  \item $\mathbf{T_1}$ if for any $x,y\in X$, if $d(x,y)=0$ for all gauging distances $d$, then $x=y$.
+  \item $\mathbf{T_0}$ if for any $x,y\in X$, if $d(x,y)=0$ and $d(y,x)=0$ for all gauging distances $d$, then $x=y$.
   \end{enumerate}
 \end{defn}
 
 In other words, a gauge is a filterbase in the poset of (extended quasi-)pseudo-metrics.
 Note that the qualifiers ``extended'' and ``quasi-'' carry over from the metrics to the gauge, but all the metrics in a gauge space are automatically assumed to be pseudo; separatedness is named as an additional property that involves all the gauging distances at once.
+
+Evidently the separation axioms $T_0$ and $T_1$ coincide in the symmetric case (gauge spaces), and as we will see they also imply the strong topological separation axiom $T_2$ (Hausdorff).
+Thus, such a space is commonly called simply \textbf{separated}; but in the non-symmetric case it seems worth distinguishing different kinds of separation.
 
 Of course, any (extended quasi-)pseudo-metric space defines an (extended quasi-)gauge space with exactly one gauging distance.
 The essential difference between gauge spaces and metric spaces is that gauge spaces need not be ``countable'' in any of the senses that metric spaces must.
@@ -104,13 +108,11 @@ Yet more general than gauge spaces are prometric spaces~\cite{cht:one-setting}:
   \item $d(x,x)=0$ for every distance and all $x\in X$ (reflexivity),
   \item for any distance $d_1$ there is a distance $d_2$ such that $d_1(x,z)\le d_2(x,y)+d_2(y,z)$ for all $x,y,z\in X$ (transitivity, or the triangle inequality).
   \end{enumerate}
-  A prometric space is \textbf{symmetric} if
+  A prometric space is\dots
   \begin{enumerate}[resume]
-  \item for any distance $d_1$ there is a distance $d_2$ such that $d_1(x,y)\le d_2(y,x)$ for all $x,y\in X$.
-  \end{enumerate}
-  It is \textbf{separated} if
-  \begin{enumerate}[resume]
-  \item for any $x,y\in X$, if $d(x,y)=0$ for all distances $d$, then $x=y$.
+  \item \textbf{symmetric} if for any distance $d_1$ there is a distance $d_2$ such that $d_1(x,y)\le d_2(y,x)$ for all $x,y\in X$.
+  \item $\mathbf{T_1}$ if for any $x,y\in X$, if $d(x,y)=0$ for all distances $d$, then $x=y$.
+  \item $\mathbf{T_0}$ if for any $x,y\in X$, if $d(x,y)=0$ and $d(y,x)=0$ for all distances $d$, then $x=y$.
   \end{enumerate}
 \end{defn}
 
@@ -207,49 +209,109 @@ As always, $d$ will range over distances in a prometric space $X$.
   \end{itemize}
 \end{defn}
 
-\begin{thm}
-  For any prometric space $X$, the relation $\leapx$ is a preorder.
-  If $X$ is symmetric, then $\leapx$ is a symmetric relation, and hence an \textbf{equivalence relation} (which we will usually write as $\approx$).
+Since $\neg(a<b)$ is equivalent to $b\le a$ for located real numbers, in a prometric space we have
+\begin{equation}
+  (x\leapx y) \iff \neg(x\oapt y).\label{eq:leapx-oapt}
+\end{equation}
+However, $\oapt$ cannot constructively be expressed in terms of $\leapx$; to say $x\oapt y$ is stronger than $x\neq y$ or even $x\not\leapx y$.
+
+The abstract structure possessed by $\leapx$ is obvious and well-known.
+
+\begin{thm}\label{thm:pmet-preord}
+  Let $X$ be a prometric space.
+  \begin{enumerate}
+  \item The relation $\leapx$ is a \textbf{preorder} (i.e.\ a reflexive transitive relation).
+  \item If $X$ is symmetric, then $\leapx$ is a symmetric relation, and hence an \textbf{equivalence relation} (which we will usually write as $\approx$).
+  \item $X$ is $T_0$ if and only if $\leapx$ is antisymmetric ($x\leapx y$ and $y\leapx x$ together imply $x=y$), hence a \textbf{partial order}.
+  \item $X$ is $T_1$ if and only if $\leapx$ coincides with equality.
+  \end{enumerate}
 \end{thm}
 \begin{proof}
-  Reflexivity and transitivity of $\leapx$ follow from reflexivity and transitivity (i.e.\ the triangle inequality) of a prometric, and likewise for symmetry.
+  Reflexivity and transitivity of $\leapx$ follow from reflexivity and transitivity (i.e.\ the triangle inequality) of a prometric, and likewise for symmetry and the separation axioms.
 \end{proof}
 
 Of course, $\leapx$ is an instance of the \emph{specialization order} underlying a topology; we will return to this in \cref{sec:point-point}.
 
-\begin{thm}
-  For any prometric space $X$, the relation $\oapt$ is an \emph{irreflexive comparison}, i.e.\ it satisfies:
+The structure possessed by $\oapt$ is less familiar to classical mathematicians, but well-known to constructive ones.  
+For reasons that will become clear later, we first define a weaker notion and then the more familiar stronger one.
+
+\begin{defn}
+  A \textbf{co-preorder} is a binary relation $\oapt$ on a set $X$ such that:
   \begin{enumerate}
-  \item $\neg(x\oapt x)$ for all $x$ (irreflexivity), and
-  \item if $x\oapt z$ then for any $y$ we have $x\oapt y$ or $y\oapt z$ (comparison).
+  \item $\neg(x\oapt x)$ for all $x$ (irreflexivity).
+  \item If $x\oapt z$ and $\neg(y\oapt z)$, then $x\oapt y$ (bilocal transitivity).
   \end{enumerate}
-  If $X$ is symmetric, then $\oapt $ is also a symmetric relation, and hence an \textbf{apartness relation} (usually written $\apart$).
-\end{thm}
-\begin{proof}
-  Irreflexivity of $\oapt $ follows directly from reflexivity of a prometric.
-  Comparison is rather trickier: if $d(x,z)>0$, we have another distance $d'$ with $d'(x,y)+d'(y,z)\ge d(x,z)$.
-  By locatedness of real numbers, $d'(x,y)$ and $d'(y,z)$ are both either $>0$ or $<\frac12 d(x,z)$.
-  Thus either $x\oapt y$ or $y\oapt z$ or $d'(x,y)+d'(y,z) < d(x,z)$; but the latter case is a contradiction.
-\end{proof}
+  A co-preorder is\dots
+  \begin{enumerate}[resume]
+  \item \textbf{bilocally decomposable}, or a \textbf{comparison}, if whenever $x\oapt z$, then for any $y$ we have $x\oapt y$ or $y\oapt z$.
+    (Note that this implies bilocal transitivity.)
+  \item \textbf{symmetric} if $x\oapt y$ implies $y\oapt x$ (symmetry).
+  \item an \textbf{apartness relation} (usually written $\apart$) if it is a symmetric comparison.
+  \item \textbf{connected} if $(\neg(x\oapt y)\land \neg(y\oapt x))\implies x=y$.
+  \item \textbf{tight} if $\neg(x\oapt y) \implies x=y$.
+  \end{enumerate}
+\end{defn}
 
-By analogy with later sections, we might also call a comparison a \textbf{locally decomposable} relation.
-
-Since $\neg(a<b)$ is equivalent to $b\le a$ for located real numbers, in a prometric space we have
-\[ (x\leapx y) \iff \neg(x\oapt y). \]
-However, $\oapt$ cannot constructively be expressed in terms of $\leapx$; to say $x\oapt y$ is stronger than $x\neq y$ or even $x\not\leapx y$.
+Tightness is usually defined only for symmetric relations, in which case it of course coincides with connectedness.
+But in the non-symmetric case, it seems useful to distinguish the two notions.
 
 \begin{warn}
   Some constructive mathematicians write $\neq$ for an arbitrary apartness relation.
   We will always reserve slashed symbols such as $\neq,\not\leapx,\napprox,\notin$ for logical negations (i.e.\ $x\neq y$ means $\neg(x=y)$, $x\not\leapx y$ means $\neg(x\leapx y)$, etc.), and use other symbols such as $\apart$ and $\oapt$ for stronger ``positive'' relations.
 \end{warn}
 
-If $X$ is separated, then $x\leapx y$ (and hence equivalently $\neg(x\oapt y)$) implies $x=y$.
-A relation $\oapt$ (such as an apartness relation) with the property that $\neg(x\oapt y)$ implies $x=y$ is sometimes called \textbf{tight} or \textbf{connected}.
-In particular, the equality relation of a separated prometric space is $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)$, hence $x\leapx y$ and thus $x=y$.
-
-Finally, we observe that the point-point relations underlying a prometric space vary appropriately with continuous functions, so that they really are a topological invariant.
-
 \begin{thm}
+  Let $X$ be a prometric space.
+  \begin{enumerate}
+  \item The relation $\oapt$ is a comparison co-preorder.  
+  \item If $X$ is symmetric, $\oapt$ is an apartness relation.
+  \item $X$ is $T_0$ if and only if $\oapt$ is connected.
+  \item $X$ is $T_1$ if and only if $\oapt$ is tight.
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  Irreflexivity of $\oapt $ follows directly from reflexivity of a prometric.
+  Comparison is rather trickier: if $d(x,z)>0$, we have another distance $d'$ with $d'(x,y)+d'(y,z)\ge d(x,z)$.
+  By locatedness of real numbers, $d'(x,y)$ and $d'(y,z)$ are both either $>0$ or $<\frac12 d(x,z)$.
+  Thus either $x\oapt y$ or $y\oapt z$ or $d'(x,y)+d'(y,z) < d(x,z)$; but the latter case is a contradiction.
+
+  Symmetry is obvious, and the last two statements follow from~\eqref{eq:leapx-oapt} and \cref{thm:pmet-preord}.
+\end{proof}
+
+In particular, the equality relation of a $T_0$ prometric space is (like that of any set with a connected irreflexive relation) $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)$, hence $x\leapx y$ and thus $x=y$.
+
+Preorders and co-preorders are closely related.
+In fact, in classical mathematics they are entirely equivalent notions.
+To state the corresponding constructive fact, we first define the appropriate categories.
+
+\begin{defn}
+  Let $f:X\to Y$ be a function.
+  \begin{enumerate}
+  \item If $X$ and $Y$ are preorders, then $f$ is \textbf{monotone} if $x\leapx y \implies f(x)\leapx f(y)$ for all $x,y\in X$.
+  \item If $X$ and $Y$ are co-preorders, then $f$ is \textbf{co-monotone}, or \textbf{strongly extensional}, if $f(x)\oapt f(y) \implies x\oapt y$ for all $x,y\in X$.
+  \end{enumerate}
+\end{defn}
+
+\begin{thm}\label{thm:ord-le-apt}
+  If $X$ is a preorder, then the relation $\neg(x\leapx y)$ is a co-preorder.
+  Dually, if $X$ is a co-preorder, then the relation $\neg(x\oapt y)$ is a preorder.
+  These operations define functors $F$ and $G$ from preorders to co-preorders and vice versa, respectively, and the identity functions form natural transformations from the identity functors to $F G$ and $G F$.
+\end{thm}
+\begin{proof}
+  Reflexivity is easy in both directions.
+  If $X$ is a preorder, then for transitivity of its dual, suppose $\neg(x\leapx z)$ and $\neg\neg(y\leapx z)$; we must show $\neg(x\leapx y)$.
+  Suppose $x\leapx y$; then since we are trying to prove a contradiction, we may assume $y\leapx z$, hence $x\leapx z$ by transitivity of $\leapx$, contradiction our other assumption.
+
+  Dually, if $X$ is a co-preorder, for transitivity of its dual suppose $\neg (x\oapt y)$ and $\neg (y\oapt z)$; we must show $\neg(x\oapt z)$.
+  Suppose $x\oapt z$; then by transitivity of $\oapt$ and our second assumption we have $x\oapt y$, contradicting our first assumption.
+
+  Functoriality in both directions is obvious from the contravariance of $\neg$, and (co-)monotonicity of the identity function is just the implication $P\implies \neg\neg P$, while naturality is obvious.
+\end{proof}
+
+\cref{thm:ord-le-apt} gives some partial justification for defining the notion of co-preorder using bilocal transitivity instead of bilocal decomposability (comparison), since there seems no general way to make a comparison by negating a preorder.
+Further justification will have to wait for \cref{thm:top-ord} and \cref{sec:syntopogeny}.
+
+\begin{thm}\label{thm:pmet-monotone}
   Let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a continuous function.
   Then:
   \begin{enumerate}
@@ -264,6 +326,24 @@ Finally, we observe that the point-point relations underlying a prometric space 
   For the second, if $f(x)\oapt f(y)$ we have $d_Y(f(x),f(y))>0$ for some $d_Y$.
   Let $\ep = \frac12 \,d_Y(f(x),f(y))$; then by \cref{thm:cocontinuous} we have a $d_X$ and a $\de>0$ such that if $d_Y(f(x),f(y))>\ep$ (which is true) then $d_X(x,y)>\de$, hence $x\oapt y$.
 \end{proof}
+
+In fact,~\eqref{eq:leapx-oapt} means that the preorder of a prometric space is obtained from its co-preorder via \cref{thm:ord-le-apt}, so that the first statement of \cref{thm:pmet-monotone} follows from the second.
+This is an instance of the fact that constructively, it is often better to work with co-preorders (such as apartness relations) than preorders (such as equivalence relations), since many preorders are the dual of some co-preorder but not conversely.
+However, this seems to be due mainly to the impoverished nature of a single binary relation; in later sections we will see that for more refined topological structures we can impose natural conditions to make the ``closeness'' and ``apartness'' notions coincide.
+
+% \begin{thm}\label{thm:ord-topconcrete}
+%   The categories of preorders, co-preorders, and comparison co-preorders are ``topological over $\mathbf{Set}$'', i.e.\ their forgetful functor to $\mathbf{Set}$ has initial lifts for all sources and (hence) final lifts for all sinks.
+%   In particular, they are complete and cocomplete.
+% \end{thm}
+% \begin{proof}
+%   Given a source $\{f_i : X \to Y_i\}$ with each $Y_i$ a preorder, define $x\leapx y$ for $x,y\in X$ to mean that $f_i(x)\leapx_i f_i(y)$ for all $i$.
+%   This is evidently a preorder and the initial lift.
+
+%   Similarly, given $\{f_i : X \to Y_i\}$ with each $Y_i$ a co-preorder, define $x\oapt y$ for $x,y\in X$ to mean that $f_i(x)\oapt_i f_i(y)$ for \emph{some} $i$.
+%   Irreflexivity is obvious.
+%   For bilocal transitivity, if $x\oapt z$, so that $f_i(x)\oapt_i f_i(z)$ for some $i$, then if $\neg(y\oapt z)$ we have $\neg (f_i(y)\oapt_i f_i(z))$, hence $f_i(x) \oapt_i f_i(y)$ and so $x\oapt y$.
+%   A similar argument works for comparison.
+% \end{proof}
 
 
 \section{Point-set relations: topology}
@@ -501,14 +581,12 @@ The assumption $\forall y, (y\in B \lor y\bowtie A)$ gives $\setof{y|y\not\bowti
 
 \begin{thm}\label{thm:top-locdec-equiv}
   The categories of
-  \begin{enumerate}
-  \item locally decomposable topological neighborhood spaces and
-  \item locally decomposable topological apartness spaces
-  \end{enumerate}
+  locally decomposable topological neighborhood spaces and
+  locally decomposable topological apartness spaces
   are equivalent.
 \end{thm}
 \begin{proof}
-  By \ref{thm:toprels}\ref{item:top-ll-bowtie}, we have a functor from neighborhood spaces to apartness spaces.
+  By \cref{thm:toprels}\ref{item:top-ll-bowtie}, we have a functor from neighborhood spaces to apartness spaces.
   We claim that local decomposability makes~\eqref{eq:top-bowtie-ll-1} and~\eqref{eq:top-bowtie-ll-2} coincide, giving a functor in the other direction.
   Evidently~\eqref{eq:top-bowtie-ll-2} always implies~\eqref{eq:top-bowtie-ll-1}.
   Conversely, suppose $x\ll A$ by~\eqref{eq:top-bowtie-ll-1}, so that $x\bowtie B$ and $\forall y, (y\bowtie B \implies y\in A)$.
@@ -602,14 +680,14 @@ Of course, prometric spaces are still very special objects of this category, and
 This will be clearer in later sections, when its close relationship with regularity becomes evident.)
 
 We will not exhaustively survey separation axioms, but there are a few others worth mentioning.
-The first two are naturally phrased using the fact that point-set relations give rise to point-point relations.
+The first few are naturally phrased using the fact that point-set relations give rise to point-point relations.
 
 \begin{thm}\label{thm:top-ord}\ 
   \begin{enumerate}
   \item If $X$ is a topological neighborhood space, define $x\leapx y$ to mean that $\forall A, (x\ll A \to y\ll A)$.
     Then $\leapx$ is a preorder, called the \textbf{specialization order} of $X$.
   \item If $X$ is a topological apartness space, define $x\oapt y$ to mean $x \bowtie \singleton{y}$.
-    Then $\oapt$ is irreflexive, and if $X$ is locally decomposable then it is a comparison.
+    Then $\oapt$ is a co-preorder, and if $X$ is locally decomposable then it is a comparison.
   \end{enumerate}
   Moreover, if $X$ is a prometric space then both of these relations agree with those defined in \cref{def:promet-ord}.
 \end{thm}
@@ -624,6 +702,9 @@ The first two are naturally phrased using the fact that point-set relations give
   Since this is true for all $\ep$, we have $d(x,y)=0$ for all $d$.
 
   In the apartness case, irreflexivity is obvious.
+  For bilocal transitivity, if $x\oapt z$ so that $x\bowtie \{z\}$, then by transitivity for $\bowtie$ we have $x \bowtie \setof{y|y\not \bowtie \{z\}}$.
+  Thus, if $\neg (y\oapt z)$, so that $\neg (y\bowtie \{z\})$, then $y$ belongs to a set that is apart from $x$; hence $x\bowtie \{y\}$ by isotony, i.e.\ $x\oapt y$.
+
   For the comparison axiom, we note first that local decomposability implies the following property that we call \textbf{weak local decomposability}: if $x\bowtie A$, then $\forall y, (x\bowtie \singleton{y} \lor y\bowtie A)$.
   For if $x\bowtie B$ and $y\in B$ as in local decomposability, then $x\bowtie \singleton{y}$.
   Moreover, weak local decomposability implies that $\oapt$ is a comparison, by taking $A = \singleton{y}$.
@@ -635,11 +716,13 @@ The first two are naturally phrased using the fact that point-set relations give
 \begin{defn}
   Let $X$ be a topological neighborhood space.
   \begin{enumerate}
-  \item $X$ is $\mathbf{T_1}$ if $x\leapx y \implies x=y$.
+  \item $X$ is $\mathbf{T_0}$ if $(x\leapx y \land y\leapx x) \implies x=y$ (i.e.\ $\leapx$ is antisymmetric).
+  \item $X$ is $\mathbf{T_1}$ if $x\leapx y \implies x=y$ (i.e.\ $\leapx$ coincides with equality).
   \item $X$ is $\mathbf{R_0}$ if $\leapx$ is symmetric (hence an equivalence relation).
   \end{enumerate}
   Let $X$ be a topological apartness space.
   \begin{enumerate}
+  \item $X$ is $\mathbf{T_0}$ if $(\neg(x\oapt y) \land \neg(y\oapt x)) \implies x=y$ (i.e.\ $\oapt$ is connected).
   \item $X$ is $\mathbf{T_1}$ if $\neg(x\oapt y)\implies x=y$ (i.e.\ $\oapt$ is tight).
   \item $X$ is $\apart$-$\mathbf{T_1}$ if $x\apart y \implies x\oapt y$, for some tight relation $\apart$.
   \item $X$ is \textbf{strongly} $\mathbf{R_0}$ if $\oapt$ is symmetric (hence an apartness relation).
@@ -651,7 +734,7 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
 \begin{thm}
   If $X$ is a locally decomposable topological space, then for any $x,y\in X$ we have
   \[ (x\leapx y) \iff \neg(x\oapt y) \]
-  and the two definitions of $T_1$ above agree, while strong $R_0$ implies $R_0$.
+  and the two definitions of $T_1$ and $T_0$ above agree, while strong $R_0$ implies $R_0$.
 \end{thm}
 \begin{proof}
   First let $x\leapx y$, so that $\forall A, (x\ll A \implies y\ll A)$, and suppose for contradiction that $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$.
@@ -668,7 +751,7 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
 \begin{thm}
   Let $X$ be a prometric space.
   \begin{enumerate}
-  \item $X$ is separated if and only if it is $T_1$.
+  \item $X$ is $T_1$ or $T_0$ if and only if its underlying topology is so.
   \item If $X$ is symmetric, then its underlying topology is strongly $R_0$.
   \end{enumerate}
 \end{thm}
@@ -707,7 +790,7 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   % Put differently, this means that if $x\leapx y$, then $f(x)\ll A$ implies $f(y)\ll A$, i.e.\ $x\leapx y \implies f(x)\leapx_Y f(y)$, where $\leapx_Y$ is defined as in \cref{thm:top-ord}.
   % This gives adjointness.
 
-  However, it is unclear how to construct an ``Alexandrov apartness'' from an irreflexive comparison $\oapt$; the comparison property $x\oapt y \lor y\oapt z$ seems insufficient, constructively, to ensure transitivity of any $\bowtie$ defined naturally from it.
+  However, it is unclear how to construct an ``Alexandrov apartness'' from a co-preorder $\oapt$, even the comparison property $x\oapt y \lor y\oapt z$ seems insufficient, constructively, to ensure transitivity of any $\bowtie$ defined naturally from it.
   This may be related to the fact that the Alexandrov space of a poset is locally decomposable if and only if $\leapx$ is decidable.
 \end{rmk}
 
@@ -802,10 +885,35 @@ Classically, \emph{any} topological space can be given by a quasi-gauge (althoug
 \label{sec:uniformity}
 
 \cref{thm:promet-top} shows that topological neighborhood or apartness spaces are sufficient to capture the topological information in a prometric space.
-However, there is also the stronger \emph{uniform} information, as defined by the category of uniformly continuous functions.
+However, there is also the more refined \emph{uniform} information, as defined by the category of uniformly continuous functions.
 The standard way to divorce uniformity from real numbers is to consider \emph{families} of point-point relations.
 
+\begin{defn}
+  Let $X$ be a prometric space, $d$ a distance, $\ep>0$ a real number, and $x,y\in X$.
+  \begin{enumerate}
+  \item We say $x \leapx_{d,\ep} y$ if $d(x,y)<\ep$.
+  \item We say $x \oapt_{d,\ep} y$ if $d(x,y)>\ep$.
+  \end{enumerate}
+\end{defn}
 
+The abstract structures capturing these relations are the following.
+We will use Greek letters $\al,\be,\gm$ to denote binary relations on a set, with ``$\al$ relates $x,y$'' written as $x\leapx_\al y$ or $x \oapt_\al y$ depending on the intended perspective.
+If $\forall x\forall y,(x\leapx_\al y \implies x\leapx_\be y)$, we write $\al\implies\be$ (i.e.\ $\al\subseteq \be$ as subsets of $X\times X$).
+
+\begin{defn}
+  A \textbf{quasi-uniform space} is a set $X$ together with a family of binary relations, called \textbf{entourages}, satisfying the following axioms.
+  \begin{enumerate}
+  \item If $\al$ is an entourage and $\al\implies\be$, then $\be$ is an entourage (isotony).
+  \item There exists an entourage (nullary filtration).
+  \item If $\al$ and $\be$ are entourages, there exists an entourage $\gm$ such that $\gm\implies\al$ and $\gm\implies\be$ (binary filtration).
+  \item We have $x\leapx_\al x$ for all entourages $\al$ and all $x\in X$ (reflexivity).
+  \item For any entourage $\al$, there exists an entourage $\be$ such that for any $x,y,z\in X$, if $x\leapx_\be y$ and $y\leapx_\be z$, then $x\leapx_\al z$ (transitivity).
+  \end{enumerate}
+  It is a \textbf{uniform space} if it also satisfies the following:
+  \begin{enumerate}[resume]
+  \item For any entourage $\al$, there is an entourage $\be$ such that for any $x,y\in X$, if $x\leapx_\be y$ then $y\leapx_\al x$.
+  \end{enumerate}
+\end{defn}
 
 % TODO: Upper prometric spaces are equivalent to quasi-uniform spaces; lower prometric spaces are equivalent to quasi-uniform apartness spaces.
 
