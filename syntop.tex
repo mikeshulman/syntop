@@ -674,7 +674,18 @@ We note that they also form a well-behaved category.
   (This is, of course, very inexplicit and impredicative.)
 \end{proof}
 
-Thus, locally decomposable topological spaces form a well-behaved category that fully captures the topological structure of prometric spaces, where ``topological structure'' is defined by the notion of continuous function.
+\begin{rmk}
+  In particular, \cref{thm:ldtop-topconcrete} implies that the forgetful functor from locally decomposable spaces to sets has a left adjoint, assigning to every set the finest possible locally decomposable topology on that set.
+  This is \emph{not} generally the discrete topology, since a discrete topology (meaning $x\ll A$ iff $x\in A$) is locally decomposable if and only if equality on $X$ is decidable.
+  Of course we cannot expect to prove that this topology is ever non-discrete, since excluded middle implies that it is.
+  But it seems likely that in many interesting cases it will turn out metatheoretically to coincide with the ``natural'' topology.
+\end{rmk}
+
+
+\section{Interlude: separation axioms}
+\label{sec:separation}
+
+In the last section we saw that locally decomposable topological spaces form a well-behaved category that fully captures the topological structure of prometric spaces, where ``topological structure'' is defined by the notion of continuous function.
 Of course, prometric spaces are still very special objects of this category, and much of their specialness is captured by additional \emph{separation axioms}.
 (Local decomposability itself is also naturally regarded as a separation axiom, albeit one that is only nontrivial constructively.
 This will be clearer in later sections, when its close relationship with regularity becomes evident.)
@@ -923,14 +934,6 @@ We write $\al\implies\be$ to mean that $\forall x\forall y,(x\leapx_\al y \impli
 % TODO: Upper prometric spaces are equivalent to quasi-uniform spaces; lower prometric spaces are equivalent to quasi-uniform apartness spaces.
 
 
-\section{Families of point-set relations: approach}
-\label{sec:approach}
-
-Approach spaces have a distance between points and sets, definable from a metric space by infima.
-Constructively this produces only an upper-real-valued distance, unless all subsets are located.
-Presumably there are ``pro-approach spaces'' that arise from prometric spaces, or at least from gauge spaces.
-Upper pro-approach spaces also give rise to syntopogenous spaces, but not decomposable ones.
-
 
 \section{Set-set relations: proximity}
 \label{sec:set-set}
@@ -938,8 +941,13 @@ Upper pro-approach spaces also give rise to syntopogenous spaces, but not decomp
 
 
 
-\section{Filters of set-set relations: syntopogeny}
-\label{sec:syntop}
+\section{Families of set-set relations: syntopogeny}
+\label{sec:syntopogeny}
+
+TODO: Approach spaces have a distance between points and sets, definable from a metric space by infima.
+Constructively this produces only an upper-real-valued distance, unless all subsets are located.
+Presumably there are ``pro-approach spaces'' that arise from prometric spaces, or at least from gauge spaces.
+Upper pro-approach spaces also give rise to syntopogenous spaces, but not decomposable ones.
 
 
 
