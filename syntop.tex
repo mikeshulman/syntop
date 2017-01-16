@@ -897,8 +897,9 @@ The standard way to divorce uniformity from real numbers is to consider \emph{fa
 \end{defn}
 
 The abstract structures capturing these relations are the following.
-We will use Greek letters $\al,\be,\gm$ to denote binary relations on a set, with ``$\al$ relates $x,y$'' written as $x\leapx_\al y$ or $x \oapt_\al y$ depending on the intended perspective.
-If $\forall x\forall y,(x\leapx_\al y \implies x\leapx_\be y)$, we write $\al\implies\be$ (i.e.\ $\al\subseteq \be$ as subsets of $X\times X$).
+We will use Greek letters $\al,\be,\gm$ to denote binary relations on a set, with $(x,y)\in \al$ written as $x\leapx_\al y$ or $x \oapt_\al y$ depending on the intended perspective.
+
+We write $\al\implies\be$ to mean that $\forall x\forall y,(x\leapx_\al y \implies x\leapx_\be y)$ (i.e.\ $\al\subseteq \be$ as subsets of $X\times X$).
 
 \begin{defn}
   A \textbf{quasi-uniform space} is a set $X$ together with a family of binary relations, called \textbf{entourages}, satisfying the following axioms.
@@ -911,7 +912,11 @@ If $\forall x\forall y,(x\leapx_\al y \implies x\leapx_\be y)$, we write $\al\im
   \end{enumerate}
   It is a \textbf{uniform space} if it also satisfies the following:
   \begin{enumerate}[resume]
-  \item For any entourage $\al$, there is an entourage $\be$ such that for any $x,y\in X$, if $x\leapx_\be y$ then $y\leapx_\al x$.
+  \item For any entourage $\al$, there is an entourage $\be$ such that for any $x,y\in X$, if $x\leapx_\be y$ then $y\leapx_\al x$ (symmetry).
+  \end{enumerate}
+  A quasi-uniform space is \textbf{(uniformly) locally decomposable} if
+  \begin{enumerate}[resume]
+  \item For any entourage $\al$, there is an entourage $\be$ such that for any $x,y\in X$, either $x\leapx_\al y$ or $\neg(x\leapx_\be y)$.
   \end{enumerate}
 \end{defn}
 
