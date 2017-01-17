@@ -21,6 +21,10 @@
 \def\inv{^{-1}}
 \def\hfep{\frac{\ep}{2}}
 \def\singleton#1{\{#1\}}
+\def\Preord{\mathbf{Preord}}
+\def\APreord{\mathbf{APreord}}
+\def\anti{\mathfrak{A}}
+\def\neigh{\mathfrak{Z}}
 \begin{document}
 \maketitle
 
@@ -121,7 +125,7 @@ Obviously any extended quasi-gauge is also a prometric.
 We do not know any important examples of the extra generality afforded by prometric spaces, but they seem a natural level of generality; almost everything we have to say about metric spaces or gauge spaces in this paper applies just as well to prometric ones.
 
 On the other hand, in constructive mathematics a very different (and much more general) notion is obtained by allowing distances to take values in the (nonnegative extended) \emph{upper} real numbers (sets $U$ of rational numbers satisfying the single axiom ``$y\in U$ if and only if there is an $x\in U$ with $x<y$'', plus $0\notin U$ for nonnegativity).
-In this case we will speak of an \textbf{upper prometric space}.
+In this case we will speak of an \textbf{upper prometric space}.\fxnote{What about lower reals?}
 %If necessary, we distinguish ordinary real numbers from upper ones by calling them \textbf{located}, and ordinary prometric spaces from upper ones by calling them \textbf{decomposable}.
 
 The main difference is that unlike located real numbers, upper real numbers constructively admit arbitrary infima.
@@ -132,7 +136,7 @@ We will return to upper prometric spaces briefly in \cref{sec:uniformity}.
 
 A metric space, and even a prometric space, contains a lot of information.
 Some of that information is \emph{numerical}, since points are compared by real number distances.
-However, for some purposes we are only interested in ``topological'' or ``geometric'' features that are, for instance, invariant with respect to scaling of distances.
+However, for many purposes we are only interested in ``topological'' or ``geometric'' features that are, for instance, invariant with respect to scaling of distances.
 Category-theoretically, this means we consider (pro)metric spaces as the objects of various different categories.
 The two primary types of morphism we will be interested in are the following.
 (Here $X$ and $Y$ denote prometric spaces; $\ep$ and $\de$ are assumed to range over $\Rp$; and $d_X$ and $d_Y$ are assumed to range over distances on $X$ and $Y$ respectively.)
@@ -236,12 +240,12 @@ The structure possessed by $\oapt$ is less familiar to classical mathematicians,
 For reasons that will become clear later, we first define a weaker notion and then the more familiar stronger one.
 
 \begin{defn}
-  A \textbf{co-preorder} is a binary relation $\oapt$ on a set $X$ such that:
+  A \textbf{anti-preorder} is a binary relation $\oapt$ on a set $X$ such that:
   \begin{enumerate}
   \item $\neg(x\oapt x)$ for all $x$ (irreflexivity).
   \item If $x\oapt z$ and $\neg(y\oapt z)$, then $x\oapt y$ (bilocal transitivity).
   \end{enumerate}
-  A co-preorder is\dots
+  an anti-preorder is\dots
   \begin{enumerate}[resume]
   \item \textbf{bilocally decomposable}, or a \textbf{comparison}, if whenever $x\oapt z$, then for any $y$ we have $x\oapt y$ or $y\oapt z$.
     (Note that this implies bilocal transitivity.)
@@ -263,7 +267,7 @@ But in the non-symmetric case, it seems useful to distinguish the two notions.
 \begin{thm}
   Let $X$ be a prometric space.
   \begin{enumerate}
-  \item The relation $\oapt$ is a comparison co-preorder.  
+  \item The relation $\oapt$ is a comparison anti-preorder.  
   \item If $X$ is symmetric, $\oapt$ is an apartness relation.
   \item $X$ is $T_0$ if and only if $\oapt$ is connected.
   \item $X$ is $T_1$ if and only if $\oapt$ is tight.
@@ -280,7 +284,7 @@ But in the non-symmetric case, it seems useful to distinguish the two notions.
 
 In particular, the equality relation of a $T_0$ prometric space is (like that of any set with a connected irreflexive relation) $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)$, hence $x\leapx y$ and thus $x=y$.
 
-Preorders and co-preorders are closely related.
+Preorders and anti-preorders are closely related.
 In fact, in classical mathematics they are entirely equivalent notions.
 To state the corresponding constructive fact, we first define the appropriate categories.
 
@@ -288,36 +292,41 @@ To state the corresponding constructive fact, we first define the appropriate ca
   Let $f:X\to Y$ be a function.
   \begin{enumerate}
   \item If $X$ and $Y$ are preorders, then $f$ is \textbf{monotone} if $x\leapx y \implies f(x)\leapx f(y)$ for all $x,y\in X$.
-  \item If $X$ and $Y$ are co-preorders, then $f$ is \textbf{co-monotone}, or \textbf{strongly extensional}, if $f(x)\oapt f(y) \implies x\oapt y$ for all $x,y\in X$.
+    We write $\Preord$ for the category of preorders and monotone maps.
+  \item If $X$ and $Y$ are anti-preorders, then $f$ is \textbf{monotone}, or \textbf{strongly extensional}, if $f(x)\oapt f(y) \implies x\oapt y$ for all $x,y\in X$.
+    We write $\APreord$ for the category of anti-preorders and monotone maps.
   \end{enumerate}
 \end{defn}
 
 \begin{thm}\label{thm:ord-le-apt}
-  If $X$ is a preorder, then the relation $\neg(x\leapx y)$ is a co-preorder.
-  Dually, if $X$ is a co-preorder, then the relation $\neg(x\oapt y)$ is a preorder.
-  These operations define functors $F$ and $G$ from preorders to co-preorders and vice versa, respectively, and the identity functions form natural transformations from the identity functors to $F G$ and $G F$.
+  If $X$ is a preorder, then the relation $\neg(x\leapx y)$ is an anti-preorder.
+  Dually, if $X$ is an anti-preorder, then the relation $\neg(x\oapt y)$ is a preorder.
+  These operations define an adjunction
+  \[\anti : \Preord \leftrightarrows \APreord : \neigh\]
 \end{thm}
 \begin{proof}
   Reflexivity is easy in both directions.
   If $X$ is a preorder, then for transitivity of its dual, suppose $\neg(x\leapx z)$ and $\neg\neg(y\leapx z)$; we must show $\neg(x\leapx y)$.
   Suppose $x\leapx y$; then since we are trying to prove a contradiction, we may assume $y\leapx z$, hence $x\leapx z$ by transitivity of $\leapx$, contradiction our other assumption.
 
-  Dually, if $X$ is a co-preorder, for transitivity of its dual suppose $\neg (x\oapt y)$ and $\neg (y\oapt z)$; we must show $\neg(x\oapt z)$.
+  Dually, if $X$ is an anti-preorder, for transitivity of its dual suppose $\neg (x\oapt y)$ and $\neg (y\oapt z)$; we must show $\neg(x\oapt z)$.
   Suppose $x\oapt z$; then by transitivity of $\oapt$ and our second assumption we have $x\oapt y$, contradicting our first assumption.
 
-  Functoriality in both directions is obvious from the contravariance of $\neg$, and (co-)monotonicity of the identity function is just the implication $P\implies \neg\neg P$, while naturality is obvious.
+  Functoriality in both directions is obvious from the contravariance of $\neg$.
+  For the unit and counit of the adjunction we take identity functions.
+  On one hand, if $X$ is a preorder, then $\neigh(\anti(X))$ is the same set $X$ with the relation $\neg\neg(x\leapx y)$.
+  Since $(x\leapx y) \implies \neg\neg(x\leapx y)$, the identity function is a monotone map $X\to \neigh(\anti(X))$.
+  On the other hand, if $X$ is an anti-preorder, then $\anti(\neigh(X))$ is the same set $X$ with the relation $\neg\neg(x\oapt y)$.
+  Since $(x\oapt y) \implies \neg\neg(x\oapt y)$, the identity function is a monotone map $\anti(\neigh(X)) \to X$.
+  The triangle identities are obviously satisfied.
 \end{proof}
 
-\cref{thm:ord-le-apt} gives some partial justification for defining the notion of co-preorder using bilocal transitivity instead of bilocal decomposability (comparison), since there seems no general way to make a comparison by negating a preorder.
+\cref{thm:ord-le-apt} gives some partial justification for defining the notion of anti-preorder using bilocal transitivity instead of bilocal decomposability (comparison), since there seems no general way to make a comparison by negating a preorder.
 Further justification will have to wait for \cref{thm:top-ord} and \cref{sec:syntopogeny}.
 
 \begin{thm}\label{thm:pmet-monotone}
   Let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a continuous function.
-  Then:
-  \begin{enumerate}
-  \item $f$ is a \textbf{monotone map} of preorders, i.e.\ if $x\leapx y$ then $f(x)\leapx f(y)$.
-  \item $f$ is a \textbf{strongly extensional} map of comparisons, i.e.\ if $f(x)\oapt f(y)$ then $x\oapt y$.
-  \end{enumerate}
+  Then $f$ is a monotone map of both preorders and anti-preorders.
 \end{thm}
 \begin{proof}
   For the first, given any $d_Y$ and $\ep>0$ we have a $d_X$ and $\de>0$ such that $d_X(x,y)<\de$ implies $d_Y(f(x),f(y))<\ep$.
@@ -327,19 +336,19 @@ Further justification will have to wait for \cref{thm:top-ord} and \cref{sec:syn
   Let $\ep = \frac12 \,d_Y(f(x),f(y))$; then by \cref{thm:cocontinuous} we have a $d_X$ and a $\de>0$ such that if $d_Y(f(x),f(y))>\ep$ (which is true) then $d_X(x,y)>\de$, hence $x\oapt y$.
 \end{proof}
 
-In fact,~\eqref{eq:leapx-oapt} means that the preorder of a prometric space is obtained from its co-preorder via \cref{thm:ord-le-apt}, so that the first statement of \cref{thm:pmet-monotone} follows from the second.
-This is an instance of the fact that constructively, it is often better to work with co-preorders (such as apartness relations) than preorders (such as equivalence relations), since many preorders are the dual of some co-preorder but not conversely.
-However, this seems to be due mainly to the impoverished nature of a single binary relation; in later sections we will see that for more refined topological structures we can impose natural conditions to make the ``closeness'' and ``apartness'' notions coincide.
+In fact,~\eqref{eq:leapx-oapt} means that the preorder of a prometric space is obtained from its anti-preorder via the functor $\neigh$ from \cref{thm:ord-le-apt}, so that the first statement of \cref{thm:pmet-monotone} follows from the second.
+This is an instance of the fact that constructively, it is often better to work with anti-preorders (such as apartness relations) than preorders (such as equivalence relations), since many preorders are the dual of some anti-preorder but not conversely.
+However, this seems to be due mainly to the impoverished nature of a single binary relation; in later sections we will see that for more refined topological structures we can impose natural conditions (satisfied by any prometric space) to make the ``closeness'' and ``apartness'' notions coincide.
 
 % \begin{thm}\label{thm:ord-topconcrete}
-%   The categories of preorders, co-preorders, and comparison co-preorders are ``topological over $\mathbf{Set}$'', i.e.\ their forgetful functor to $\mathbf{Set}$ has initial lifts for all sources and (hence) final lifts for all sinks.
+%   The categories of preorders, anti-preorders, and comparison anti-preorders are ``topological over $\mathbf{Set}$'', i.e.\ their forgetful functor to $\mathbf{Set}$ has initial lifts for all sources and (hence) final lifts for all sinks.
 %   In particular, they are complete and cocomplete.
 % \end{thm}
 % \begin{proof}
 %   Given a source $\{f_i : X \to Y_i\}$ with each $Y_i$ a preorder, define $x\leapx y$ for $x,y\in X$ to mean that $f_i(x)\leapx_i f_i(y)$ for all $i$.
 %   This is evidently a preorder and the initial lift.
 
-%   Similarly, given $\{f_i : X \to Y_i\}$ with each $Y_i$ a co-preorder, define $x\oapt y$ for $x,y\in X$ to mean that $f_i(x)\oapt_i f_i(y)$ for \emph{some} $i$.
+%   Similarly, given $\{f_i : X \to Y_i\}$ with each $Y_i$ an anti-preorder, define $x\oapt y$ for $x,y\in X$ to mean that $f_i(x)\oapt_i f_i(y)$ for \emph{some} $i$.
 %   Irreflexivity is obvious.
 %   For bilocal transitivity, if $x\oapt z$, so that $f_i(x)\oapt_i f_i(z)$ for some $i$, then if $\neg(y\oapt z)$ we have $\neg (f_i(y)\oapt_i f_i(z))$, hence $f_i(x) \oapt_i f_i(y)$ and so $x\oapt y$.
 %   A similar argument works for comparison.
@@ -698,7 +707,7 @@ The first few are naturally phrased using the fact that point-set relations give
   \item If $X$ is a topological neighborhood space, define $x\leapx y$ to mean that $\forall A, (x\ll A \to y\ll A)$.
     Then $\leapx$ is a preorder, called the \textbf{specialization order} of $X$.
   \item If $X$ is a topological apartness space, define $x\oapt y$ to mean $x \bowtie \singleton{y}$.
-    Then $\oapt$ is a co-preorder, and if $X$ is locally decomposable then it is a comparison.
+    Then $\oapt$ is an anti-preorder, and if $X$ is locally decomposable then it is a comparison.
   \end{enumerate}
   Moreover, if $X$ is a prometric space then both of these relations agree with those defined in \cref{def:promet-ord}.
 \end{thm}
@@ -801,7 +810,7 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   % Put differently, this means that if $x\leapx y$, then $f(x)\ll A$ implies $f(y)\ll A$, i.e.\ $x\leapx y \implies f(x)\leapx_Y f(y)$, where $\leapx_Y$ is defined as in \cref{thm:top-ord}.
   % This gives adjointness.
 
-  However, it is unclear how to construct an ``Alexandrov apartness'' from a co-preorder $\oapt$, even the comparison property $x\oapt y \lor y\oapt z$ seems insufficient, constructively, to ensure transitivity of any $\bowtie$ defined naturally from it.
+  However, it is unclear how to construct an ``Alexandrov apartness'' from an anti-preorder $\oapt$, even the comparison property $x\oapt y \lor y\oapt z$ seems insufficient, constructively, to ensure transitivity of any $\bowtie$ defined naturally from it.
   This may be related to the fact that the Alexandrov space of a poset is locally decomposable if and only if $\leapx$ is decidable.
 \end{rmk}
 
