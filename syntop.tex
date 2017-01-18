@@ -25,10 +25,18 @@
 \def\anti{\mathfrak{A}}
 \def\neigh{\mathfrak{Z}}
 \def\nn{\ensuremath{\neg\neg}}
+% Categories
+\def\Set{\mathbf{Set}}
 \def\Preord{\mathbf{Preord}}
 \def\APreord{\mathbf{APreord}}
 \def\PTop{\mathbf{PTop}}
+\def\Top{\mathbf{Top}}
+\def\PTopnn{\mathbf{PTop}_{\nn}}
+\def\LDTop{\mathbf{LDTop}}
 \def\APTop{\mathbf{APTop}}
+\def\ATop{\mathbf{ATop}}
+\def\APTopnn{\mathbf{APTop}_{\nn}}
+\def\LDATop{\mathbf{LDATop}}
 \begin{document}
 \maketitle
 
@@ -351,7 +359,7 @@ This is an instance of the fact that constructively, it is often better to work 
 However, this seems to be due mainly to the impoverished nature of a single binary relation; in later sections we will see that for more refined topological structures we can impose natural conditions (satisfied by any prometric space) to make the ``closeness'' and ``apartness'' notions coincide.
 
 % \begin{thm}\label{thm:ord-topconcrete}
-%   The categories of preorders, anti-preorders, and comparison anti-preorders are ``topological over $\mathbf{Set}$'', i.e.\ their forgetful functor to $\mathbf{Set}$ has initial lifts for all sources and (hence) final lifts for all sinks.
+%   The categories of preorders, anti-preorders, and comparison anti-preorders are ``topological over $\Set$'', i.e.\ their forgetful functor to $\Set$ has initial lifts for all sources and (hence) final lifts for all sinks.
 %   In particular, they are complete and cocomplete.
 % \end{thm}
 % \begin{proof}
@@ -401,7 +409,7 @@ We write $\cpl{A} = A\subseteq X = \setof{x\in X | x\notin A}$ for the relative 
   \item \textbf{locally decomposable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll B$ and $\forall y, (y\notin B \lor y \ll A)$.\fxnote{cite Bridges et. al.}
   \end{enumerate}
   If $X$ and $Y$ are pretopological neighborhood spaces, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\ll A$ implies $x\ll f\inv(A)$.
-  We write $\PTop$ for the category of pretopological neighborhood spaces and continuous maps.
+  We write $\PTop$ for the category of pretopological neighborhood spaces and continuous maps, and $\Top$, $\PTopnn$, and $\LDTop$ for its subcategories of topological, \nn-stable, and locally decomposable neighborhood spaces.
 \end{defn}
 
 Note that a local decomposability pretopological neighborhood space is automatically topological and \nn-stable, since if $\forall y, (y\notin B \lor y \ll A)$ then $\neg\neg B \subseteq A$ and also $B \subseteq \setof{ y | y\ll A}$.
@@ -422,14 +430,15 @@ Conversely, in classical mathematics any topological neighborhood space is local
   \item \textbf{locally decomposable} if whenever $x\bowtie A$, there is a subset $B$ such that $x\bowtie B$ and $\forall y, (y\in B \lor y\bowtie A)$.
   \end{enumerate}
   If $X$ and $Y$ are pretopological apartness space, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\bowtie f(A)$ implies $x\bowtie A$.
-  We write $\APTop$ for the category of pretopological apartness spaces and continuous maps.
+  We write $\APTop$ for the category of pretopological apartness spaces and continuous maps, and $\ATop$, $\APTopnn$, and $\LDATop$ for its subcategories of topological, \nn-stable, and locally decomposable apartness spaces.
 \end{defn}
 
 As before, a locally decomposable pretopological apartness space is topological, since if $\forall y, (y\in B \lor y\bowtie A)$ then $\setof{ y | y \not\bowtie A } \subseteq B$.
 Moreover, in slight contrast to the neighborhood case, any topological apartness space is \nn-stable, since $\cpl{\cpl{A}}\subseteq \setof{ y | y \not\bowtie A }$ by the contrapositive of reflexivity.
 Again, in classical mathematics any topological apartness space is locally decomposable, since we can take $B = \setof{y|y\not\bowtie A}$.
 
-As we will see below, the relation $\approx$ is not very useful to axiomatize constructively, so we will not bother with all the constructive variants.
+As we will see below, the relation $\approx$ is not very useful to axiomatize constructively, so we will not bother with all of its constructive variants.
+We will however name the version that omits binary additivity, since that axioms is usually impossible to achieve constructively.
 
 \begin{defn}
   A \textbf{Moore closure space} is a set $X$ with a relation $\approx$ between points and subsets such that
@@ -463,7 +472,7 @@ Finally, in a pretopological apartness space, the \textbf{exterior} of a set $A$
 \[ \ext(A) = \setof{ x | x\bowtie A } \]
 It is less natural to rephrase the axioms of $\bowtie$ in terms of $\ext$, however.
 
-\begin{thm}
+\begin{thm}\label{thm:pmet-top}
   If $X$ is a prometric space, then the relations $\ll$, $\bowtie$, and $\approx$ from \cref{defn:toprels} make it into a locally decomposable topological neighborhood space, a locally decomposable topological apartness space, and a Moore closure space, plus a topological closure space if excluded middle holds.
 \end{thm}
 \begin{proof}
@@ -529,163 +538,163 @@ Closure spaces are unsatisfactory as a \emph{basic} notion of space because thei
   The proof for strong $\approx$ is essentially the same.
 \end{proof}
 
-We will say no more about closure spaces.
-However, topological neighborhood spaces and topological apartness spaces are both reasonable constructive notions of ``space''.
+We will not say much more about closure spaces.
+Topological neighborhood spaces and topological apartness spaces, on the other hand, are both reasonable constructive notions of ``space''.
 In support of this we note the following:
 
 \begin{thm}\label{thm:top-topconcrete}
-  The categories of topological neighborhood spaces and topological apartness spaces are ``topological over $\mathbf{Set}$'', i.e.\ their forgetful functor to $\mathbf{Set}$ has initial lifts for all sources and (hence) final lifts for all sinks.
+  The categories $\PTop$ and $\APTop$ are all ``topological over $\Set$'', i.e.\ their forgetful functor to $\Set$ has initial lifts for all sources and (hence) final lifts for all sinks.
   In particular:
   \begin{enumerate}
   \item They are complete and cocomplete.
   \item Induced and coinduced structures exist.
-  \item The forgetful functor to $\mathbf{Set}$ has both a left adjoint (discrete spaces) and a right adjoint (indiscrete spaces).
+  \item The forgetful functor to $\Set$ has both a left adjoint (discrete spaces) and a right adjoint (indiscrete spaces).
   \item Every continuous function factors uniquely as a surjection followed by an embedding (an inclusion with the induced structure), and also as a quotient (a surjection with the coinduced structure) followed by an injection.
   \end{enumerate}
+  Moreover, their subcategories $\Top$, $\ATop$, $\PTopnn$, $\LDTop$, and $\LDATop$ (but not $\APTopnn$) are closed under initial lifts for sources.
+  In particular, they are each also topological over $\Set$, and are reflective in the corresponding supercategory.
 \end{thm}
 \begin{proof}
-  Note that topological neighborhood and apartness relations are closed under directed unions of point-set relations.
+  Note that pretopological neighborhood and apartness relations are closed under directed unions of point-set relations.
   Directedness is necessary for preservation of additivity.
   However, any family of such relations still has a join in the poset of such relations, constructed explicitly by closing up under finite additivity.
+  Moreover, such joins preserve transitivity, \nn-stability in the neighborhood case, and local decomposability.
 
-  Explicitly, given a family $\{\ll_i\}$ of topological neighborhood relations, define $x\ll A$ to mean that there exists a finite family $i_1,\dots,i_n$ and sets $B_1,\dots, B_n$ such that $\bigcap_{j=1}^n B_j \subseteq A$ and $x\ll_{i_j} B_j$ for all $j$.
+  Explicitly, given a family $\{\ll_i\}$ of pretopological neighborhood relations, define $x\ll A$ to mean that there exists a finite family $i_1,\dots,i_n$ and sets $B_1,\dots, B_n$ such that $\bigcap_{j=1}^n B_j \subseteq A$ and $x\ll_{i_j} B_j$ for all $j$.
   This satisfies isotony and additivity essentially by construction, and satisfies reflexivity since all the $\ll_i$ do.
-  For transitivity, if $x\ll A$ as above, then $x\ll_{i_j} \setof{y|y\ll_{i_j} B_j}$ by transitivity for $\ll_{i_j}$, while $\bigcap_{j=1}^n \setof{y|y\ll_{i_j} B_j} \subseteq \setof{y|y\ll A}$ essentially by the above definition of $\ll$; thus $x\ll \setof{y|y\ll A}$.
+
+  If moreover each $\ll_i$ is topological, then $x\ll_{i_j} \setof{y|y\ll_{i_j} B_j}$ by transitivity for $\ll_{i_j}$, while $\bigcap_{j=1}^n \setof{y|y\ll_{i_j} B_j} \subseteq \setof{y|y\ll A}$ essentially by the above definition of $\ll$; thus $x\ll \setof{y|y\ll A}$.
+  If instead each $\ll_i$ is \nn-stable, then we have $C_j$ with $x\ll_{i_j} \cpl{C_j}\subseteq B_j$; then if $C = \bigcup_{j=1}^n C_j$ we have $\bigcap_{j=1}^n \cpl{C_j} = \cpl{C}$, so $x\ll \cpl{C} \subseteq A$.
+  Finally, if each $\ll_i$ is locally decomposable, we have $C_j$ such that $x\ll_{i_j} C_j$ and $\forall y, (y\notin C_j \lor y\ll_{i_j} B_j)$.
+  Then $x \ll \bigcap_{j=1}^n C_j$, while any $y$ must either be in all the $B_j$ (hence in $A$) or not in some $C_j$ (hence not in $\bigcap_{j=1}^n C_j$).
+  Thus $\bigcap_{j=1}^n C_j$ exhibits local decomposability of $\ll$.
 
   The argument for apartness is similar: define $x\bowtie A$ to mean that there exist $i_1,\dots,i_n$ and $B_1,\dots, B_n$ such that $A\subseteq \bigcup_{j=1}^n B_j$ and $x\bowtie_{i_j} B_j$ for all $j$.
-  We then have $x\bowtie_{i_j} \setof{y|y\not\bowtie_{i_j} B_j}$, while $\setof{y|y\not\bowtie A} \subseteq \bigcup_{j=1}^n\setof{y|y\not\bowtie_{i_j} B_j}$ by construction, so $x\bowtie \setof{y|y\not\bowtie A}$.
-  Note that we did not actually need the relations $\ll_i$ or $\bowtie_i$ to satisfy additivity or isotony, only reflexivity and transitivity.
+  Isotony, additivity, and reflexivity are again obvious.
+  If each $\bowtie_i$ is topological, then have $x\bowtie_{i_j} \setof{y|y\not\bowtie_{i_j} B_j}$, while $\setof{y|y\not\bowtie A} \subseteq \bigcup_{j=1}^n\setof{y|y\not\bowtie_{i_j} B_j}$ by construction, so $x\bowtie \setof{y|y\not\bowtie A}$.
+  If instead all the $\bowtie_i$ are locally decomposable, we then have $C_j$ such that $x\bowtie_{i_j} C_j$ and $\forall y, (y\in C_j \lor y\bowtie_{i_j} B_j)$.
+  Then $x\bowtie \bigcup_{j=1}^n C_j$, while any $y$ must be either in some $C_j$ (hence in $\bigcup_{j=1}^n C_j$) or satisfy $y\bowtie_{i_j} B_j$ for all $j$, hence $y\bowtie A$.
+  (If each $\bowtie_i$ is \nn-stable, then $x\bowtie_{i_j} \cpl{\cpl{B_j}}$, but we cannot say that $\cpl{\cpl{A}} \subseteq \bigcup_{j=1}^n \cpl{\cpl{B_j}}$, only $\cpl{\cpl{A}} \subseteq \cpl{\cpl{\bigcup_{j=1}^n B_j}}$.)
 
-  Next, if $(Y,\ll_Y)$ is a topological neighborhood space and $f:X\to Y$ is any function, define $x\ll_f A$ to mean that $f\inv(B)\subseteq A$ for some $B$ such that $f(x)\ll_Y B$.
-  This is a topological neighborhood relation on $X$: isotony is by construction, reflexivity is obvious, and additivity follows since $f\inv$ preserves intersections.
-  For transitivity, if $f(x)\ll_Y B$ and $f\inv(B)\subseteq A$, then $f(x)\ll_Y \setof{y|y\ll_Y B}$; but $f\inv(\setof{y|y\ll_Y B}) \subseteq \setof{z|z\ll_f A}$ essentially by definition of $\ll_f$, so $x \ll_f \setof{z|z\ll_f A}$.
+  Next, if $(Y,\ll_Y)$ is a pretopological neighborhood space and $f:X\to Y$ is any function, define $x\ll_f A$ to mean that $f\inv(B)\subseteq A$ for some $B$ such that $f(x)\ll_Y B$.
+  This is a pretopological neighborhood relation on $X$: isotony is by construction, reflexivity is obvious, and additivity follows since $f\inv$ preserves intersections.
+  If $\ll_Y$ is topological and $x\ll_f A$, so that $f(x)\ll_Y B$ and $f\inv(B)\subseteq A$, then $f(x)\ll_Y \setof{y|y\ll_Y B}$; but $f\inv(\setof{y|y\ll_Y B}) \subseteq \setof{z|z\ll_f A}$ essentially by definition of $\ll_f$, so $x \ll_f \setof{z|z\ll_f A}$.
+  If instead $\ll_Y$ is \nn-stable, then $f(x)\ll_Y \cpl{C} \subseteq B$, whence $x \ll_f \cpl{f\inv(C)}$ and $\cpl{f\inv(C)} = f\inv(\cpl{C}) \subseteq f\inv(B) \subseteq A$.
+  Finally, if $\ll_Y$ is locally decomposable and, we have a $C$ with $f(x)\ll C$ and $\forall y, (y\notin C \lor y\ll B)$; but then $x\ll_f f\inv(C)$ and $\forall z, (f(z)\notin C \lor f(z) \ll B)$, hence $\forall z, (z\notin f\inv(C) \lor z \ll_f A)$.
 
-  Moreover, $f$ is continuous for some topological neighborhood relation $\ll_X$ on $X$ if and only $\ll_f$ is contained in $\ll_X$.
-  More generally, for any topological neighborhood space $(Z,\ll_Z)$ and function $g:Z\to X$, the composite $f g$ is continuous if and only if $\ll_{f g}$ (which coincides with $(\ll_f)_g$) is contained in $\ll_Z$.
-  Thus, any source $\{ f_i : X \to Y_i \}$, where each $Y_i$ is a topological neighborhood space, has an initial lift, consisting of the join of all the $\ll_{f_i}$ constructed as above.
+  Moreover, $f$ is continuous for some pretopological neighborhood relation $\ll_X$ on $X$ if and only $\ll_f$ is contained in $\ll_X$.
+  More generally, for any pretopological neighborhood space $(Z,\ll_Z)$ and function $g:Z\to X$, the composite $f g$ is continuous if and only if $\ll_{f g}$ (which coincides with $(\ll_f)_g$) is contained in $\ll_Z$.
+  Thus, any source $\{ f_i : X \to Y_i \}$, where each $Y_i$ is a pretopological neighborhood space, has an initial lift, consisting of the join of all the $\ll_{f_i}$ constructed as above; and if each $Y_i$ is topological, \nn-stable, or locally decomposable, so is the resulting structure on $X$.
 
   The argument for apartness is analogous, using the relation $x\bowtie_f A$ defined to mean $f(x)\bowtie_Y f(A)$.
-  This is a topological apartness relation on $X$: reflexivity is obvious, while isotony and additivity follow since direct images of subsets preserve containment and unions.
-  For transitivity, if $f(x)\bowtie_Y f(A)$, then $f(x) \ll_Y \setof{y|y\not\bowtie_Y f(A)}$; but $f(\setof{z|z\not\bowtie_f A}) \subseteq \setof{y|y\not\bowtie_Y f(A)}$ essentially by definition of $\bowtie_f$, so $x\bowtie_f \setof{z|z\not\bowtie_f A}$.
-  Again $f$ is continuous for $\bowtie_X$ iff $\bowtie_f$ is contained in $\bowtie_X$, and similarly for $f g$, so to construct an initial lift we can join all the $\bowtie_{f_i}$.
+  This is a pretopological apartness relation on $X$: reflexivity is obvious, while isotony and additivity follow since direct images of subsets preserve containment and unions.
+  If $\bowtie_Y$ is topological and $x\bowtie_f A$, so that $f(x)\bowtie_Y f(A)$, then $f(x) \ll_Y \setof{y|y\not\bowtie_Y f(A)}$; but $f(\setof{z|z\not\bowtie_f A}) \subseteq \setof{y|y\not\bowtie_Y f(A)}$ essentially by definition of $\bowtie_f$, so $x\bowtie_f \setof{z|z\not\bowtie_f A}$.
+  If instead $\bowtie_Y$ is locally decomposable, we have a $B$ with $f(x)\bowtie B$ and $\forall y,(y\in B \lor y\bowtie f(A))$.
+  Thus $\forall z, (f(z)\in B \lor f(z)\bowtie f(A))$, hence $\forall z, (z\in f\inv(B) \lor z\bowtie_f A)$, while $f(x) \bowtie f(f\inv(B))$ by isotony and thus $x \bowtie_f f\inv(B)$.
+  (Note that this construction does also work for \nn-stability, so that $\APTopnn$ is at least a fibration over $\Set$.)
 
-  Note that an analogous argument for closure \emph{doesn't} work, since binary additivity is no longer a closure condition.
-  This is another reason closure spaces are unsatisfactory, and the analogous proofs for $\bowtie$ and $\ll$ is one reason we have chosen to work with $\ll$ rather than open sets.
+  Again $f$ is continuous for $\bowtie_X$ iff $\bowtie_f$ is contained in $\bowtie_X$, and similarly for $f g$.
+  Thus to construct an initial lift we can join all the $\bowtie_{f_i}$, which is topological or locally decomposable if all the $Y_i$ are.
 \end{proof}
 
-As for the relationship between neighborhood and apartness spaces, we have the following partial analogue of \cref{thm:ord-le-apt}:
+Note that an analogous argument for closure spaces \emph{doesn't} work.
+This is another reason closure spaces are unsatisfactory.
+The close similarity between the proofs for $\bowtie$ and $\ll$ is one reason we have chosen to work with $\ll$ rather than open sets.
+
+\begin{rmk}
+  In particular, \cref{thm:ldtop-topconcrete} implies that the forgetful functor from locally decomposable spaces to sets has a left adjoint, assigning to every set the finest possible locally decomposable topology on that set.
+  This is \emph{not} generally the discrete topology, since a discrete topology (meaning $x\ll A$ iff $x\in A$) is locally decomposable if and only if equality on $X$ is decidable.
+  Of course we cannot expect to prove that this topology is ever non-discrete, since excluded middle implies that it is.
+  But it seems likely that in many interesting cases it will turn out metatheoretically to coincide with the ``natural'' topology.
+\end{rmk}
+
+For the relationship between neighborhood and apartness spaces, we have the following analogue of \cref{thm:ord-le-apt}:
 
 \begin{thm}\label{thm:top-ll-bowtie}
   If $X$ is a pretopological neighborhood space, define $x\bowtie A$ to mean $x\ll \cpl{A}$; this is a pretopological apartness space $\anti(X)$.
   Dually, if $X$ is a pretopological apartness space, define $x\ll A$ to mean that there exists a $B$ such that $x\bowtie B$ and $\cpl{B}\subseteq A$; this is a pretopological neighborhood space.
   These operations define an idempotent adjunction
-  \[ \anti : \PTop \leftrightarrows \APTop : \neigh \]
+  \[ \anti : \PTop \leftrightarrows \APTop : \neigh. \]
+  Moreover:
+  \begin{enumerate}
+  \item The fixed objects on both sides are exactly the \nn-stable spaces.
+    Thus the adjunction restricts to an equivalence $\PTopnn \simeq \APTopnn$.
+  \item If $X$ is a topological neighborhood space, then $\anti(X)$ is a topological apartness space.
+  \item If $X$ is a topological apartness space, then it is \nn-stable and hence a fixed point of the adjunction.
+  \item Both functors $\anti$ and $\neigh$ preserve local decomposability, and locally decomposable spaces are \nn-stable.
+    Thus the adjunction restricts to an equivalence $\LDTop \simeq \LDATop$.
+    \label{item:top-ll-bowtie-equiv}
+  \end{enumerate}
 \end{thm}
 \begin{proof}
+  In both cases the preservation of isotony, reflexivity, and additivity is easy.
+  There are no worries about de Morgan's law, because in \emph{both} cases the set we are complementing is the one apart from something, binary additivity for apartness involves unions, and $\cpl{(A\cup B)} = \cpl{A} \cap \cpl{B}$ is the de Morgan law that does hold constructively.
+
+  For functoriality of $\anti$, suppose $f:X\to Y$ is a continuous map of pretopological neighborhood spaces, and that $f(x) \bowtie f(A)$, meaning by definition $f(x)\ll \cpl{f(A)}$.
+  Then by continuity of $f$ we have $x \ll f\inv(\cpl{f(A)}) = \cpl{f\inv(f(A))}$, hence $x\bowtie f\inv(f(A))$ by definition.
+  But $A \subseteq f\inv(f(A))$, so $x\bowtie A$ by isotony.
+  Thus $\anti(f)$ is continuous.
+
+  For functoriality of $\neigh$, suppose $f:X\to Y$ is a continuous map of pretopological apartness spaces, and that $f(x) \ll A$, meaning that $f(x) \bowtie B$ and $\cpl{B} \subseteq A$ for some $B$.
+  Then $f(x) \bowtie f(f\inv(B))$ by isotony, so $x\bowtie f\inv(B)$ by continuity of $f$, while $\cpl{f\inv(B)} = f\inv(\cpl{B}) \subseteq f\inv(A)$; so $x\ll f\inv(A)$ by definition.
+  Thus $\neigh(f)$ is continuous.
+
+  As in \cref{thm:ord-le-apt}, the unit and counit are the identity functions, so that the triangle identities are trivial once we know that the unit and counit are continuous.
+  If $X$ is a pretopological neighborhood space, then in $\neigh(\anti(X))$ to say ``$x\ll A$'' means that there is a $B$ such that $\cpl{B}\subseteq A$ and $x\ll \cpl{B}$.
+  This implies $x\ll A$ in $X$ by isotony, so the identity function $X\to \neigh(\anti(X))$ is continuous; and it is an isomorphism exactly when $X$ is \nn-stable.
   
-TODO.
+  On the other side, if $X$ is a pretopological apartness space, then in $\anti(\neigh(X))$ to say ``$x\bowtie A$'' means that $x\bowtie B$ and $\cpl{B}\subseteq \cpl{A}$ for some $B$.
+  This is implied by $x\bowtie A$ in $X$ (take $B=A$), so the identity function $\anti(\neigh(X)) \to X$ is continuous.
+  To see that it is an isomorphism exactly when $X$ is \nn-stable, note that $\cpl{B}\subseteq \cpl{A}$ is equivalent to $A \subseteq \cpl{\cpl{B}}$.
 
-  % For transitivity of~\ref{item:top-ll-bowtie}, suppose $x\bowtie A$, i.e.\ $x\ll \cpl{A}$; to show $x\bowtie \setof{y|\neg(y\bowtie A)}$ means to show $x\ll \setof{y|\neg\neg(y\bowtie A)} = \setof{y|\neg\neg(y\ll \cpl{A})}$.
-  % But $x\ll \setof{y|y\ll \cpl{A}}$ by transitivity for $\ll$, and $(y\ll \cpl{A})\implies\neg\neg(y\ll\cpl{A})$, so the result follows by isotony.
+  For idempotence, it suffices to show that $\anti(X)$ and $\neigh(X)$ are both \nn-stable.
+  In the former case this follows from the identity $\cpl{\cpl{\cpl{A}}} = \cpl{A}$, and in the latter essentially by definition.
 
-\end{proof}
+  To see that $\anti$ preserves transitivity, suppose $x\bowtie A$ in $\anti(X)$, i.e.\ $x\ll \cpl{A}$.
+  To show $x\bowtie \setof{y|\neg(y\bowtie A)}$ means to show $x\ll \setof{y|\neg\neg(y\bowtie A)} = \setof{y|\neg\neg(y\ll \cpl{A})}$.
+  But $x\ll \setof{y|y\ll \cpl{A}}$ by transitivity for $\ll$, and $(y\ll \cpl{A})\implies\neg\neg(y\ll\cpl{A})$, so the result follows by isotony.
 
-LEFT OFF
-
-There is a certain sense in which topological apartness spaces can be regarded as a subclass of topological neighborhood spaces, namely:
-
-\begin{lem}\label{thm:top-bowtie-ll}
-  If $X$ is a topological apartness space and we define $x\ll A$ to mean
-  \begin{equation}
-    \exists B, (x\bowtie B \land \forall y, (y\bowtie B \implies y\in A)),\label{eq:top-bowtie-ll-1}
-  \end{equation}
-  then $X$ becomes a topological neighborhood space.
-  Moreover, we can reconstruct the original $\bowtie$ as in \cref{thm:toprels}\ref{item:top-ll-bowtie}.
-\end{lem}
-\begin{proof}
-  As usual, the interesting axiom is transitivity.
-  Thus, suppose $x\ll A$, witnessed by $B$ such that $x\bowtie B$ and $\forall y,(y\bowtie B \implies y\in A)$, i.e.\ $\setof{y|y\bowtie B} \subseteq A$.
-  By transitivity for $\bowtie$, we have $x\bowtie \setof{y|y\not\bowtie B}$, so to show $x\ll \setof{y|y\ll A}$ it suffices to show $z\bowtie \setof{y|y\not\bowtie B} \implies z\in \setof{y|y\ll A}$.
-  But if $z\bowtie \setof{y|y\not\bowtie B}$, then $z\bowtie B$ by isotony, and so $z\ll A$ by definition of $\ll$ and our assumption about $B$.
-  
-  For the second assertion, we have to show that $x\bowtie A$ is equivalent to
-  \[\exists B, (x\bowtie B \land \forall y, (y\bowtie B \implies y\notin A)).\]
-  This is certainly true if $x\bowtie A$ (take $B=A$).
-  Conversely, the above assumption implies $A \subseteq \setof{y|y\not\bowtie B}$, so we have $x\bowtie A$ by isotony and transitivity.
-\end{proof}
-
-However, the construction of \cref{thm:top-bowtie-ll} is apparently not functorial: a $\bowtie$-continuous map need not induce a $\ll$-continuous map.
-Thus, categorically it is at least dubious to regard topological apartness spaces as a subclass of topological neighborhood spaces.
-
-There is a way to define $\ll$ in terms of $\bowtie$ that is functorial: let $x\ll A$ mean
-\begin{equation}
-  \exists B, (x\bowtie B \land \forall y, (y\in A \lor y\in B)).\label{eq:top-bowtie-ll-2}
-\end{equation}
-For if $f:X\to Y$ is $\bowtie$-continuous, i.e.\ $f(x)\bowtie f(A)$ implies $x\bowtie A$, and if we suppose $f(x)\ll C$, then we have by definition $B\subseteq Y$ with $f(x)\bowtie B$ and $\forall y, (y\in C \lor y\in B)$.
-Since $f(f\inv(B))\subseteq B$, we have $f(x)\bowtie f(f\inv(B))$, so $x\bowtie f\inv(B)$.
-Moreover, for all $y\in X$ we have $f(y)\in C$ or $f(y)\in B$, hence $y\in f\inv(C)$ or $y\in f\inv(B)$.
-Thus, $f\inv(B)$ exhibits $x\ll f\inv(C)$, so $f$ is $\ll$-continuous.
-
-However, \eqref{eq:top-bowtie-ll-2} apparently fails to satisfy transitivity in general, so it does not define a topological neighborhood space.
-This suggests that a natural subclass of topological apartness spaces to compare with topological neighborhood spaces would be those for which these two definitions of $\ll$ coincide.\fxnote{Is there an adjunction or something else nicer?}
-A natural condition that ensures this is (local decomp)
-
-\begin{thm}\label{thm:top-locdec-equiv}
-  The categories of
-  locally decomposable topological neighborhood spaces and
-  locally decomposable topological apartness spaces
-  are equivalent.
-\end{thm}
-\begin{proof}
-  By \cref{thm:toprels}\ref{item:top-ll-bowtie}, we have a functor from neighborhood spaces to apartness spaces.
-  We claim that local decomposability makes~\eqref{eq:top-bowtie-ll-1} and~\eqref{eq:top-bowtie-ll-2} coincide, giving a functor in the other direction.
-  Evidently~\eqref{eq:top-bowtie-ll-2} always implies~\eqref{eq:top-bowtie-ll-1}.
-  Conversely, suppose $x\ll A$ by~\eqref{eq:top-bowtie-ll-1}, so that $x\bowtie B$ and $\forall y, (y\bowtie B \implies y\in A)$.
-  By local decomposability we have a $C$ with $x\bowtie C$ and $\forall y, (y\in C \lor y\bowtie B)$; but then $\forall y, (y\in C \lor y\in A)$, giving~\eqref{eq:top-bowtie-ll-2}.
-
-  It remains to show that local decomposability is preserved in both directions, and that the round-trip composite is the identity on locally decomposable neighborhood spaces.
-  Suppose first that $\ll$ is locally decomposable and $x \bowtie A$, so that $x\ll \cpl{A}$; then we have a $B$ with $x\ll B$ and $\forall y, (y\notin B \lor y\ll \cpl{A})$.
+  We have already observed that topological apartness spaces and locally decomposable neighborhood spaces are \nn-stable, so it remains to show that $\anti$ and $\neigh$ both preserve local decomposability.
+  Suppose first that $X$ is a locally decomposable neighborhood space, and $x \bowtie A$ in $\anti(X)$, so that $x\ll \cpl{A}$.
+  Then we have a $B$ with $x\ll B$ and $\forall y, (y\notin B \lor y\ll \cpl{A})$.
   Let $C = \cpl{B}$; then $x\ll \cpl{C}$ by isotony, i.e.\ $x\bowtie C$.
-  Moreover, any $y$ satisfies either $y\ll\cpl{A}$, i.e.\ $y\bowtie A$, or $y\notin B$, i.e.\ $y\in C$.
-  Thus, $\bowtie$ is locally decomposable.
+  Moreover, for any $y$ we have either $y\ll\cpl{A}$, hence $y\bowtie A$, or $y\notin B$, hence $y\in C$.
+  Thus, $\anti(X)$ is locally decomposable.
 
-  On the other hand, suppose $\bowtie$ is locally decomposable and $x\ll A$, so that (by~\eqref{eq:top-bowtie-ll-2}) we have a $B$ with $x\bowtie B$ and $\forall y, (y\in A \lor y\in B)$.
-  Then by local decomposability for $\bowtie$ we have a $C$ with $x\bowtie C$ and $\forall y, (y\in C \lor y\bowtie B)$.
-  Using it again, we have a $D$ with $x\bowtie D$ and $\forall y, (y\in D \lor y\bowtie C)$.
-  Thus $D$ exhibits $x\ll \setof{y|y\bowtie C}$.
-  Let $z\in X$; it remains to show $z\ll A$ or $z\notin \setof{y|y\bowtie C}$.
-  We have either $z\in C$ or $z\bowtie B$, and if $z\bowtie B$ and hence $z\ll A$ (exhibited by $B$).
-  But if $z\in C$, then $z\not\bowtie C$, hence $z\notin \setof{y|y\bowtie C}$.
-
-  Finally, suppose given a locally decomposable $\ll$; we must show that $x\ll A$ if and only if
-  \[ \exists B, (x\ll \cpl{B} \land \forall y, (y\in A \lor y\in B)) \]
-  This statement clearly implies $\cpl{B}\subseteq A$, hence $x\ll A$ by isotony.
-  Conversely, if $x\ll A$ then we have a $C$ with $x\ll C$ and $\forall y, (y\ll A \lor y\notin C)$, since $\ll$ is locally decomposable.
-  Let $B = \cpl{C}$; then $x\ll \cpl{B} = \cpl{\cpl{C}}$ by isotony,
-  and any $y$ satisfies either $y\ll A$ (hence $y\in A$) or $y\notin C$ (hence $y\in B$).
+  In the other direction, suppose $X$ is a locally decomposable apartness space, and $x\ll A$ in $\neigh(X)$, so that $x\bowtie B$ and $\cpl{B}\subseteq A$.
+  Then we have a $C$ with $x\bowtie C$ and $\forall y, (y\in C \lor y\bowtie B)$.
+  Let $D = \cpl{C}$; then $x\ll D$ since $x\bowtie C$.
+  Moreover, for any $y$ we have either $y\in C$, hence $y\notin D$, or $y\bowtie B$, hence $y\ll A$.
+  Thus, $\neigh(X)$ is locally decomposable.
 \end{proof}
 
-Local decomposability is classically trivial (take $B=\setof{y|y\bowtie A}$ for $\bowtie$, or $B=A$ for $\ll$).
-Constructively, it is an extra condition, but is not too strong; it is satisfied by any prometric space.
+\begin{rmk}
+  There are at least two other ways to define $x\ll A$ in a topological apartness space, namely
+  \begin{gather}
+    \exists B, (x\bowtie B \land \forall y, (y\bowtie B \implies y\in A))\label{eq:top-bowtie-ll-1}\\
+    \exists B, (x\bowtie B \land \forall y, (y\in A \lor y\in B)).\label{eq:top-bowtie-ll-2}
+  \end{gather}
+  Of these,~\eqref{eq:top-bowtie-ll-1} is the one used by~\cite{bridges} to define the ``apartness topology''.
+  It has the advantage of preserving transitivity, but it is not functorial $\ATop \to \Top$ or even $\APTop \to \PTop$, so category-theoretically it is suspect.
+  Definition~\eqref{eq:top-bowtie-ll-2} is, like the definition given in \cref{thm:top-ll-bowtie}, a functor $\APTop \to \PTop$, but apparently not $\ATop \to \Top$.
+  Category-theoretically, however, the adjunction of \cref{thm:top-ll-bowtie} argues strongly for the correctness of the functor $\neigh$ given there.
+  The reader can easily check that all three definitions agree in the locally decomposable case.
+\end{rmk}
+
+Recall that in \cref{thm:pmet-top} we showed that a prometric space has both a locally decomposable neighborhood relation and a locally decomposable apartness relation.
 
 \begin{thm}\label{thm:promet-top}
-  The $\bowtie$ and $\ll$ underlying any prometric space are locally decomposable, and identified with each other by the equivalence of \cref{thm:top-locdec-equiv}.
-  Moreover, this defines a fully faithful functor from prometric spaces and continuous functions to the category of \cref{thm:top-locdec-equiv}.
+  The $\bowtie$ and $\ll$ underlying any prometric space are identified with each other by the equivalence of \cref{thm:top-ll-bowtie}\ref{item:top-ll-bowtie-equiv}.
+  Moreover, this defines a fully faithful functor from prometric spaces and continuous functions to $\LDTop$ (or equivalently $\LDATop$).
 \end{thm}
 \begin{proof}
-  Let $X$ be a prometric space; we first show that $x\bowtie A$ if and only if $x\ll \cpl{A}$ according to \cref{defn:toprels}, so that the two structures correspond under \cref{thm:top-locdec-equiv}.
+  Let $X$ be a prometric space; we first show that $x\bowtie A$ if and only if $x\ll \cpl{A}$ according to \cref{defn:toprels}, so that the two structures are identified by $\anti$.
   If $x\bowtie A$, we have $d,\ep$ such that $y\in A \implies d(x,y)>\ep$ for any $y$.
   By a contrapositive, it follows that $d(x,y)\le \ep \implies y\notin A$, giving $x\ll \cpl{A}$.
   Conversely, if $x\ll\cpl{A}$, we have $d,\ep$ such that $d(x,y)< \ep \implies y\notin A$ for any $y$.
   The contrapositive is now $\neg\neg(y\in A) \implies d(x,y)\ge \ep$, which implies $y\in A \implies d(x,y)> \hfep$, so $x\bowtie A$.
 
-  For local decomposability, let $x\ll A$ so we have $d,\ep$ with $d(x,y)< \ep \implies y\in A$ for any $y$.
-  Let $d'$ be as in prometric transitivity for $d$, and let $B = \setof{y|d'(x,y)<\hfep}$; then $x\ll B$ is exhibited by $d',\hfep$.
-  Now for any $y$, we have either $d'(x,y)<\frac{2\ep}{3}$ or $d'(x,y)>\hfep$.
-  In the former case $y\ll A$ is exhibited by $d'$ and $\frac{\ep}{3}$, since if $d'(y,z)<\frac{\ep}{3}$ then $d(x,z)<\ep$ so $z\in A$.
-  And in the latter case $y\notin B$ by definition.
-
-  Finally, let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a function.
+  Now let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a function.
   Suppose first that $f$ is prometrically continuous, and let $f(x)\ll A$, so that we have $d_Y,\ep$ with $d_Y(f(x),y)< \ep \implies y\in A$ for any $y\in Y$.
   By continuity, there is a $d_X$ and a $\de$ such that $d_X(x,x')<\de \implies d_Y(f(x),f(x'))<\ep$ for any $x'\in X$, and hence $d_X(x,x')<\de \implies x'\in f\inv(A)$.
   Thus $x\ll f\inv(A)$, so $f$ is $\ll$-continuous.
@@ -695,42 +704,6 @@ Constructively, it is an extra condition, but is not too strong; it is satisfied
 \end{proof}
 
 Henceforth we will simply speak of a \textbf{locally decomposable topological space}, which comes with both a $\ll$ and a $\bowtie$ that are interdefinable.
-We note that they also form a well-behaved category.
-
-\begin{thm}\label{thm:ldtop-topconcrete}
-  Locally decomposable topological spaces are topological over $\mathbf{Set}$, hence complete and cocomplete.
-  Moreover, they form a reflective subcategory of both topological neighborhood spaces and topological apartness spaces, and the units of the reflection are bijective (i.e.\ the reflection retopologizes the same set).
-\end{thm}
-\begin{proof}
-  First, we show that if $\bowtie$ or $\ll$ is locally decomposable, then so are $\bowtie_f$ and $\ll_f$ as defined in \cref{thm:top-topconcrete}.
-  For $\ll$, if $x\ll_f A$, meaning $f\inv(C)\subseteq A$ with $f(x)\ll C$, then we have a $B$ with $f(x)\ll B$ and $\forall y, (y\notin B \lor y\ll C)$.
-  But then $x\ll_f f\inv(B)$ and $\forall z, (f(z)\notin B \lor f(z) \ll C)$, hence $\forall z, (z\notin f\inv(B) \lor z \ll_f A)$.
-
-  For $\bowtie$, if $x\bowtie_f A$, meaning $f(x)\bowtie f(A)$, we have a $B$ with $f(x)\bowtie B$ and $\forall y,(y\in B \lor y\bowtie f(A))$.
-  Thus $\forall z, (f(z)\in B \lor f(z)\bowtie f(A))$, hence $\forall z, (z\in f\inv(B) \lor z\bowtie_f A)$, while $f(x) \bowtie f(f\inv(B))$ by isotony and thus $x \bowtie_f f\inv(B)$.
-
-  Second, we show that the join of any family of locally decomposable point-set relations (in either sense) is again locally decomposable.
-  Recall that for the join of $\{\ll_i\}$, we define $x\ll A$ to mean that there exist $i_1,\dots,i_n$ and sets $B_1,\dots, B_n$ such that $\bigcap_{j=1}^n B_j \subseteq A$ and $x\ll_{i_j} B_j$ for all $j$.
-  If all the $\ll_i$ are locally decomposable, then in this case we have $C_j$ such that $x\ll_{i_j} C_j$ and $\forall y, (y\notin C_j \lor y\ll_{i_j} B_j)$.
-  Then $x \ll \bigcap_{j=1}^n C_j$, while any $y$ must either be in all the $B_j$ (hence in $A$) or not in some $C_j$ (hence not in $\bigcap_{j=1}^n C_j$).
-  Thus $\bigcap_{j=1}^n C_j$ exhibits local decomposability of $\ll$.
-
-  Similarly, for the join of $\{\bowtie_i\}$ we defined $x\bowtie A$ to mean that there exist $i_1,\dots,i_n$ and $B_1,\dots, B_n$ such that $A\subseteq \bigcup_{j=1}^n B_j$ and $x\bowtie_{i_j} B_j$ for all $j$.
-  If all the $\bowtie_i$ are locally decomposable, we then have $C_j$ such that $x\bowtie_{i_j} C_j$ and $\forall y, (y\in C_j \lor y\bowtie_{i_j} B_j)$.
-  Then $x\bowtie \bigcup_{j=1}^n C_j$, while any $y$ must be either in some $C_j$ (hence in $\bigcup_{j=1}^n C_j$) or satisfy $y\bowtie_{i_j} B_j$ for all $j$, hence $y\bowtie A$.
-
-  Since initial lifts were constructed in \cref{thm:top-topconcrete} by restricting along functions and then joining in a poset of point-set relations, it follows that local decomposability is preserved by initial lifts of sources.
-  This implies the first statement of the theorem.
-  The second is a straightforward argument for any subcategory of a topological category closed under initial lifts: the locally decomposable reflection of a topological relation is the join of all locally decomposable relations contained in it.
-  (This is, of course, very inexplicit and impredicative.)
-\end{proof}
-
-\begin{rmk}
-  In particular, \cref{thm:ldtop-topconcrete} implies that the forgetful functor from locally decomposable spaces to sets has a left adjoint, assigning to every set the finest possible locally decomposable topology on that set.
-  This is \emph{not} generally the discrete topology, since a discrete topology (meaning $x\ll A$ iff $x\in A$) is locally decomposable if and only if equality on $X$ is decidable.
-  Of course we cannot expect to prove that this topology is ever non-discrete, since excluded middle implies that it is.
-  But it seems likely that in many interesting cases it will turn out metatheoretically to coincide with the ``natural'' topology.
-\end{rmk}
 
 
 \section{Interlude: separation axioms}
@@ -764,8 +737,8 @@ The first few are naturally phrased using the fact that point-set relations give
   Since this is true for all $\ep$, we have $d(x,y)=0$ for all $d$.
 
   In the apartness case, irreflexivity is obvious.
-  For bilocal transitivity, if $x\oapt z$ so that $x\bowtie \{z\}$, then by transitivity for $\bowtie$ we have $x \bowtie \setof{y|y\not \bowtie \{z\}}$.
-  Thus, if $\neg (y\oapt z)$, so that $\neg (y\bowtie \{z\})$, then $y$ belongs to a set that is apart from $x$; hence $x\bowtie \{y\}$ by isotony, i.e.\ $x\oapt y$.
+  For bilocal transitivity, if $x\oapt z$ so that $x\bowtie \singleton{z}$, then by transitivity for $\bowtie$ we have $x \bowtie \setof{y|y\not \bowtie \singleton{z}}$.
+  Thus, if $\neg (y\oapt z)$, so that $\neg (y\bowtie \singleton{z})$, then $y$ belongs to a set that is apart from $x$; hence $x\bowtie \singleton{y}$ by isotony, i.e.\ $x\oapt y$.
 
   For the comparison axiom, we note first that local decomposability implies the following property that we call \textbf{weak local decomposability}: if $x\bowtie A$, then $\forall y, (x\bowtie \singleton{y} \lor y\bowtie A)$.
   For if $x\bowtie B$ and $y\in B$ as in local decomposability, then $x\bowtie \singleton{y}$.
@@ -787,13 +760,24 @@ The first few are naturally phrased using the fact that point-set relations give
   \item $X$ is $\mathbf{T_0}$ if $(\neg(x\oapt y) \land \neg(y\oapt x)) \implies x=y$ (i.e.\ $\oapt$ is connected).
   \item $X$ is $\mathbf{T_1}$ if $\neg(x\oapt y)\implies x=y$ (i.e.\ $\oapt$ is tight).
   \item $X$ is $\apart$-$\mathbf{T_1}$ if $x\apart y \implies x\oapt y$, for some tight relation $\apart$.
-  \item $X$ is \textbf{strongly} $\mathbf{R_0}$ if $\oapt$ is symmetric (hence an apartness relation).
+  \item $X$ is \textbf{strongly} $\mathbf{R_0}$ if $\oapt$ is symmetric (hence, if $X$ is also locally decomposable, $\oapt$ is an apartness relation).
   \end{enumerate}
 \end{defn}
 
 Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conversely $\apart$-$T_1$ for any tight $\apart$ implies ordinary $T_1$.
 
 \begin{thm}
+  Let $X$ be a prometric space.
+  \begin{enumerate}
+  \item $X$ is $T_1$ or $T_0$ if and only if its underlying topology is so.
+  \item If $X$ is symmetric, then its underlying topology is strongly $R_0$.
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  Obvious.
+\end{proof}
+
+\begin{thm}\label{thm:ldtop-ord}
   If $X$ is a locally decomposable topological space, then for any $x,y\in X$ we have
   \[ (x\leapx y) \iff \neg(x\oapt y) \]
   and the two definitions of $T_1$ and $T_0$ above agree, while strong $R_0$ implies $R_0$.
@@ -808,17 +792,6 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   But if $y\notin B$ then $B\subseteq \cpl{\singleton{y}}$, so $x\ll \cpl{\singleton{y}}$ by isotony and thus $x\bowtie \singleton{y}$, contradicting $\neg(x\oapt y)$.
 
   The remaining statements are obvious.
-\end{proof}
-
-\begin{thm}
-  Let $X$ be a prometric space.
-  \begin{enumerate}
-  \item $X$ is $T_1$ or $T_0$ if and only if its underlying topology is so.
-  \item If $X$ is symmetric, then its underlying topology is strongly $R_0$.
-  \end{enumerate}
-\end{thm}
-\begin{proof}
-  Obvious.
 \end{proof}
 
 \begin{rmk}
@@ -852,9 +825,45 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   % Put differently, this means that if $x\leapx y$, then $f(x)\ll A$ implies $f(y)\ll A$, i.e.\ $x\leapx y \implies f(x)\leapx_Y f(y)$, where $\leapx_Y$ is defined as in \cref{thm:top-ord}.
   % This gives adjointness.
 
-  However, it is unclear how to construct an ``Alexandrov apartness'' from an anti-preorder $\oapt$, even the comparison property $x\oapt y \lor y\oapt z$ seems insufficient, constructively, to ensure transitivity of any $\bowtie$ defined naturally from it.
+  However, it is unclear how to construct an ``Alexandrov apartness'' from an anti-preorder $\oapt$.
+  Even the comparison property $x\oapt y \lor y\oapt z$ seems insufficient, constructively, to ensure transitivity of any $\bowtie$ defined naturally from it.
   This may be related to the fact that the Alexandrov space of a poset is locally decomposable if and only if $\leapx$ is decidable.
 \end{rmk}
+
+In keeping with our categorical perspective, we observe also that \cref{thm:ldtop-ord} can be promoted to a natural transformation.
+
+\begin{thm}
+  Let $\mathbf{Refl}$ and $\mathbf{Irref}$ denote the categories of reflexive and irreflexive relations respectively, with morphisms defined to preserve and anti-preserve the relation as in $\Preord$ and $\APreord$ respectively.
+  Then the constructions of \cref{thm:top-ord} generalize to functors $\PTop \to \mathbf{Refl}$ and $\APTop \to \mathbf{Irref}$, and we have a mate-pair of natural transformations lying over the identity in $\Set$:
+  \[
+  \xymatrix{ \PTop \ar[r] \ar[d]_{\anti} \drtwocell\omit & \mathbf{Refl} \ar[d]^{\anti} \\
+    \APTop \ar[r]  & \mathbf{Irref}  }
+  \qquad
+  \xymatrix{ \PTop \ar[r]  & \mathbf{Refl}   \\
+    \APTop \ar[r] \ar[u]^{\neigh} \urtwocell\omit & \mathbf{Irref}\ar[u]_{\neigh} }
+  \]
+  of which the second becomes an isomorphism when restricted to locally decomposable spaces:
+  \[ \xymatrix{ \LDTop \ar[r]  & \Preord   \\
+    \LDATop \ar[r] \ar[u]^{\neigh}_{\simeq} \urtwocell\omit{\cong} & \APreord \ar[u]_{\neigh} }
+  \]
+\end{thm}
+\begin{proof}
+  First let $f:X\to Y$ be a continuous map of pretopological neighborhood spaces, and $x\leapx y$ in $X$.
+  If $f(x)\ll A$ in $Y$, then $x\ll f\inv(A)$ in $X$, hence $y\ll f\inv(A)$ since $x\leapx y$, and thus $f(y)\ll A$.
+  Thus $f(x)\leapx f(y)$, and we have a functor $\PTop \to \mathbf{Refl}$.
+
+  Second, let $f:X\to Y$ be a continuous map of pretopological apartness spaces, and $f(x)\oapt f(y)$ in $Y$.
+  Then $f(x) \bowtie \singleton{ f(y)} = f(\singleton{y})$, so $x\bowtie \singleton{y}$ and $x\oapt y$.
+  Thus we have a functor $\APTop \to \mathbf{Irref}$.
+
+  By the mate-correspondence, it suffices to construct the right-hand transformation.
+  Thus let $X$ be a pretopological apartness space.
+  In the putative domain of the transformation, $x\leapx y$ means $\forall A, (x\ll A \implies y\ll A)$ in $\neigh(X)$, while in the putative codomain, $x\leapx y$ means $\neg (x\bowtie \singleton{y})$.
+  Assume the former, and for contradiction that $x\bowtie \singleton{y}$.
+  Then $x\ll \cpl{\singleton{y}}$ in $\neigh(X)$, whence $y\ll \cpl{\singleton{y}}$, but this is a contradiction since $y\notin \cpl{\singleton{y}}$.
+
+  The fact that this becomes an isomorphism on locally decomposable spaces is the $\Leftarrow$ direction of \cref{thm:ldtop-ord}.
+\end{proof}
 
 The other pair of separation axioms we will be interested in are regularity and complete regularity.
 We define them only for neighborhood spaces, since as we will see below they both imply local decomposability.
