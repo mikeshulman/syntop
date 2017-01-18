@@ -20,11 +20,15 @@
 \let\implies\Rightarrow
 \def\inv{^{-1}}
 \def\hfep{\frac{\ep}{2}}
+\def\fep#1#2{\frac{\if1#1\else#1\fi\ep}{#2}}
 \def\singleton#1{\{#1\}}
-\def\Preord{\mathbf{Preord}}
-\def\APreord{\mathbf{APreord}}
 \def\anti{\mathfrak{A}}
 \def\neigh{\mathfrak{Z}}
+\def\nn{\ensuremath{\neg\neg}}
+\def\Preord{\mathbf{Preord}}
+\def\APreord{\mathbf{APreord}}
+\def\PTop{\mathbf{PTop}}
+\def\APTop{\mathbf{APTop}}
 \begin{document}
 \maketitle
 
@@ -282,7 +286,7 @@ But in the non-symmetric case, it seems useful to distinguish the two notions.
   Symmetry is obvious, and the last two statements follow from~\eqref{eq:leapx-oapt} and \cref{thm:pmet-preord}.
 \end{proof}
 
-In particular, the equality relation of a $T_0$ prometric space is (like that of any set with a connected irreflexive relation) $\neg\neg$-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)$, hence $x\leapx y$ and thus $x=y$.
+In particular, the equality relation of a $T_0$ prometric space is (like that of any set with a connected irreflexive relation) \nn-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)$, hence $x\leapx y$ and thus $x=y$.
 
 Preorders and anti-preorders are closely related.
 In fact, in classical mathematics they are entirely equivalent notions.
@@ -301,7 +305,7 @@ To state the corresponding constructive fact, we first define the appropriate ca
 \begin{thm}\label{thm:ord-le-apt}
   If $X$ is a preorder, then the relation $\neg(x\leapx y)$ is an anti-preorder.
   Dually, if $X$ is an anti-preorder, then the relation $\neg(x\oapt y)$ is a preorder.
-  These operations define an adjunction
+  These operations define an idempotent adjunction
   \[\anti : \Preord \leftrightarrows \APreord : \neigh\]
 \end{thm}
 \begin{proof}
@@ -319,10 +323,16 @@ To state the corresponding constructive fact, we first define the appropriate ca
   On the other hand, if $X$ is an anti-preorder, then $\anti(\neigh(X))$ is the same set $X$ with the relation $\neg\neg(x\oapt y)$.
   Since $(x\oapt y) \implies \neg\neg(x\oapt y)$, the identity function is a monotone map $\anti(\neigh(X)) \to X$.
   The triangle identities are obviously satisfied.
+
+  To say that an adjunction is \emph{idempotent} means that the unit or counit (hence also the other) is an isomorphism when restricted to objects in the image of the right or left adjoint, respectively.
+  In our case, this follows from the fact that $\neg P \iff \neg\neg\neg P$ for any truth value $P$.
 \end{proof}
 
 \cref{thm:ord-le-apt} gives some partial justification for defining the notion of anti-preorder using bilocal transitivity instead of bilocal decomposability (comparison), since there seems no general way to make a comparison by negating a preorder.
 Further justification will have to wait for \cref{thm:top-ord} and \cref{sec:syntopogeny}.
+
+Any idempotent adjunction restricts to an equivalence between the full images of the right and left adjoints.
+Thus, preorders that are \textbf{\nn-stable} (i.e.\ $\neg\neg(x\leapx y) \implies x\leapx y$) are equivalent to anti-preorders that are \nn-stable.
 
 \begin{thm}\label{thm:pmet-monotone}
   Let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a continuous function.
@@ -373,50 +383,75 @@ There are three fundamental relations between a point and a set that can be defi
 \end{defn}
 
 We can now axiomatize the basic properties of these relations.
+In contrast to the last section, we will also consider structures that lack transitivity.
+We write $\cpl{A} = A\subseteq X = \setof{x\in X | x\notin A}$ for the relative complement of a subset $A\subseteq X$.
 
 \begin{defn}
-  A \textbf{topological neighborhood space} (or simply a \textbf{topological space} --- see below) is a set $X$ with a relation $\ll$ between points and subsets such that
+  A \textbf{pretopological neighborhood space} is a set $X$ with a relation $\ll$ between points and subsets such that
   \begin{enumerate}
   \item If $x\ll A$ and $A\subseteq B$, then $x\ll B$ (isotony).
   \item If $x\ll A$, then $x\in A$ (reflexivity).
   \item $x\ll X$ for all $x\in X$ (nullary additivity).
   \item If $x\ll A$ and $x\ll B$, then $x\ll A\cap B$ (binary additivity).
-  \item If $x\ll A$, then $x \ll \setof{ y | y\ll A}$ (transitivity).
   \end{enumerate}
-  If $X$ and $Y$ are topological neighborhood spaces, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\ll A$ implies $x\ll f\inv(A)$.
+  A pretopological neighborhood $X$ space is\dots
+  \begin{enumerate}[resume]
+  \item \textbf{topological} if whenever $x\ll A$, we have $x \ll \setof{ y | y\ll A}$ (transitivity).
+  \item \textbf{\nn-stable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll \cpl{B} \subseteq A$.
+  \item \textbf{locally decomposable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll B$ and $\forall y, (y\notin B \lor y \ll A)$.\fxnote{cite Bridges et. al.}
+  \end{enumerate}
+  If $X$ and $Y$ are pretopological neighborhood spaces, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\ll A$ implies $x\ll f\inv(A)$.
+  We write $\PTop$ for the category of pretopological neighborhood spaces and continuous maps.
 \end{defn}
 
+Note that a local decomposability pretopological neighborhood space is automatically topological and \nn-stable, since if $\forall y, (y\notin B \lor y \ll A)$ then $\neg\neg B \subseteq A$ and also $B \subseteq \setof{ y | y\ll A}$.
+Conversely, in classical mathematics any topological neighborhood space is locally decomposable, since we can take $B = \setof{ y | y\ll A}$.
+
 \begin{defn}
-  A \textbf{topological apartness space} (or sometimes a \textbf{point-set apartness space}) is a set $X$ with a relation $\bowtie$ between points and subsets such that
+  A \textbf{pretopological apartness space} (sometimes a \textbf{point-set apartness space} for emphasis) is a set $X$ with a relation $\bowtie$ between points and subsets such that
   \begin{enumerate}
   \item If $x\bowtie A$ and $B\subseteq A$, then $x\bowtie B$ (isotony).
   \item If $x\bowtie A$, then $x\notin A$ (reflexivity).
   \item $x\bowtie \emptyset$ for all $x\in X$ (nullary additivity).
   \item If $x\bowtie A$ and $x\bowtie B$, then $x\bowtie A\cup B$ (binary additivity).
-  \item If $x\bowtie A$, then $x\bowtie \setof{ y | y \not\bowtie A }$ (transitivity).
   \end{enumerate}
-  If $X$ and $Y$ are topological apartness space, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\bowtie f(A)$ implies $x\bowtie A$.
+  A pretopological apartness space is\dots
+  \begin{enumerate}[resume]
+  \item \textbf{topological} if whenever $x\bowtie A$, we have $x\bowtie \setof{ y | y \not\bowtie A }$ (transitivity).
+  \item \textbf{\nn-stable} if whenever $x\bowtie A$, we have $x\bowtie \cpl{\cpl{A}}$.
+  \item \textbf{locally decomposable} if whenever $x\bowtie A$, there is a subset $B$ such that $x\bowtie B$ and $\forall y, (y\in B \lor y\bowtie A)$.
+  \end{enumerate}
+  If $X$ and $Y$ are pretopological apartness space, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\bowtie f(A)$ implies $x\bowtie A$.
+  We write $\APTop$ for the category of pretopological apartness spaces and continuous maps.
 \end{defn}
 
+As before, a locally decomposable pretopological apartness space is topological, since if $\forall y, (y\in B \lor y\bowtie A)$ then $\setof{ y | y \not\bowtie A } \subseteq B$.
+Moreover, in slight contrast to the neighborhood case, any topological apartness space is \nn-stable, since $\cpl{\cpl{A}}\subseteq \setof{ y | y \not\bowtie A }$ by the contrapositive of reflexivity.
+Again, in classical mathematics any topological apartness space is locally decomposable, since we can take $B = \setof{y|y\not\bowtie A}$.
+
+As we will see below, the relation $\approx$ is not very useful to axiomatize constructively, so we will not bother with all the constructive variants.
+
 \begin{defn}
-  A \textbf{topological closure space} is a set $X$ with a relation $\approx$ between points and subsets such that
+  A \textbf{Moore closure space} is a set $X$ with a relation $\approx$ between points and subsets such that
   \begin{enumerate}
   \item If $x\approx A$ and $A\subseteq B$, then $x\approx B$ (isotony).
   \item If $x\in A$, then $x\approx A$ (reflexivity).
   \item $x\napprox \emptyset$ for all $x\in X$ (nullary additivity).
-  \item If $x\approx A\cup B$, then $x\approx A$ or $x\approx B$ (binary additivity).
   \item If $x\approx \setof{ y | y\approx A}$, then $x\approx A$ (transitivity).
   \end{enumerate}
-  If it satisfies all the above axioms except binary additivity, we call it a \textbf{Moore closure space}.
+  A Moore closure space is \textbf{topological} if it also satisfies
+  \begin{enumerate}[resume]
+  \item If $x\approx A\cup B$, then $x\approx A$ or $x\approx B$ (binary additivity).
+  \end{enumerate}
   If $X$ and $Y$ are topological or Moore closure spaces, a function $f:X\to Y$ is \textbf{continuous} if $x\approx A$ implies $f(x) \approx f(A)$.
 \end{defn}
 
 A relation between points and subsets can equivalently be defined in terms of an operation taking each subset to the subset of points related to it.
 For instance, in a topological neighborhood space, the \textbf{interior} of a set $A$ is
 \[ \int(A) = \setof{ x | x\ll A } \]
-The axioms of $\ll$ say exactly that $\int(-)$ is a left-exact monad on the powerset of $X$.
+The axioms of $\ll$ say exactly that $\int(-)$ is a left-exact comonad on the powerset of $X$.
 Hence it is determined by its fixed points, which are called \textbf{open sets}, and are closed under arbitrary unions and finite intersections.
-This is, of course, the usual definition of a topological space.
+This is, of course, the usual definition of a \textbf{topological space}.
 We will stick to working directly with $\ll$, however, since it generalizes better.
 
 Similarly, in a Moore closure space, the \textbf{closure} of a set $A$ is
@@ -424,12 +459,12 @@ Similarly, in a Moore closure space, the \textbf{closure} of a set $A$ is
 The axioms of $\approx$ say exactly that $\cl(-)$ is a comonad on the powerset of $X$, which is right-exact exactly when $X$ is topological.
 Hence it is determined by its fixed points, which are called \textbf{closed sets}, and are closed under arbitrary intersections (and finite unions, if $X$ is topological).
 
-Finally, in a topological apartness space, the \textbf{exterior} of a set $A$ is
+Finally, in a pretopological apartness space, the \textbf{exterior} of a set $A$ is
 \[ \ext(A) = \setof{ x | x\bowtie A } \]
 It is less natural to rephrase the axioms of $\bowtie$ in terms of $\ext$, however.
 
 \begin{thm}
-  If $X$ is a prometric space, then the relations $\ll$, $\bowtie$, and $\approx$ from \cref{defn:toprels} make it into a topological neighborhood space, a topological apartness space, and a Moore closure space, plus a topological closure space if excluded middle holds.
+  If $X$ is a prometric space, then the relations $\ll$, $\bowtie$, and $\approx$ from \cref{defn:toprels} make it into a locally decomposable topological neighborhood space, a locally decomposable topological apartness space, and a Moore closure space, plus a topological closure space if excluded middle holds.
 \end{thm}
 \begin{proof}
   In all cases, isotony and nullary additivity are obvious, while reflexivity follows directly from prometric reflexivity ($d(x,x)=0$).
@@ -441,14 +476,15 @@ It is less natural to rephrase the axioms of $\bowtie$ in terms of $\ext$, howev
   But our assumptions show that this $y$ cannot be in $A$ or in $B$, a contradiction.
   Constructively, however, it seems impossible to prove this axiom.
 
-  For transitivity for $\ll$, if $x\ll A$ then we have a $d,\ep$ with $d(x,y)<\ep \implies y\in A$.
-  Let $d'$ be as in prometric transitivity for $d$; then if $d'(x,y)<\hfep$ and $d'(y,z)<\hfep$, we have $d(x,z) \le d'(x,y)+d'(y,z) <\ep$, so $z\in A$.
-  Thus, $y\ll A$.
-  Therefore, for any $y$ we have $d'(x,y)<\hfep \implies y\in \setof{ y | y\ll A }$, so $x\ll \setof{ y | y\ll A }$.
-  Transitivity for $\bowtie$ and $\approx$ is analogous.
+  For local decomposability of $\ll$, if $x\ll A$ then we have a $d,\ep$ with $d(x,y)<\ep \implies y\in A$.
+  Let $d'$ be as in prometric transitivity for $d$, and $B = \setof{ y | d'(x,y) < \fep13}$.
+  Then certainly $x\ll B$, while for any $y$ we have either $d'(x,y)<\fep23$ or $d'(x,y)>\fep13$.
+  In the first case, if $d'(x,y)<\fep23$, then for any $z$ with $d'(y,z)<\fep13$ we have $d(x,z) \le d'(x,y)+d'(y,z) <\ep$, so $z\in A$; thus $y\ll A$.
+  In the second case, if $d'(x,y)>\fep13$ then certainly $y\notin B$.
+  Local decomposability of $\bowtie$, and transitivity of $\approx$, are similar.
 \end{proof}
 
-In classical mathematics, all three notions of topological space are equivalent, via the following definitions (where $\cpl{A} = \setof{x\in X | x\notin A}$ means the relative complement of a subset $A\subseteq X$):
+In classical mathematics, all three notions of topological space are equivalent, via the following definitions:
 \[
 \begin{array}{ccccc}
   x\ll A & \iff & x \bowtie \cpl{A} & \iff & x\napprox \cpl{A}\\
@@ -456,26 +492,26 @@ In classical mathematics, all three notions of topological space are equivalent,
   x\approx A & \iff & x \not\ll \cpl{A} & \iff & x \not\bowtie A
 \end{array}
 \]
-Constructively, this is no longer so, but we can say the following:
+Constructively, this is no longer so, but we do have various relationships between the three structures.
+Closure spaces are unsatisfactory as a \emph{basic} notion of space because their binary additivity axiom cannot be proven even for metric spaces, but the following notions are nevertheless useful:
 
-\begin{thm}\label{thm:toprels}\ 
+\begin{thm}\label{thm:top-closed}
+  Let $X$ be a topological neighborhood space.
   \begin{enumerate}
-  \item If $X$ is a topological neighborhood space, define $x\approx A$ to mean
-    \[\forall B, (x\ll B \implies A\cap B \text{ is inhabited})\]
-    Then $X$ becomes a Moore closure space.\label{item:top-ll-wkcl}
+  \item If we define $x\approx A$ to mean
+    \[\forall B, (x\ll B \implies A\cap B \text{ is inhabited}),\]
+    then $X$ becomes a Moore closure space.\label{item:top-ll-wkcl}
     Its closed sets are called \textbf{weakly closed} in $X$.
-  \item If $X$ is a topological neighborhood space, define $x\approx A$ to mean
-    \[\forall B, (x\ll B \implies A\cap B \neq \emptyset)\]
-    Then $X$ becomes a Moore closure space.\label{item:top-ll-strcl}
+  \item If we $x\approx A$ to mean
+    \[\forall B, (x\ll B \implies A\cap B \neq \emptyset),\]
+    then $X$ becomes a Moore closure space.\label{item:top-ll-strcl}
     Its closed sets are called \textbf{strongly closed} in $X$ (they are the complements of the open sets).
-  \item If $X$ is a topological neighborhood space, define $x\bowtie A$ to mean $x\ll \cpl{A}$.
-    Then $X$ becomes a topological apartness space.\label{item:top-ll-bowtie}
   \end{enumerate}
-  Moreover, all these constructions are functorial.
+  Moreover, both these constructions are functorial.
 \end{thm}
 \begin{proof}
-  In all cases, all the axioms are easy except binary additivity and transitivity.
-  Binary additivity for~\ref{item:top-ll-wkcl} and~\ref{item:top-ll-strcl} fails constructively for essentially the same reason that it failed for prometric spaces, while for~\ref{item:top-ll-bowtie} it is easy since $\cpl{(A\cup B)} = \cpl{A} \cap \cpl{B}$.
+  In both cases, all the axioms are easy except binary additivity and transitivity.
+  Binary additivity fails constructively for essentially the same reason that it failed for prometric spaces.
 
   For transitivity of~\ref{item:top-ll-wkcl}, if $x\approx \setof{y | y\approx A}$, then whenever $x\ll B$, we also have $x\ll \int(B)$ by transitivity for $\ll$.
   Hence there is a $y\in \int(B)$ such that $y\approx A$; but then $y\ll \int(B)$, and so by definition of $\approx$ there is a $z\in\int(B)$ with $z\in A$.
@@ -486,18 +522,15 @@ Constructively, this is no longer so, but we can say the following:
   We will show that $\setof{y | y\approx A} \cap \int(B) = \emptyset$, for which purpose suppose it contains an element $y$.
   But then $y\approx A$ and $y\in \int(B)$, hence $y\ll \int(B)$; thus by definition of $\approx$ we have $A\cap \int(B) \neq \emptyset$, a contradiction.
 
-  For transitivity of~\ref{item:top-ll-bowtie}, suppose $x\bowtie A$, i.e.\ $x\ll \cpl{A}$; to show $x\bowtie \setof{y|\neg(y\bowtie A)}$ means to show $x\ll \setof{y|\neg\neg(y\bowtie A)} = \setof{y|\neg\neg(y\ll \cpl{A})}$.
-  But $x\ll \setof{y|y\ll \cpl{A}}$ by transitivity for $\ll$, and $(y\ll \cpl{A})\implies\neg\neg(y\ll\cpl{A})$, so the result follows by isotony.
-
   For functoriality, suppose $X$ and $Y$ are topological neighborhood spaces and $f:X\to Y$ is $\ll$-continuous.
   If $x\approx A$ weakly, suppose given $B\subseteq Y$ with $f(x)\ll B$; then by $\ll$-continuity, we have $x\ll f\inv(B)$.
   Since $x\approx A$, we have $A\cap f\inv(B)$ inhabited, hence $f(A) \cap B$ inhabited.
   Thus, $f(x)\approx f(A)$.
-  The proof for strong $\approx$ is essentially the same, and for $\bowtie$ it follows immediately from the fact that $f\inv(\cpl{A}) = \cpl{f\inv(A)}$.
+  The proof for strong $\approx$ is essentially the same.
 \end{proof}
 
-Since topological closure spaces fail to include the most interesting examples constructively, while Moore closure spaces don't contain enough topological information, we will say no more about closure spaces.
-But topological neighborhood spaces and topological apartness spaces are both reasonable constructive notions.
+We will say no more about closure spaces.
+However, topological neighborhood spaces and topological apartness spaces are both reasonable constructive notions of ``space''.
 In support of this we note the following:
 
 \begin{thm}\label{thm:top-topconcrete}
@@ -540,6 +573,25 @@ In support of this we note the following:
   This is another reason closure spaces are unsatisfactory, and the analogous proofs for $\bowtie$ and $\ll$ is one reason we have chosen to work with $\ll$ rather than open sets.
 \end{proof}
 
+As for the relationship between neighborhood and apartness spaces, we have the following partial analogue of \cref{thm:ord-le-apt}:
+
+\begin{thm}\label{thm:top-ll-bowtie}
+  If $X$ is a pretopological neighborhood space, define $x\bowtie A$ to mean $x\ll \cpl{A}$; this is a pretopological apartness space $\anti(X)$.
+  Dually, if $X$ is a pretopological apartness space, define $x\ll A$ to mean that there exists a $B$ such that $x\bowtie B$ and $\cpl{B}\subseteq A$; this is a pretopological neighborhood space.
+  These operations define an idempotent adjunction
+  \[ \anti : \PTop \leftrightarrows \APTop : \neigh \]
+\end{thm}
+\begin{proof}
+  
+TODO.
+
+  % For transitivity of~\ref{item:top-ll-bowtie}, suppose $x\bowtie A$, i.e.\ $x\ll \cpl{A}$; to show $x\bowtie \setof{y|\neg(y\bowtie A)}$ means to show $x\ll \setof{y|\neg\neg(y\bowtie A)} = \setof{y|\neg\neg(y\ll \cpl{A})}$.
+  % But $x\ll \setof{y|y\ll \cpl{A}}$ by transitivity for $\ll$, and $(y\ll \cpl{A})\implies\neg\neg(y\ll\cpl{A})$, so the result follows by isotony.
+
+\end{proof}
+
+LEFT OFF
+
 There is a certain sense in which topological apartness spaces can be regarded as a subclass of topological neighborhood spaces, namely:
 
 \begin{lem}\label{thm:top-bowtie-ll}
@@ -576,17 +628,7 @@ Thus, $f\inv(B)$ exhibits $x\ll f\inv(C)$, so $f$ is $\ll$-continuous.
 
 However, \eqref{eq:top-bowtie-ll-2} apparently fails to satisfy transitivity in general, so it does not define a topological neighborhood space.
 This suggests that a natural subclass of topological apartness spaces to compare with topological neighborhood spaces would be those for which these two definitions of $\ll$ coincide.\fxnote{Is there an adjunction or something else nicer?}
-A natural condition that ensures this is the following.
-
-\begin{defn}\ \fxnote{cite Bridges}
-  \begin{enumerate}
-  \item A topological apartness space $X$ is \textbf{locally decomposable} if whenever $x\bowtie A$, there is a subset $B$ such that $x\bowtie B$ and $\forall y, (y\in B \lor y\bowtie A)$.
-  \item A topological neighborhood space $X$ is \textbf{locally decomposable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll B$ and $\forall y, (y\notin B \lor y \ll A)$.
-  \end{enumerate}
-\end{defn}
-
-Note that local decomposability (for both sorts of space) is actually a strengthening of transitivity.
-The assumption $\forall y, (y\in B \lor y\bowtie A)$ gives $\setof{y|y\not\bowtie A} \subseteq B$, while the assumption $\forall y, (y\notin B \lor y \ll A)$ gives $B\subseteq \setof{y|y\ll A}$, so in both cases transitivity follows from isotony.
+A natural condition that ensures this is (local decomp)
 
 \begin{thm}\label{thm:top-locdec-equiv}
   The categories of
