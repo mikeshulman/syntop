@@ -1043,8 +1043,6 @@ Less well-known is the dual notion of uniform apartness.
 Note that the ``bilocal transitivity'' condition for a uniform apartness is weaker than what we have called bilocal decomposability.
 Just as a quasi-uniform space with a smallest entourage can be identified with a preorder, an anti-quasi-uniform space with a largest anti-entourage can be identified with an anti-preorder (\cref{def:anti-preorder}).
 
-We also observe:
-
 \begin{lem}
   If a quasi-uniform apartness space is locally decomposable, then it is bilocally decomposable.
 \end{lem}
@@ -1055,15 +1053,15 @@ We also observe:
   Since $\si\implies\tau$, we have $x\oapt_\tau y$ or $y\oapt_\tau z$, as desired.
 \end{proof}
 
-We proceed to study uniform structures analogously to our study of topological structures in \cref{sec:point-set}.
+As usual, a \textbf{base} for a uniformity is a subset of ``basic'' entourages such that every entourage contains a basic one.
+Dually, a base for an anti-uniformity is a subset of basic anti-entourages such that every anti-entourage is contained in a basic one.
+A set of entourages or anti-entourages is a base for \emph{some} uniformity or anti-uniformity exactly when it satisfies all of the axioms except isotony.
+(We have stated the axioms in such a way as to make this true, though in the presence of isotony the filtration axioms have a simpler form.)
 
-\begin{thm}
-  The definitions of \cref{def:pmet-unif}, once closed up under isotony, make any prometric space $X$ into a locally decomposable quasi-uniform space and a locally decomposable quasi-uniform apartness space, which are symmetric if $X$ is.
+\begin{thm}\label{thm:pmet-unif}
+  The definitions of \cref{def:pmet-unif} form bases for a locally decomposable quasi-uniformity and a locally decomposable anti-quasi-uniformity on any prometric space $X$, which are symmetric if $X$ is.
 \end{thm}
 \begin{proof}
-  ``Closed up under isotony'' means that we define $\be$ to be an entourage whenever $(\leapx_{d,\ep})\implies \be$, and $\rho$ to be an anti-entourage whenever $\rho \implies (\oapt_{d,\ep})$.
-  This is the standard way of generating a filter or ideal from a base, and we have stated the other axioms so that they are correct when applied directly to a base rather than the filter or ideal it generates.
-
   In both cases nullary filtration follows from nullary filtration of distances.
   For binary filtration, given $(d_1,\ep_1)$ and $(d_2,\ep_2)$, let $d_3$ be as in binary filtration for distances; then $(d_3,\min(\ep_1,\ep_2))$ is what we want.
   Both reflexivity axioms follow directly from reflexivity for distances, and likewise symmetry follows from symmetry for distances (when it holds).
@@ -1087,9 +1085,9 @@ We proceed to study uniform structures analogously to our study of topological s
 \end{proof}
 
 \begin{thm}
-  If $X$ is a quasi-uniform space, define $\rho$ to be an anti-entourage if $\rho\implies\neg\al$ for some entourage $\al$; then $X$ becomes a quasi-uniform apartness space.
-  Dually, if $X$ is a quasi-uniform apartness space, define $\al$ to be an entourage if $\neg\rho\implies\al$ for some anti-entourage $\rho$; then $X$ becomes a quasi-uniform space.
-  These constructions form an idempotent adjunction
+  If $X$ is a quasi-uniform space, the complements $\neg\al$ of entourages form a base for an anti-quasi-uniformity.
+  Dually, if $X$ is a quasi-uniform apartness space, the complements $\neg\rho$ of the anti-entourages form a base for a quasi-uniformity.
+  These operations define an idempotent adjunction
   \[ \anti : \Unif \rightleftarrows \AUnif : \neigh. \]
   Moreover:
   \begin{enumerate}
@@ -1104,9 +1102,32 @@ We proceed to study uniform structures analogously to our study of topological s
   TODO
 \end{proof}
 
-% unif -> top -> ord, also ord -> unif, sometimes preserves ld
+\begin{thm}
+  For any prometric space $X$, the quasi-uniform and anti-quasi-uniform structures of \cref{thm:pmet-unif} correspond under the equivalence $\LDUnif \simeq \LDAUnif$.
+  Moreover, this defines a fully faithful functor from prometric spaces and uniformly continuous functions to $\LDUnif$ (or equivalently $\LDAUnif$).
+\end{thm}
+\begin{proof}
+  TODO
+\end{proof}
 
-% Upper prometric spaces are equivalent to quasi-uniform spaces; lower prometric spaces are equivalent to quasi-uniform apartness spaces.
+Thus, locally decomposable (quasi-)uniform spaces capture exactly the uniform information in a prometric space.
+Classically, \emph{every} quasi-uniform space can be given a prometric, and indeed a quasi-gauge, and similarly in the symmetric case; but this seems not to be true constructively.
+(It is true, however, if we allow distances to take values in \emph{upper} real numbers, since then from any entourage $\al$ we can define a distance by $d(x,y) = \inf\setof{ 0 | x\leapx_\al y}$.
+Similarly, if we allow distances to take values in \emph{lower} real numbers, any bilocally decomposable\fxnote{Is bilocal decomposability necessary and sufficient for this?} anti-quasi-uniform space becomes quasi-gaugeable, since from any anti-entourage $\rho$ we can define a distance by $d(x,y) = \sup\setof{ q\in\mathbb{Q} | x\oapt_\rho y }$.)
+
+\begin{thm}
+  TODO: Underlying topology of uniform structures, how it commutes with the adjunctions $\anti\dashv \neigh$ and preserves local decomposability.
+\end{thm}
+
+\begin{thm}
+  TODO: The orders underlying the uniform topology are the intersection of entourages and union of anti-entourages, giving a co/reflection from uniformities into orders.
+\end{thm}
+
+\begin{thm}
+  The topology underlying a locally decomposable (symmetric) uniform space is regular.
+\end{thm}
+
+More about uniform regularity.
 
 
 
