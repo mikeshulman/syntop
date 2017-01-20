@@ -985,11 +985,12 @@ We will use Greek letters $\al,\be,\gm$ to denote special binary relations conta
 Similarly, we will use $\rho,\si,\tau$ to denote special binary relations disjoint from the diagonal, with $
 (x,y)\in\rho$ written $x \oapt_\rho y$.
 
-We write $\neg\al$ for a complemented relation, i.e.\ $(x \oapt_{\neg\al} y) \iff \neg (x\leapx_{\al} y)$ and similarly.
-We write $\al\implies\be$ to mean that $\forall x\forall y,(x\leapx_\al y \implies x\leapx_\be y)$ (i.e.\ $\al\subseteq \be$ as subsets of $X\times X$).
+We write $\neg\al$ for the complement of a relation $\al$, for which we also invert the notation $\leapx/\oapt$.
+That is, $(x \oapt_{\neg\al} y)$ means $\neg (x\leapx_{\al} y)$ and similarly.
+We write $\al\implies\be$ to mean that $\forall x\forall y,(x\leapx_\al y \implies x\leapx_\be y)$ or similarly (i.e.\ $\al\subseteq \be$ as subsets of $X\times X$).
 
 \begin{defn}
-  A \textbf{quasi-uniform space} is a set $X$ together with a family of binary relations $\leapx_\al$, called \textbf{entourages}, satisfying the following axioms.
+  A \textbf{quasi-uniform space} is a set $X$ together with a family of binary relations, called \textbf{entourages}, satisfying the following axioms.
   \begin{enumerate}
   \item If $\al$ is an entourage and $\al\implies\be$, then $\be$ is an entourage (isotony).
   \item There exists an entourage (nullary filtration).
@@ -1000,7 +1001,7 @@ We write $\al\implies\be$ to mean that $\forall x\forall y,(x\leapx_\al y \impli
   It is a \textbf{uniform space} if it also satisfies the following:
   \begin{enumerate}[resume]
   \item For any entourage $\al$, there is an entourage $\be$ such that for any $x,y\in X$, if $x\leapx_\be y$ then $y\leapx_\al x$ (symmetry).
-    By isotony, there is then a base of symmetric entourages, which we usually write $\approx_\al$ instead of $\leapx_\al$.
+    By isotony, there is then a base (see below) of symmetric entourages, which we usually write $\approx_\al$ instead of $\leapx_\al$.
   \end{enumerate}
   A quasi-uniform space is\dots
   \begin{enumerate}[resume]
@@ -1019,7 +1020,7 @@ Likewise, any set has a discrete uniformity in which all reflexive relations are
 Less well-known is the dual notion of uniform apartness.
 
 \begin{defn}
-  A \textbf{quasi-uniform apartness space} (or \textbf{anti-quasi-uniform space}) is a set $X$ together with a family of binary relations $\oapt_\rho$, called \textbf{anti-entourages}, satisfying the following axioms.
+  A \textbf{quasi-uniform apartness space} (or \textbf{anti-quasi-uniform space}) is a set $X$ together with a family of binary relations, called \textbf{anti-entourages}, satisfying the following axioms.
   \begin{enumerate}
   \item If $\rho$ is an anti-entourage and $\si\implies\rho$, then $\si$ is an anti-entourage (isotony).
   \item There exists an anti-entourage (nullary filtration).
@@ -1030,7 +1031,7 @@ Less well-known is the dual notion of uniform apartness.
   It is a \textbf{uniform apartness space} (or \textbf{anti-uniform space}) if it also satisfies:
   \begin{enumerate}[resume]
   \item For any anti-entourage $\rho$, there is an anti-entourage $\si$ such that for any $x,y\in X$, if $x\oapt_\rho y$ then $y\oapt_\si x$ (symmetry).
-    By isotony, there is then a base of symmetric anti-entourages, which we usually write $\apart_\rho$.
+    By isotony, there is then a base (see below) of symmetric anti-entourages, which we usually write $\apart_\rho$.
   \end{enumerate}
   A quasi-uniform apartness space is\dots
   \begin{enumerate}[resume]
@@ -1045,6 +1046,7 @@ Less well-known is the dual notion of uniform apartness.
 
 Note that the ``bilocal transitivity'' condition for a uniform apartness is weaker than what we have called bilocal decomposability.
 Just as a quasi-uniform space with a smallest entourage can be identified with a preorder, an anti-quasi-uniform space with a largest anti-entourage can be identified with an anti-preorder (\cref{def:anti-preorder}).
+However, we note:
 
 \begin{lem}
   If a quasi-uniform apartness space is locally decomposable, then it is bilocally decomposable.
@@ -1062,7 +1064,7 @@ A set of entourages or anti-entourages is a base for \emph{some} uniformity or a
 (We have stated the axioms in such a way as to make this true, though in the presence of isotony the filtration axioms have a simpler form.)
 
 \begin{thm}\label{thm:pmet-unif}
-  The definitions of \cref{def:pmet-unif} form bases for a locally decomposable quasi-uniformity and a locally decomposable anti-quasi-uniformity on any prometric space $X$, which are symmetric if $X$ is.
+  For any prometric space $X$, \cref{def:pmet-unif} gives bases for a locally decomposable quasi-uniformity and a locally decomposable anti-quasi-uniformity, which are symmetric if $X$ is.
 \end{thm}
 \begin{proof}
   In both cases nullary filtration follows from nullary filtration of distances.
