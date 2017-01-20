@@ -49,6 +49,17 @@
 \section{Introduction}
 \label{sec:intro}
 
+Guiding principles:
+\begin{enumerate}
+\item Category theory.  Large categories should be well-behaved, constructions should be functorial and natural and related by universal properties.
+\item Nice categories including not-nice objects.  In particular, only impose separation axioms when needed, and include trivial cases like the empty set.
+\item There's nothing intrinsically wrong with points, although they don't tell the whole story.
+\item There's nothing intrinsically wrong with negation, as long as it is used correctly.
+  For instance, $x\le y$ can be defined for real numbers as $\neg(y<x)$.
+\item Topos-valid mathematics.  Equality means equality; it doesn't have to be ``proved'' that a function respects equality.  Sets don't come with a God-given apartness relation; indeed an apartness is a sort of topological structure that a set can be \emph{equipped} with.
+\end{enumerate}
+
+
 \section{Metric, gauge, and prometric spaces}
 \label{sec:metric}
 
@@ -412,6 +423,7 @@ We write $\cpl{A} = A\subseteq X = \setof{x\in X | x\notin A}$ for the relative 
   \begin{enumerate}[resume]
   \item \textbf{topological} if whenever $x\ll A$, we have $x \ll \setof{ y | y\ll A}$ (transitivity).
   \item \textbf{\nn-stable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll \cpl{B} \subseteq A$.
+    (Bridges-Vita call this \emph{weakly nested neighborhoods}.)
   \item \textbf{locally decomposable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll B$ and $\forall y, (y\notin B \lor y \ll A)$.\fxnote{cite Bridges et. al.}
   \end{enumerate}
   If $X$ and $Y$ are pretopological neighborhood spaces, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\ll A$ implies $x\ll f\inv(A)$.
@@ -820,8 +832,11 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   Note that this $\apart$-reflexivity is just the converse of $\apart$-$T_1$, so that together they force $\apart$ to coincide with the defined relation $\oapt$.
   (As noted above, though, the basic axioms of an apartness space don't force $\oapt$ to be symmetric, and indeed it can fail to be symmetric even in a quasi-metric space.
   Bridges and Vita avoid this problem by \emph{defining} a ``quasi-metric space'' to be strongly $R_0$, which again we eschew.)
-  Their $\apart$-transitivity, however, seems too weak even in classical mathematics, if $x\apart y$ means $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$: when translated to $\ll$ it says that if $x\ll A$, then $x \ll \setof{ y | \forall z, (y\le z \implies z\in A) }$ which is a larger set that $\setof{y|y\ll A}$.\fxnote{Concrete counterexample?}
-  Moreover, it seems insufficient for our proof of \cref{thm:top-topconcrete}\fxwarning{Is that true?}, though an alternative proof might be possible.
+
+  Their $\apart$-transitivity, however, seems too weak even in classical mathematics, if $x\apart y$ means $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$.
+  For instance, if $X = \{x,y,z\}$ with the only nontrivial apartnesses being $x\bowtie \singleton{z}$ and $z\bowtie \singleton{x}$, then $\oapt$-transitivity holds, but full transitivity fails; this is a pretopological space that is not topological.
+  Moreover, $\apart$-transitivity also destroyes \cref{thm:top-topconcrete}; indeed it is not even inherited by subspaces.
+  Thus we adopt the stronger transitivity axiom (which is equivalent to an axiom that Bridges-Vita call \emph{reverse Kolmogorov}), despite the fact that it contains a negation; since it is implied by local decomposability, it is certainly not unreasonably strong.
 \end{rmk}
 
 \begin{rmk}
