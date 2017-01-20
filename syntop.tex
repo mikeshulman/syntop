@@ -805,20 +805,19 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
 \end{proof}
 
 \begin{rmk}
-  Our definition of topological apartness space is inspired by the point-set apartness spaces of Bridges et.~al.\fxerror{cite}, but their definition differs from ours in a number of ways.
-  Firstly, they include $\apart$-$T_1$ (though without the assumption that $\apart$ is tight) and weak local decomposability (see the proof of \cref{thm:top-ord}) as part of their definition of ``point-set apartness space''.
+  Our definition of topological apartness space is inspired by the point-set apartness spaces of Bridges and Vita\fxerror{cite book}, but their definition differs from ours in a couple of ways.
+  Firstly, they include weak local decomposability (see the proof of \cref{thm:top-ord}) as part of their definition of ``apartness space'' (without it they speak of a ``pre-apartness'').
   We follow instead the lesson of classical topology that separation axioms should only be assumed when necessary, not included in the definition of space.
   
-  Secondly, they assume $\exists x \exists y,(x\apart y)$.
+  Secondly, they assume $X$ to be inhabited.
   We follow instead the lesson of category theory that trivial examples should not be arbitrarily excluded, since they are necessary to have a well-behaved category.
-  In particular, such a condition would destroy \cref{thm:top-topconcrete}, by in particular removing both the initial and the terminal object.
+  In particular, such a condition would destroy \cref{thm:top-topconcrete}, by in particular removing the initial object.
 
-  Thirdly, they omit nullary additivity entirely.
-  This is probably an oversight; it follows from isotony \emph{if} we have $\forall x \exists A, x\bowtie A$.
-
-  Finally, they weaken transitivity to ``if $x\bowtie A$ and $\forall y, (y\bowtie A \implies \forall z\in B, y\apart z)$, then $x\bowtie B$''.
-  Perhaps this is due to a desire to use $\apart$ instead of $\neq$ whenever possible (although they don't similarly modify reflexivity to $x\bowtie A \implies \forall y\in A, x\apart y$, which together with $\apart$-$T_1$ would imply that $\oapt$ coincides with $\apart$).
-  However, it seems rather \emph{ad hoc}, and also unnecessary since any locally decomposable space satisfies the stronger version.
+  Thirdly, they assume an ambient apartness relation $\apart$ and state reflexivity and transitivity in terms of it as $x\bowtie A \implies \forall y\in A, x\apart y$ and $x \bowtie \setof{ y | \forall z, (z\bowtie A \implies z\apart y)}$.
+  Note that this $\apart$-reflexivity is just the converse of $\apart$-$T_1$, so that together they force $\apart$ to coincide with the defined relation $\oapt$.
+  (As noted above, though, the basic axioms of an apartness space don't force $\oapt$ to be symmetric, and indeed it can fail to be symmetric even in a quasi-metric space.
+  Bridges and Vita avoid this problem by \emph{defining} a ``quasi-metric space'' to be strongly $R_0$, which again we eschew.)
+  Their $\apart$-transitivity, however, seems too weak even in classical mathematics, if $x\apart y$ means $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$.
   Moreover, it seems insufficient for our proof of \cref{thm:top-topconcrete}, though an alternative proof might be possible.
 \end{rmk}
 
