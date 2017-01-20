@@ -112,7 +112,7 @@ In fact, most topological constructions on metric spaces can easily be generaliz
 In other words, a gauge is a filterbase in the poset of (extended quasi-)pseudo-metrics.
 Note that the qualifiers ``extended'' and ``quasi-'' carry over from the metrics to the gauge, but all the metrics in a gauge space are automatically assumed to be pseudo; separatedness is named as an additional property that involves all the gauging distances at once.
 
-Evidently the separation axioms $T_0$ and $T_1$ coincide in the symmetric case (gauge spaces), and as we will see they also imply the strong topological separation axiom $T_2$ (Hausdorff).
+Evidently the separation axioms $T_0$ and $T_1$ coincide in the symmetric case (gauge spaces), in which case they also imply the stronger topological separation axiom $T_2$ (Hausdorff), as well as $T_3$ (regularity).
 Thus, such a space is commonly called simply \textbf{separated}; but in the non-symmetric case it seems worth distinguishing different kinds of separation.
 
 Of course, any (extended quasi-)pseudo-metric space defines an (extended quasi-)gauge space with exactly one gauging distance.
@@ -418,7 +418,7 @@ We write $\cpl{A} = A\subseteq X = \setof{x\in X | x\notin A}$ for the relative 
   We write $\PTop$ for the category of pretopological neighborhood spaces and continuous maps, and $\Top$, $\PTopnn$, and $\LDTop$ for its subcategories of topological, \nn-stable, and locally decomposable neighborhood spaces.
 \end{defn}
 
-Note that a local decomposability pretopological neighborhood space is automatically topological and \nn-stable, since if $\forall y, (y\notin B \lor y \ll A)$ then $\neg\neg B \subseteq A$ and also $B \subseteq \setof{ y | y\ll A}$.
+Note that a locally decomposable neighborhood space is automatically topological and \nn-stable, since if $\forall y, (y\notin B \lor y \ll A)$ then $\neg\neg B \subseteq A$ and also $B \subseteq \setof{ y | y\ll A}$.
 Conversely, in classical mathematics any topological neighborhood space is locally decomposable, since we can take $B = \setof{ y | y\ll A}$.
 
 \begin{defn}
@@ -544,7 +544,9 @@ Closure spaces are unsatisfactory as a \emph{basic} notion of space because thei
   The proof for strong $\approx$ is essentially the same.
 \end{proof}
 
+In~\cite{bridges-vita} the weak closure relation $x\approx A$ is written as $\mathbf{near}(x,A)$, and an example is given showing that binary additivity for this relation in the metric space $\R$ implies the Limited Principle of Omniscience.
 We will not say much more about closure spaces.
+
 Topological neighborhood spaces and topological apartness spaces, on the other hand, are both reasonable constructive notions of ``space''.
 In support of this we note the following:
 
@@ -606,13 +608,6 @@ In support of this we note the following:
 Note that an analogous argument for closure spaces \emph{doesn't} work.
 This is another reason closure spaces are unsatisfactory.
 The close similarity between the proofs for $\bowtie$ and $\ll$ is one reason we have chosen to work with $\ll$ rather than open sets.
-
-\begin{rmk}
-  In particular, \cref{thm:top-topconcrete} implies that the forgetful functor from locally decomposable spaces to sets has a left adjoint, assigning to every set the finest possible locally decomposable topology on that set.
-  This is \emph{not} generally the discrete topology, since a discrete topology (meaning $x\ll A$ iff $x\in A$) is locally decomposable if and only if equality on $X$ is decidable.
-  Of course we cannot expect to prove that this topology is ever non-discrete, since excluded middle implies that it is.
-  But it seems likely that in many interesting cases it will turn out metatheoretically to coincide with the ``natural'' topology.
-\end{rmk}
 
 For the relationship between neighborhood and apartness spaces, we have the following analogue of \cref{thm:ord-le-apt}:
 
@@ -676,6 +671,7 @@ For the relationship between neighborhood and apartness spaces, we have the foll
 
 \begin{rmk}
   \cref{thm:top-ll-bowtie} explains why \cref{thm:top-topconcrete} does not include $\APTopnn$: rather than being reflective in $\APTop$, $\APTopnn$ is \emph{coreflective} therein.
+  This implies that it is also topological over $\Set$ in its own right, though it is not closed under initial lifts in $\APTop$.
 \end{rmk}
 
 \begin{rmk}
@@ -714,6 +710,13 @@ Recall that in \cref{thm:pmet-top} we showed that a prometric space has both a l
 \end{proof}
 
 Henceforth we will simply speak of a \textbf{locally decomposable topological space}, which comes with both a $\ll$ and a $\bowtie$ that are interdefinable.
+
+\begin{rmk}
+  Note that \cref{thm:top-topconcrete} implies that the forgetful functor from locally decomposable spaces to sets has a left adjoint, assigning to every set the finest possible locally decomposable topology on that set.
+  This is \emph{not} generally the discrete topology, since a discrete topology (meaning $x\ll A$ iff $x\in A$) is locally decomposable if and only if equality on $X$ is decidable.
+  Of course we cannot expect to prove that this topology is non-discrete in any particular case, since excluded middle implies that it is.
+  But it seems likely that in many interesting cases it will turn out metatheoretically to coincide with the ``natural'' topology.
+\end{rmk}
 
 
 \section{Interlude: separation axioms}
@@ -817,8 +820,8 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   Note that this $\apart$-reflexivity is just the converse of $\apart$-$T_1$, so that together they force $\apart$ to coincide with the defined relation $\oapt$.
   (As noted above, though, the basic axioms of an apartness space don't force $\oapt$ to be symmetric, and indeed it can fail to be symmetric even in a quasi-metric space.
   Bridges and Vita avoid this problem by \emph{defining} a ``quasi-metric space'' to be strongly $R_0$, which again we eschew.)
-  Their $\apart$-transitivity, however, seems too weak even in classical mathematics, if $x\apart y$ means $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$.
-  Moreover, it seems insufficient for our proof of \cref{thm:top-topconcrete}, though an alternative proof might be possible.
+  Their $\apart$-transitivity, however, seems too weak even in classical mathematics, if $x\apart y$ means $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$: when translated to $\ll$ it says that if $x\ll A$, then $x \ll \setof{ y | \forall z, (y\le z \implies z\in A) }$ which is a larger set that $\setof{y|y\ll A}$.\fxnote{Concrete counterexample?}
+  Moreover, it seems insufficient for our proof of \cref{thm:top-topconcrete}\fxwarning{Is that true?}, though an alternative proof might be possible.
 \end{rmk}
 
 \begin{rmk}
@@ -834,9 +837,10 @@ Note that if an apartness space is $T_1$, then it is $\oapt$-$T_1$, while conver
   % Put differently, this means that if $x\leapx y$, then $f(x)\ll A$ implies $f(y)\ll A$, i.e.\ $x\leapx y \implies f(x)\leapx_Y f(y)$, where $\leapx_Y$ is defined as in \cref{thm:top-ord}.
   % This gives adjointness.
 
-  However, it is unclear how to construct an ``Alexandrov apartness'' from an anti-preorder $\oapt$.
-  Even the comparison property $x\oapt y \lor y\oapt z$ seems insufficient, constructively, to ensure transitivity of any $\bowtie$ defined naturally from it.
-  This may be related to the fact that the Alexandrov space of a poset is locally decomposable if and only if $\leapx$ is decidable.
+  Dually, any anti-preorder $\oapt$ (indeed, any irreflexive relation) induces a \emph{pretopological} apartness relation where $x\bowtie A$ means $\forall y, (y\in A \implies x\oapt y)$, which we might call the \textbf{Alexandrov apartness}.
+  This likewise gives a left adjoint to the functor taking a pretopological apartness relation to its underlying $\oapt$ (which is only irreflexive in the pretopological case), and the apartness spaces obtained in this way are precisely those in which $x\bowtie A_i$ for all $i$ implies $x\bowtie \bigcup_i A_i$.
+  However, the Alexandrov apartness is not usually topological; even the comparison property $x\oapt y \lor y\oapt z$ for $\oapt$ seems insufficient, constructively, to ensure transitivity of $\bowtie$.
+  (Similarly, the Alexandrov topology of a poset is locally decomposable if and only if $\leapx$ is decidable.)
 \end{rmk}
 
 In keeping with our categorical perspective, we observe also that \cref{thm:ldtop-ord} can be promoted to a natural transformation.
