@@ -1293,11 +1293,41 @@ In the prometric case, the relevant relations are:
 We now proceed to axiomatize these relations.
 
 \begin{defn}
-  \textbf{quasi-proximal neighborhood space}
+  A \textbf{pre-quasi-proximal neighborhood space} is a set $X$ with a binary relation $\ll$ on subsets such that
+  \begin{enumerate}
+  \item If $A \subseteq B \ll C \subseteq D$, then $A\ll D$ (isotony).
+  \item If $A\ll B$ then $A\subseteq B$ (reflexivity).
+  \item $\emptyset \ll A$ and $A\ll X$ for all $A$ (nullary additivity).
+  \item If $A\ll B$ and $A\ll C$, then $A\ll B\cap C$ (right binary additivity).
+  \item If $A\ll C$ and $B\ll C$, then $A\cup B \ll C$ (left binary additivity).
+  \end{enumerate}
+  A pre-quasi-proximal neighborhood space is\dots
+  \begin{enumerate}[resume]
+  \item \textbf{quasi-proximal} if whenever $A\ll B$, there is a $C$ such that $A\ll C \ll B$ (transitivity).
+  \item \textbf{pre-proximal} if whenever $A\ll B$ we have $\cpl{B} \ll \cpl{A}$ (symmetry).
+  \item \textbf{proximal} if it satisfies both transitivity and symmetry.
+  \item \textbf{decomposable} if whenever $A\ll B$, there exist $C$ and $D$ such that $A\ll C$, $D\ll B$, and $\cpl{C}\cup D = X$.
+  \end{enumerate}
+  \textbf{proximally continuous}
 \end{defn}
 
 \begin{defn}
-  \textbf{quasi-proximal apartness space}
+  A \textbf{pre-quasi-proximal apartness space} is a set $X$ with a binary relation $\bowtie$ on subsets such that
+  \begin{enumerate}
+  \item If $A\subseteq B \bowtie C \supset D$, then $A\bowtie D$ (isotony).
+  \item If $A\bowtie B$ then $A\cap B = \emptyset$ (reflexivity).
+  \item $\emptyset \bowtie A$ and $A\bowtie \emptyset$ for all $A$ (nullary additivity).
+  \item 
+  \item 
+  \end{enumerate}
+  A pre-quasi-proximal apartness space is\dots
+  \begin{enumerate}[resume]
+  \item 
+  \item 
+  \item 
+  \item 
+  \end{enumerate}
+  \textbf{proximally continuous}
 \end{defn}
 
 \begin{defn}
