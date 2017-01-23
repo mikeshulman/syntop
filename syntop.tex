@@ -13,6 +13,8 @@
 \def\nle{\not\le}
 \def\oapt{\mathrel{\!\not\,\not\lesssim}}
 \def\leapx{\lesssim}
+\def\ent#1{\leapx_{#1}}
+\def\aent#1{\oapt_{#1}}
 \def\int{\mathrm{int}}
 \def\ext{\mathrm{ext}}
 \def\cl{\mathrm{cl}}
@@ -37,12 +39,17 @@
 \def\ATop{\mathbf{ATop}}
 \def\APTopnn{\mathbf{pATop}_{\nn}}
 \def\ldATop{\mathbf{ATop}_{\mathbf{ld}}}
+\def\QUnif{\mathbf{QUnif}}
 \def\Unif{\mathbf{Unif}}
 \def\Unifnn{\mathbf{Unif}_{\nn}}
 \def\ldUnif{\mathbf{Unif}_{\mathbf{ld}}}
+\def\ldQUnif{\mathbf{QUnif}_{\mathbf{ld}}}
 \def\AUnif{\mathbf{AUnif}}
 \def\AUnifnn{\mathbf{AUnif}_{\nn}}
 \def\ldAUnif{\mathbf{AUnif}_{\mathbf{ld}}}
+\def\AQUnif{\mathbf{AQUnif}}
+\def\AUnifnn{\mathbf{AUnif}_{\nn}}
+\def\ldAQUnif{\mathbf{AQUnif}_{\mathbf{ld}}}
 \begin{document}
 \maketitle
 
@@ -1092,19 +1099,19 @@ The standard way to divorce uniformity from real numbers is to consider \emph{fa
 \begin{defn}\label{def:pmet-unif}
   Let $X$ be a prometric space, $d$ a distance, $\ep>0$ a real number, and $x,y\in X$.
   \begin{enumerate}
-  \item We say $x \leapx_{d,\ep} y$ if $d(x,y)<\ep$.
-  \item We say $x \oapt_{d,\ep} y$ if $d(x,y)>\ep$.
+  \item We say $x \ent{d,\ep} y$ if $d(x,y)<\ep$.
+  \item We say $x \aent{d,\ep} y$ if $d(x,y)>\ep$.
   \end{enumerate}
 \end{defn}
 
 The abstract structures capturing these relations are the following.
-We will use Greek letters $\al,\be,\gm$ to denote special binary relations containing the diagonal, with $(x,y)\in \al$ written as $x\leapx_\al y$.
+We will use Greek letters $\al,\be,\gm$ to denote special binary relations containing the diagonal, with $(x,y)\in \al$ written as $x\ent\al y$.
 Similarly, we will use $\rho,\si,\tau$ to denote special binary relations disjoint from the diagonal, with $
-(x,y)\in\rho$ written $x \oapt_\rho y$.
+(x,y)\in\rho$ written $x \aent\rho y$.
 
 We write $\neg\al$ for the complement of a relation $\al$, for which we also invert the notation $\leapx/\oapt$.
-That is, $(x \oapt_{\neg\al} y)$ means $\neg (x\leapx_{\al} y)$ and similarly.
-We write $\al\implies\be$ to mean that $\forall x\forall y,(x\leapx_\al y \implies x\leapx_\be y)$ or similarly (i.e.\ $\al\subseteq \be$ as subsets of $X\times X$).
+That is, $(x \aent{\neg\al} y)$ means $\neg (x\ent{\al} y)$ and similarly.
+We write $\al\implies\be$ to mean that $\forall x\forall y,(x\ent\al y \implies x\ent\be y)$ or similarly (i.e.\ $\al\subseteq \be$ as subsets of $X\times X$).
 
 \begin{defn}
   A \textbf{quasi-uniform space} is a set $X$ together with a family of binary relations, called \textbf{entourages}, satisfying the following axioms.
@@ -1112,25 +1119,28 @@ We write $\al\implies\be$ to mean that $\forall x\forall y,(x\leapx_\al y \impli
   \item If $\al$ is an entourage and $\al\implies\be$, then $\be$ is an entourage (isotony).
   \item There exists an entourage (nullary filtration).
   \item If $\al$ and $\be$ are entourages, there exists an entourage $\gm$ such that $\gm\implies\al$ and $\gm\implies\be$ (binary filtration).
-  \item We have $x\leapx_\al x$ for all entourages $\al$ and all $x\in X$ (reflexivity).
-  \item For any entourage $\al$, there exists an entourage $\be$ such that for any $x,y,z\in X$, if $x\leapx_\be y$ and $y\leapx_\be z$, then $x\leapx_\al z$ (transitivity).
-  \end{enumerate}
-  It is a \textbf{uniform space} if it also satisfies the following:
-  \begin{enumerate}[resume]
-  \item For any entourage $\al$, there is an entourage $\be$ such that for any $x,y\in X$, if $x\leapx_\be y$ then $y\leapx_\al x$ (symmetry).
-    By isotony, there is then a base (see below) of symmetric entourages, which we usually write $\approx_\al$ instead of $\leapx_\al$.
+  \item We have $x\ent\al x$ for all entourages $\al$ and all $x\in X$ (reflexivity).
+  \item For any entourage $\al$, there exists an entourage $\be$ such that for any $x,y,z\in X$, if $x\ent\be y$ and $y\ent\be z$, then $x\ent\al z$ (transitivity).
   \end{enumerate}
   A quasi-uniform space is\dots
   \begin{enumerate}[resume]
-  \item \textbf{\nn-stable} if for any entourage $\al$, there is an entourage $\be$ such that $\neg\neg\be\implies \al$. %, i.e.\ $\forall x\forall y, (\neg\neg(x\leapx_\be y) \implies x\leapx_\al y)$.
-  \item \textbf{locally decomposable} if for any entourage $\al$, there is an entourage $\be$ such that for any $x,y\in X$, either $x\leapx_\al y$ or $\neg(x\leapx_\be y)$.
+  \item \textbf{uniform} if for any entourage $\al$, there is an entourage $\be$ such that for any $x,y\in X$, if $x\ent\be y$ then $y\ent\al x$ (symmetry).
+    By isotony, there is then a base (see below) of symmetric entourages, which we usually write $\approx_\al$ instead of $\ent\al$.
+  % \end{enumerate}
+  % A quasi-uniform space is\dots
+  % \begin{enumerate}[resume]
+  % \item \textbf{\nn-stable} if for any entourage $\al$, there is an entourage $\be$ such that $\neg\neg\be\implies \al$. %, i.e.\ $\forall x\forall y, (\neg\neg(x\ent\be y) \implies x\ent\al y)$.
+  \item \textbf{locally decomposable} if for any entourage $\al$, there is an entourage $\be$ such that for any $x,y\in X$, either $x\ent\al y$ or $\neg(x\ent\be y)$.
   \end{enumerate}
-  If $X$ and $Y$ are quasi-uniform spaces, a function $f:X\to Y$ is \textbf{uniformly continuous} if for any entourage $\al$ in $Y$ there is an entourage $\be$ in $X$ such that $\forall x\forall y, (x\leapx_\be y \implies f(x)\leapx_\al f(y))$.
-  We write $\Unif$ for the category of quasi-uniform spaces and uniformly continuous maps, and similarly $\Unifnn$ and $\ldUnif$ for its full subcategories of \nn-stable and locally decomposable spaces.
+  If $X$ and $Y$ are quasi-uniform spaces, a function $f:X\to Y$ is \textbf{uniformly continuous} if for any entourage $\al$ in $Y$ there is an entourage $\be$ in $X$ such that $\forall x\forall y, (x\ent\be y \implies f(x)\ent\al f(y))$.
+  We write $\QUnif$ for the category of quasi-uniform spaces and uniformly continuous maps, and similarly
+  % $\Unifnn$ and
+  $\Unif$ and $\ldUnif$ for its full subcategories of uniform %, \nn-stable,
+  and locally decomposable quasi-uniform spaces.
 \end{defn}
 
 Uniform spaces are well-known in classical mathematics.
-Constructively, some authors\fxwarning{cite} include uniform local decomposability as part of the definition, but we regard it as a separation axiom to be imposed only when required.
+Constructively, some authors such as~\cite{bridges-vita} include uniform local decomposability as part of the definition, but as with topological local decomposability, we regard it as a separation axiom to be imposed only when required.
 For instance, any topological group is a uniform space in the usual way, but it need not be locally decomposable.
 Likewise, any set has a discrete uniformity in which all reflexive relations are entourages, but this is locally decomposable only when the set has decidable equality.
 
@@ -1142,23 +1152,25 @@ Less well-known is the dual notion of uniform apartness.
   \item If $\rho$ is an anti-entourage and $\si\implies\rho$, then $\si$ is an anti-entourage (isotony).
   \item There exists an anti-entourage (nullary filtration).
   \item If $\rho$ and $\si$ are anti-entourages, there exists an anti-entourage $\tau$ such that $\rho\implies\tau$ and $\si\implies\tau$ (binary filtration).
-  \item We have $\neg(x\oapt_\rho x)$ for all anti-entourages $\rho$ and all $x\in X$ (reflexivity).
-  \item For any anti-entourage $\rho$, there exists an anti-entourage $\si$ such that for any $x,y,z\in X$, if $x\oapt_\rho z$ and $\neg(y\oapt_\si z)$, then $x\oapt_\si y$ (bilocal transitivity).
-  \end{enumerate}
-  It is a \textbf{uniform apartness space} (or \textbf{anti-uniform space}) if it also satisfies:
-  \begin{enumerate}[resume]
-  \item For any anti-entourage $\rho$, there is an anti-entourage $\si$ such that for any $x,y\in X$, if $x\oapt_\rho y$ then $y\oapt_\si x$ (symmetry).
-    By isotony, there is then a base (see below) of symmetric anti-entourages, which we usually write $\apart_\rho$.
+  \item We have $\neg(x\aent\rho x)$ for all anti-entourages $\rho$ and all $x\in X$ (reflexivity).
+  \item For any anti-entourage $\rho$, there exists an anti-entourage $\si$ such that for any $x,y,z\in X$, if $x\aent\rho z$ and $\neg(y\aent\si z)$, then $x\aent\si y$ (bilocal transitivity).
   \end{enumerate}
   A quasi-uniform apartness space is\dots
   \begin{enumerate}[resume]
-  \item \textbf{\nn-stable} if for any anti-entourage $\rho$, there is an entourage $\si$ such that $\neg\neg\rho \implies \si$. %, i.e.\ $\forall x\forall y, (\neg\neg(x\oapt_\rho y) \implies x\oapt_\si y)$.
-  \item \textbf{locally decomposable} if for any anti-entourage $\rho$, there is an anti-entourage $\si$ such that for any $x,y\in X$, either $x\oapt_\si y$ or $\neg(x\oapt_\rho y)$.
+  \item a \textbf{uniform apartness space} (or \textbf{anti-uniform space}) if for any anti-entourage $\rho$, there is an anti-entourage $\si$ such that for any $x,y\in X$, if $x\aent\rho y$ then $y\aent\si x$ (symmetry).
+    By isotony, there is then a base (see below) of symmetric anti-entourages, which we usually write $\apart_\rho$.
+  % \end{enumerate}
+  % A quasi-uniform apartness space is\dots
+  % \begin{enumerate}[resume]
+  % \item \textbf{\nn-stable} if for any anti-entourage $\rho$, there is an entourage $\si$ such that $\neg\neg\rho \implies \si$. %, i.e.\ $\forall x\forall y, (\neg\neg(x\aent\rho y) \implies x\aent\si y)$.
+  \item \textbf{locally decomposable} if for any anti-entourage $\rho$, there is an anti-entourage $\si$ such that for any $x,y\in X$, either $x\aent\si y$ or $\neg(x\aent\rho y)$.
     Note that then automatically $\rho\implies\si$.
-  \item \textbf{bilocally decomposable} if for any anti-entourage $\rho$, there is an anti-entourage $\si$ such that for any $x,y,z\in X$, if $x\oapt_\rho z$ then either $x\oapt_\si y$ or $y\oapt_\si z$.
+  \item \textbf{bilocally decomposable} if for any anti-entourage $\rho$, there is an anti-entourage $\si$ such that for any $x,y,z\in X$, if $x\aent\rho z$ then either $x\aent\si y$ or $y\aent\si z$.
   \end{enumerate}
-  If $X$ and $Y$ are quasi-uniform apartness spaces, a function $f:X\to Y$ is \textbf{uniformly continuous} if for any anti-entourage $\al$ in $Y$ there is an anti-entourage $\be$ in $X$ such that $\forall x\forall y, (f(x)\oapt_\al f(y) \implies x\oapt_\be y)$.
-  We write $\AUnif$ for the category of quasi-uniform apartness spaces and uniformly continuous maps, and similarly $\AUnifnn$ and $\ldAUnif$ for its full subcategories of \nn-stable and locally decomposable spaces.
+  If $X$ and $Y$ are quasi-uniform apartness spaces, a function $f:X\to Y$ is \textbf{uniformly continuous} if for any anti-entourage $\al$ in $Y$ there is an anti-entourage $\be$ in $X$ such that $\forall x\forall y, (f(x)\aent\al f(y) \implies x\aent\be y)$.
+  We write $\AQUnif$ for the category of quasi-uniform apartness spaces and uniformly continuous maps, and similarly $\AUnif$ % $\AUnifnn$
+  and $\ldAQUnif$ for its full subcategories of uniform %,  \nn-stable
+  and locally decomposable quasi-uniform apartness spaces.
 \end{defn}
 
 Note that the ``bilocal transitivity'' condition for a uniform apartness is weaker than what we have called bilocal decomposability.
@@ -1170,9 +1182,9 @@ However, we note:
 \end{lem}
 \begin{proof}
   Given $\rho$, let $\si$ be as in transitivity, and then let $\tau$ be as in local decomposability for $\si$.
-  Now suppose $x\oapt_\rho z$.
-  We have either $\neg(y\oapt_\si z)$ or $y\oapt_\tau z$; but in the former case transitivity gives $x\oapt_\si y$.
-  Since $\si\implies\tau$, we have $x\oapt_\tau y$ or $y\oapt_\tau z$, as desired.
+  Now suppose $x\aent\rho z$.
+  We have either $\neg(y\aent\si z)$ or $y\aent\tau z$; but in the former case transitivity gives $x\aent\si y$.
+  Since $\si\implies\tau$, we have $x\aent\tau y$ or $y\aent\tau z$, as desired.
 \end{proof}
 
 As usual, a \textbf{base} for a uniformity is a subset of ``basic'' entourages such that every entourage contains a basic one.
@@ -1199,8 +1211,8 @@ A set of entourages or anti-entourages is a base for \emph{some} uniformity or a
 \end{proof}
 
 \begin{thm}
-  The categories $\Unif$ and $\AUnif$ are both topological over $\Set$.
-  Moreover, their subcategories \dots are closed under initial lifts of sources, hence are also topological over $\Set$ and are reflective in their supercategory.
+  The categories $\QUnif$ and $\AQUnif$ are both topological over $\Set$.
+  Moreover, their subcategories $\Unif$, $\ldQUnif$, $\AUnif$, and $\ldAQUnif$ are closed under initial lifts of sources, hence are also topological over $\Set$ and are reflective in their supercategory.
 \end{thm}
 \begin{proof}
   TODO
@@ -1210,13 +1222,14 @@ A set of entourages or anti-entourages is a base for \emph{some} uniformity or a
   If $X$ is a quasi-uniform space, the complements $\neg\al$ of entourages form a base for an anti-quasi-uniformity.
   Dually, if $X$ is a quasi-uniform apartness space, the complements $\neg\rho$ of the anti-entourages form a base for a quasi-uniformity.
   These operations define an idempotent adjunction
-  \[ \anti : \Unif \rightleftarrows \AUnif : \neigh. \]
+  \[ \anti : \QUnif \rightleftarrows \AQUnif : \neigh. \]
   Moreover:
   \begin{enumerate}
-  \item The fixed objects on both sides are exactly the \nn-stable spaces.
-    Thus the adjunction restricts to an equivalence $\Unifnn \simeq \AUnifnn$.
+  \item The fixed quasi-uniform spaces are those such that for any entourage $\al$, there is an entourage $\be$ such that $\neg\neg\be\implies \al$.
+    The fixed quasi-uniform apartness spaces are those such that for any anti-entourage $\rho$, there is an entourage $\si$ such that $\neg\neg\rho \implies \si$.
+    We call these objects \textbf{\nn-stable}.
   \item Both $\anti$ and $\neigh$ preserve local decomposability.
-    Since locally decomposable (anti)-quasi-uniform spaces are \nn-stable, we have another equivalence $\ldUnif \simeq \ldAUnif$.
+  \item Locally decomposable (anti)-quasi-uniform spaces are \nn-stable, so we have an induced equivalence $\ldQUnif \simeq \ldAQUnif$.
   \item Both $\anti$ and $\neigh$ preserve symmetry, so the above adjunction and equivalences restrict from the quasi-uniform case to the uniform case.
   \end{enumerate}
 \end{thm}
@@ -1225,17 +1238,22 @@ A set of entourages or anti-entourages is a base for \emph{some} uniformity or a
 \end{proof}
 
 \begin{thm}
-  For any prometric space $X$, the quasi-uniform and anti-quasi-uniform structures of \cref{thm:pmet-unif} correspond under the equivalence $\ldUnif \simeq \ldAUnif$.
-  Moreover, this defines a fully faithful functor from prometric spaces and uniformly continuous functions to $\ldUnif$ (or equivalently $\ldAUnif$).
+  For any prometric space $X$, the locally decomposable quasi-uniform and anti-quasi-uniform structures of \cref{thm:pmet-unif} correspond under the equivalence $\ldQUnif \simeq \ldAQUnif$.
+  Moreover, this defines a fully faithful functor from prometric spaces and uniformly continuous functions to $\ldQUnif$ (or equivalently $\ldAQUnif$).
 \end{thm}
 \begin{proof}
-  TODO
+  It suffices to show that for any distance $d$ and $\ep>0$, there exists a distance $d'$ and an $\ep'>0$ such that
+  \[\neg(x\aent{d',\ep'} y) \implies x\ent{d,\ep} y \quad\text{and}\quad x\aent{d,\ep} y \implies \neg(x\ent{d',\ep'} y) .\]
+  Take $d'=d$ and $\ep'= \hfep$; the first statement follows from $d(x,y)<\ep \lor d(x,y)>\hfep$, while the second is obvious.
+
+  Now if $X$ and $Y$ are prometric spaces and $f:X\to Y$ is a function, to say that it is uniformly continuous for the induced quasi-uniformities means that for any basic entourage defined by $(d_Y,\ep)$ on $Y$, there exists a basic entourage defined by $(d_X,\de)$ on $X$ such that $x\ent{d_X,\de} y \implies f(x) \ent{d_Y,\ep} f(y)$.
+  But this is exactly uniform continuity as defined for prometric spaces in \cref{sec:metric}.
 \end{proof}
 
 Thus, locally decomposable (quasi-)uniform spaces capture exactly the uniform information in a prometric space.
 Classically, \emph{every} quasi-uniform space can be given a prometric, and indeed a quasi-gauge, and similarly in the symmetric case; but this seems not to be true constructively.
-(It is true, however, if we allow distances to take values in \emph{upper} real numbers, since then from any entourage $\al$ we can define a distance by $d(x,y) = \inf\setof{ 0 | x\leapx_\al y}$.
-Similarly, if we allow distances to take values in \emph{lower} real numbers, any bilocally decomposable\fxnote{Is bilocal decomposability necessary and sufficient for this?} anti-quasi-uniform space becomes quasi-gaugeable, since from any anti-entourage $\rho$ we can define a distance by $d(x,y) = \sup\setof{ q\in\mathbb{Q} | x\oapt_\rho y }$.)
+(It is true, however, if we allow distances to take values in \emph{upper} real numbers, since then from any entourage $\al$ we can define a distance by $d(x,y) = \inf\setof{ 0 | x\ent\al y}$.
+Similarly, if we allow distances to take values in \emph{lower} real numbers, any bilocally decomposable\fxnote{Is bilocal decomposability necessary and sufficient for this?} anti-quasi-uniform space becomes quasi-gaugeable, since from any anti-entourage $\rho$ we can define a distance by $d(x,y) = \sup\setof{ q\in\mathbb{Q} | x\aent\rho y }$.)
 
 \begin{thm}
   TODO: Underlying topology of uniform structures, how it commutes with the adjunctions $\anti\dashv \neigh$ and preserves local decomposability.
@@ -1245,43 +1263,66 @@ Similarly, if we allow distances to take values in \emph{lower} real numbers, an
   TODO: The orders underlying the uniform topology are the intersection of entourages and union of anti-entourages, giving a co/reflection from uniformities into orders.
 \end{thm}
 
+Is it worth introducing, for pedagogical reasons, the notion of a set equipped with a jointly-transitive filter of pretopologies (i.e.\ a left-perfect syntopogeny) as a common generalization of topologies and uniformities, before we introduce proximities and go all the way to general syntopogenies?
+They do include \emph{approach spaces} and I guess \emph{pro-approach spaces} as further generalization of both.
+
 \begin{thm}
   The topology underlying a locally decomposable (symmetric) uniform space is regular.
 \end{thm}
 
-More about uniform regularity.
-
+TODO: More about uniform regularity, as discussed on the nLab and nForum.
 
 
 \section{Set-set relations: proximity}
 \label{sec:set-set}
 \label{sec:proximity}
 
+Although somewhat less well-known, there is an intermediate notion between topology and uniformity, generally known as \emph{proximity}~\cite{proximity-spaces}.
+Like topologies, proximities can be defined classically by three equivalent kinds of relation --- neighborhood, apartness, and closeness --- but now these are relations between pairs of sets rather than between a point and a set.
+In the prometric case, the relevant relations are:
+
+\begin{defn}
+  Let $X$ be a prometric space and $A,B\subseteq X$.
+  \begin{enumerate}
+  \item We say $A\ll B$ if $\exists d, \exists \ep, \forall x, \forall y, (x\in A \land d(x,y)<\ep \implies y\in B)$.
+  \item We say $A\bowtie B$ if $\exists d, \exists \ep, \forall x, \forall y, (x\in A \land y\in B \implies d(x,y)>\ep)$.
+  \item We say $A\approx B$ if $\forall d, \forall \ep, \exists x, \exists y, (x\in A \land y\in B \land d(x,y)<\ep)$.
+  \end{enumerate}
+\end{defn}
+
+We now proceed to axiomatize these relations.
+
+\begin{defn}
+  \textbf{quasi-proximal neighborhood space}
+\end{defn}
+
+\begin{defn}
+  \textbf{quasi-proximal apartness space}
+\end{defn}
+
+\begin{defn}
+  \textbf{quasi-proximal closeness space}
+\end{defn}
 
 
 \section{Families of set-set relations: syntopogeny}
 \label{sec:syntopogeny}
 
-TODO: Approach spaces have a distance between points and sets, definable from a metric space by infima.
-Constructively this produces only an upper-real-valued distance, unless all subsets are located.
-Presumably there are ``pro-approach spaces'' that arise from prometric spaces, or at least from gauge spaces.
-Upper pro-approach spaces also give rise to syntopogenous spaces, but not decomposable ones.
 
 
+% \section{Located subspaces}
+% \label{sec:located}
 
-\section{Located subspaces}
-\label{sec:located}
+% \begin{defn}
+%   A subset $A\subseteq X$ is \textbf{(metrically) located} if for all $x\in X$, the set $\setof{ d(x,y) | y\in A }$ has an greatest lower bound, written $d(x,A)$.
+%   \fxwarning{Which direction does this go in the quasi case?}
+% \end{defn}
 
-\begin{defn}
-  A subset $A\subseteq X$ is \textbf{(metrically) located} if for all $x\in X$, the set $\setof{ d(x,y) | y\in A }$ has an greatest lower bound, written $d(x,A)$.
-  \fxwarning{Which direction does this go in the quasi case?}
-\end{defn}
-
-Classically, the poset $\Rp$ is a complete lattice, and thus every subset is located.
-(Even the empty set: $d(x,\emptyset)=\infty$.
-This is one good reason for allowing infinite distances.)
-However, constructively there are ``wild'' subsets such as $\setof{x\in X | P}$, for some undecidable proposition $P$, that cannot be shown to be located in general.
-\fxnote{Mention some theorems about located subsets.}
+% Classically, the poset $\Rp$ is a complete lattice, and thus every subset is located.
+% (Even the empty set: $d(x,\emptyset)=\infty$.
+% This is one good reason for allowing infinite distances.)
+% However, constructively there are ``wild'' subsets such as $\setof{x\in X | P}$, for some undecidable proposition $P$, that cannot be shown to be located in general.
+% \fxnote{Mention some theorems about located subsets.}
 
 
 \bibliographystyle{alpha}
