@@ -38,6 +38,7 @@
 \def\anti{\mathfrak{A}}
 \def\neigh{\mathfrak{Z}}
 \def\nn{\ensuremath{\neg\neg}}
+\def\sat#1{\widecheck{#1}}
 % Categories
 \def\Set{\mathbf{Set}}
 \def\PMet{\mathbf{PMet}}
@@ -48,15 +49,19 @@
 \def\PMetUnif{\mathbf{PMet}_{\mathbf{Unif}}}
 \def\PMetProx{\mathbf{PMet}_{\mathbf{Prox}}}
 \def\PMetApp{\mathbf{PMet}_{\mathbf{App}}}
+\def\PMetOrd{\mathbf{PMet}_{\mathbf{Ord}}}
 \def\PMetu{\mathbf{PMet}_u}
 \def\PMetTopu{\mathbf{PMet}_{\mathbf{Top},u}}
 \def\PMetUnifu{\mathbf{PMet}_{\mathbf{Unif},u}}
 \def\PMetProxu{\mathbf{PMet}_{\mathbf{Prox},u}}
 \def\PMetAppu{\mathbf{PMet}_{\mathbf{App},u}}
+\def\PMetOrdu{\mathbf{PMet}_{\mathbf{Ord},u}}
 \def\TopPMet{\mathbf{TopPMet}}
 \def\UnifPMet{\mathbf{UnifPMet}}
 \def\ProxPMet{\mathbf{ProxPMet}}
 \def\AppPMet{\mathbf{AppPMet}}
+\def\OrdPMet{\mathbf{OrdPMet}}
+\def\SatPMet{\mathbf{SatPMet}}
 \def\Preord{\mathbf{Preord}}
 \def\APreord{\mathbf{APreord}}
 \def\PTop{\mathbf{pTop}}
@@ -78,7 +83,7 @@
 \def\AQUnif{\mathbf{AQUnif}}
 \def\AUnifnn{\mathbf{AUnif}_{\nn}}
 \def\ldAQUnif{\mathbf{AQUnif}_{\mathbf{ld}}}
-
+\hyphenation{pro-metric}
 \begin{document}
 \maketitle
 
@@ -294,11 +299,7 @@ Note that the qualifiers ``extended'' and ``quasi-'' carry over from the metrics
 Evidently the separation axioms $T_0$ and $T_1$ coincide in the symmetric case (gauge spaces), in which case they also imply the stronger topological separation axiom $T_2$ (Hausdorff), as well as $T_3$ (regularity).
 Thus, such a space is commonly called simply \textbf{separated}; but in the non-symmetric case it seems worth distinguishing different kinds of separation.
 
-Of course, any pseudo-metric space (of any type) defines a gauge space (of the same type) with exactly one gauging distance.
-The essential difference between gauge spaces and metric spaces is that gauge spaces need not be ``countable'' in any of the senses that metric spaces must.
-For instance, any family of gauge spaces $\{X_k\}_{k\in K}$ has a product $\prod_k X_k$ with gauging distances of the form $d(x,y) = \max(d_1(\pi_{k_1}(x),\pi_{k_1}(y)),\dots,d_n(\pi_{k_n}(x),\pi_{k_n}(y)))$ where each $d_i$ is a gauging distance on $X_{k_i}$.
-An analogous construction for metric spaces only works if $K$ is finite (a slightly subtler one works if it is countable).
-
+Of course, any pseudo-metric space (of any type) defines a gauge space (of the same type) with exactly one gauging distance; the essential difference between gauge spaces and metric spaces is that gauge spaces need not be ``countable'' in most of the senses that metric spaces must.
 Yet more general than gauge spaces are prometric spaces~\cite{cht:one-setting}:
 
 \begin{defn}
@@ -334,18 +335,20 @@ Some of that information is \emph{numerical}, since points are compared by real 
 However, for many purposes we are only interested in ``topological'' or ``geometric'' features that are, for instance, invariant with respect to scaling of distances.
 Category-theoretically, this means we consider (pro)metric spaces as the objects of various different categories.
 The most important types of morphism between prometric spaces are the following.
+\fxnote{Include Cauchy?}
 
 \begin{defn}
   Let $X$ and $Y$ be upper prometric spaces (including, of course, MacNeille or Dedekind prometric spaces) and $f:X\to Y$ a function.
   In what follows, $\ep$ and $\de$ are assumed to range over $\Qp$, and $d_X$ and $d_Y$ are assumed to range over distances on $X$ and $Y$ respectively.
   \begin{enumerate}
+  \item $f$ is \textbf{monotone} if whenever $d_X(x,y)=0$ for all $d_X$, then also $d_Y(f(x),f(y))=0$ for all $d_Y$.
   \item $f$ is \textbf{continuous} if for all $x\in X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for all $y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
   \item $f$ is \textbf{proximally continuous} if for all $A\subseteq X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for any $y\in X$, if there exists a $z\in A$ with $d_X(z,y)<\de$ then there exists a $w\in A$ with $d_Y(f(w),f(y))<\ep$.
   \item $f$ is \textbf{uniformly continuous} if for all $d_Y$ and $\ep$ there are $d_X$ and $\de$ such that for all $x,y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
   \item $f$ is an \textbf{approach map} if for all $x\in X$, $d_Y$, and $k,\eta\in \Qp$, there exists a $d_X$ such that for all $y\in X$ we have $\min(d_Y(f(x),f(y)),k) \le d_X(x,y) +\eta$.
   \item $f$ is \textbf{short}, or a \textbf{contraction}, if for all $d_Y$ there is a $d_X$ such that for all $x,y\in X$ we have $d_Y(f(x),f(y)) \le d_X(x,y)$.
   \end{enumerate}
-  We write $\PMetTopu$, $\PMetProxu$, $\PMetUnifu$, $\PMetAppu$, and $\PMetu$ for the categories of upper prometric spaces equipped with these five kinds of morphism, respectively.
+  We write $\PMetOrdu$, $\PMetTopu$, $\PMetProxu$, $\PMetUnifu$, $\PMetAppu$, and $\PMetu$ for the categories of upper prometric spaces equipped with these five kinds of morphism, respectively.
   If we restrict the objects to be MacNeille or Dedekind prometric spaces, we write $\PMet_m$, $\PMet_d$, and so on.
   If we instead restrict them to be quasi-gauge or metric spaces, we write $\QGau_u$, $\Met_u$, and so on.
 \end{defn}
@@ -354,7 +357,7 @@ The most important types of morphism between prometric spaces are the following.
   The above kinds of morphism are arranged in increasing order of strictness.
   That is, we have
   \begin{center}
-    short $\implies$ approach $\implies$ uniform $\implies$ proximal $\implies$ continuous.
+    short $\implies$ approach $\implies$ uniform $\implies$ proximal $\implies$ continuous $\implies$ monotone.
   \end{center}
 \end{thm}
 \begin{proof}
@@ -366,7 +369,8 @@ The most important types of morphism between prometric spaces are the following.
   But $k>\ep$, so this can only happen if $d_Y(f(x),f(y))<\ep$.
 
   For uniform $\implies$ proximal, obtain $d_X$ and $\de$ from the uniform condition; then we can take $w=z$.
-  And finally, for proximal $\implies$ continuous, let $A = \singleton{x}$.
+  For proximal $\implies$ continuous, let $A = \singleton{x}$.
+  Finally, for continuous $\implies$ monotone, to show $d_Y(f(x),f(y))=0$ it suffices to show $d_Y(f(x),f(y))<\ep$ for all $\ep$, which we can do by finding a $d_X$ and $\de$ and using the fact that $d_X(x,y)=0 <\de$.
 \end{proof}
 
 For \emph{lower} prometric spaces, we can use the same definitions of short and approach maps, but the other three should be modified as follows:
@@ -374,6 +378,7 @@ For \emph{lower} prometric spaces, we can use the same definitions of short and 
 \begin{defn}
   Let $X$ and $Y$ be lower prometric spaces and $f:X\to Y$ a function.
   \begin{enumerate}
+  \item $f$ is \textbf{monotone} if for all $x,y\in X$ and $d_Y$, if $d_Y(x,y)>0$ there exists a $d_X$ such that $d_X(x,y)>0$.
   \item $f$ is \textbf{continuous} if for all $x\in X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for all $y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
   \item $f$ is \textbf{proximally continuous} if for all $A\subseteq X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for any $y\in X$, if $d_Y(f(w),f(y))>\ep$ for all $w\in A$, then $d_X(z,y)>\de$ for all $z\in A$.
   \item $f$ is \textbf{uniformly continuous} if for all $d_Y$ and $\ep$ there are $d_X$ and $\de$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
@@ -384,20 +389,25 @@ For \emph{lower} prometric spaces, we can use the same definitions of short and 
 \begin{thm}
   For lower prometric spaces we also have
   \begin{center}
-    short $\implies$ approach $\implies$ uniform $\implies$ proximal $\implies$ continuous.
+    short $\implies$ approach $\implies$ uniform $\implies$ proximal $\implies$ continuous $\implies$ monotone.
   \end{center}
 \end{thm}
 \begin{proof}
-  All the proofs are essentially the same, except for approach $\implies$ uniform.
-  Once again from $d_Y$ and $\ep$ we get a $d_X$ such that $\min(d_Y(f(x),f(y)),k) \le d_X(x,y) +\hfep$, where $k>\ep$, and we take $\de=\hfep$.
+  All the proofs are essentially the same; perhaps the least obvious one is approach $\implies$ uniform.
+  Here, once again from $d_Y$ and $\ep$ we get a $d_X$ such that $\min(d_Y(f(x),f(y)),k) \le d_X(x,y) +\hfep$, where $k>\ep$, and we take $\de=\hfep$.
   Then if $d_Y(f(x),f(y))>\ep$, we have $d_X(x,y)+\hfep >\ep$, which (even though we cannot in general subtract lower real numbers) implies $d_X(x,y)>\hfep = \de$.
 \end{proof}
 
 Finally, since MacNeille and Dedekind reals can be regarded as both lower or upper reals, we ought to verify that these definitions are consistent.
+In fact they are only partially consistent:
 
 \begin{thm}\label{thm:anti-continuous}
-  For MacNeille prometric spaces $X$ and $Y$, a function $f:X\to Y$ is continuous or uniformly continuous in the upper sense if and only if it is so in the lower sense.
-  And if $f$ is proximally continuous in the upper sense, it is also so in the lower sense.
+  Let $X$ and $Y$ be MacNeille prometric spaces and $f:X\to Y$ a function.
+  \begin{enumerate}
+  \item $f$ is continuous or uniformly continuous in the upper sense if and only if it is so in the lower sense.
+  \item If $f$ is proximally continuous in the upper sense, it is also so in the lower sense.
+  \item If $f$ is monotone in the lower sense, it is also so in the upper sense.
+  \end{enumerate}
 \end{thm}
 \begin{proof}
   If $f$ is continuous in the upper sense, then given $x$, $d_Y$ and $\ep$, let $d_X$ and $\de$ be as in upper continuity.
@@ -407,38 +417,154 @@ Finally, since MacNeille and Dedekind reals can be regarded as both lower or upp
   Then if $d_X(x,y)<\de$, we cannot have $d_Y(f(x),f(y))>\hfep$, so by the MacNeille condition we must have $d_Y(f(x),f(y))<\ep$.
 
   The proofs in the uniform case are essentially identical.
+
   In the proximal case, given $A$, $d_Y$, and $\ep$, let $d_X$ and $\de$ be as in upper proximal continuity.
   If $d_Y(f(z),f(y))>\ep$ for all $z\in A$, then by contraposition we have $\neg (d_X(w,y)<\de)$ for all $w\in A$, hence $d_X(w,y)>\frac{\de}{2}$.
+
+  Finally, the monotone case follows from the fact that $a\le b$, for MacNeille reals, is equivalent to $\neg(b<a)$, and $\neg\exists$ is equivalent to $\forall\neg$.
 \end{proof}
 
-However, proximal continuity in the lower sense seems weaker than in the upper sense, since $\neg\forall \not\implies \exists\neg$.
-If necessary to disambiguate, we will refer to proximal continuity in the lower sense as \textbf{proximal anti-continuity}.
+If necessary to disambiguate, we will refer to monotonicity or proximal continuity in the lower sense as \textbf{anti-monotonicity} and \textbf{proximal anti-continuity} respectively.
 
 
-\section{Subcategories of prometric spaces}
+\section{Categories of prometric spaces}
 \label{sec:sub-promet}
 
+In this section most of what we say will be independent of the type of real number, so we will omit the subscripts.
+
 Roughly speaking, the goal of general topology is to ``remove'' the undesired information contained in a structure such as a metric, gauge, or prometric space, obtaining more abstract notion of space such as topological, uniform, proximity, and approach spaces.
-One reason that is often given for this is the poor behavior of categories of metric spaces: as already noted above, countably infinite ``products'' of metric spaces can be constructed only in an \textit{ad hoc} way (giving products in $\MetTop$ but not in $\Met$), while for uncountably infinite products we are out of luck completely.
+One reason that is often given for this is the poor behavior of categories of metric spaces: while finite products of metric spaces are easy to construct, countably infinite ones can be constructed only in an \textit{ad hoc} way (and yield categorical products in $\MetTop$ but not in $\Met$), while for uncountably infinite products we are out of luck completely.
 However, this problem is already resolved by passage to gauge or prometric spaces:
 
 \begin{thm}
-  topological over $\Set$.
+  The category $\PMet$ is topological over $\Set$, i.e.\ its forgetful functor to $\Set$ has initial lifts for all sources and (hence) final lifts for all sinks.
+  In particular, it is complete and cocomplete.
+  Moreover, the inclusions of $\PMet$ into $\PMetOrd$, $\PMetTop$, $\PMetProx$, $\PMetUnif$, and $\PMetApp$ preserve initial lifts of sources, and its subcategory $\QGau$ is closed under initial lifts of sources; thus these latter categories are also topological,
 \end{thm}
+\begin{proof}
+  Given a family of functions $\{f_i : X \to Y_i\}$, where each $Y_i$ is a prometric space, we define a prometric structure on $X$ consisting of the distances $\max(d^X_1,\dots,d^X_n)$, where each $d^X_j$ is defined by $d^X_j(x,y) = d_j^Y(f_{i_j}(x),f_{i_j}(y))$ for some $i_j$ and some distance $d_j^Y$ on $Y_{i_j}$.
+  These distances satisfy filtration by construction; note that the case $n=0$ gives the distance $d(x,y)=0$ for all $x,y$, so that $X$ satisfies nullary filtration even if there are no $Y_i$'s.
+  Reflexivity and transitivity follow from their truth for each $Y_i$, while each function $f_i$ is obviously short.
+  Moreover, if each $d_j^Y$ is a pseudo-metric, then so is $\max(d^X_1,\dots,d^X_n)$, so that $X$ is a quasi-gauge space if each $Y_i$ is.
+
+  It remains to show that this structure on $X$ is an initial lift preserved by all the inclusions, which is to say that a function $g:Z\to X$ is short, approach, uniform, proximal, continuous, or monotone as soon as all the composites $g\circ f_i$ are.
+  In all cases the proof is essentially the same: given a metric $\max(d^X_1,\dots,d^X_n)$ on $X$ and possibly some other things, each metric $d_j^Y$ on $Y_{i_j}$ induces by the appropriate property of $g\circ f_i$ a metric $d^Z_j$ on $Z$.
+  Let $d^Z$ dominate all the $d^Z_j$ by filtration of $Z$; then any assumed smallness of $d^Z$ implies smallness of each $d^Z_j$ and hence of each $d_j^Y$, hence also of $\max(d^X_1,\dots,d^X_n)$.
+  (In the lower case, the argument runs in reverse, with largeness of $\max(d^X_1,\dots,d^X_n)$ implying that of some $d_j^Y$, hence of some $d^Z_j$, and thus of $d^Z$.)
+\end{proof}
+
+Note that if each $Y_i$ is a metric space \emph{and} there are finitely many of them, then $X$ has a maximal metric and hence is isomorphic in $\PMet$ to a metric space; but in general $\Met$ is not closed under initial lifts.
 
 Why, then, do we seek more abstract notions of space?
-Remove undesired information.
+One answer is that a prometric space contains far \emph{more} information than we are interested in for topology, uniformity, and so on.
+From a rigid category-theoretic perspective, one might argue that this removal of information is already accomplished by the definitions of weaker kinds of maps.
+However, the fact that it is nevertheless present in the ``internal structure'' of a prometric space can interfere with our intuition and make abstraction and generalization more difficult.
+At the technical level, it means that if we want to treat prometric spaces ``topologically'' (for instance), we have the obligation to verify at every step that our constructions respect (iso)morphisms in $\PMetTop$.
 
-From a category-theoretic perspective, however, one might argue that this removal of information is already accomplished by the definitions of weaker kinds of maps.
-That is, one might reasonably \emph{define} an ``upper topological space'', say, to be an upper prometric space \emph{regarded as an object of} $\PMetTopu$, and the functor $\PMetu \to \PMetTopu$ (which is bijective on objects and faithful) as assigning the \emph{underlying topological space} of a prometric space.
+Formally, the problem is that $\PMet$ and its supercategories are not \emph{amnestic}, meaning that their fibers over a given set $X$ are only preorders and not partial orders.
+In other words, two very different-looking prometrics on the same space might nevertheless be equivalent, i.e.\ isomorphic by the identity function.
 
-However, this removal is not visible at the level of objects; hard to detect isomorphism.
+In the case of $\PMet$ itself, this can be remedied quite easily: we simply require the prometric to be an ideal rather than an ideal base.
+That is, we stipulate that if $d'$ is a distance and $d\le d'$, then $d$ is also a distance.
+Call a prometric space \emph{saturated} if it satisfies this condition.
+Then if $X$ is saturated, then the condition for $f:X\to Y$ to be short can be restated as
+\begin{quote}
+  ($\star$) For any distance $d_Y$ on $Y$, the function $d_X:X\times X\to \Re$ defined by $d_X(x,y) = d_Y(f(x),f(y))$ is a distance on $X$.
+\end{quote}
+Thus, if $X$ and $Y$ are both saturated, an isomorphism $X\cong Y$ ensures that they have \emph{exactly} the same distances.
+Moreover, any prometric space $X$ is isomorphic in $\PMet$ to a saturated one: let $\sat{X}$ be the same set $X$ with the distances being all functions $d:X\times X\to \Re$ such that there is a distance $d'$ of $X$ with $d\le d'$.
+This is a prometric, since if $d\le d'$ with $d'$ a distance of $X$, there is a distance $d''$ of $X$ with $d(x,z) \le d'(x,z) \le d''(x,y)+d''(y,z)$.
+And $\sat{X}$ is saturated since if $d\le d' \le d''$ with $d''$ a distance of $X$ then $d\le d''$, while the identity function $X\to \sat{X}$ is an isomorphism in $\PMet$.
 
-Coreflective subcategories.
+In fact this solution can be extended to all the supercategories of $\PMet$ as well.
+Note that all the continuity conditions on maps $f:X\to Y$ between prometric spaces can be rephrased to be of the form ``for any $d_Y$, the function defined by $d_X(x,y) = d_Y(f(x),f(y))$ has some property''.
+Thus, it is natural to simply demand a stronger form of saturation, that any function with the relevant property is a distance on $X$.
 
-Still too much flab: a topological prometric, for instance, is an immense object.
-In general the way we do this is by considering \emph{relations} between points or subsets rather than distances between them.
+This works literally for quasi-gauge spaces if instead of ``any function'' we say ``any pseudo-metric'', but not for prometrics.
+The problem is that for an arbitrary function $d:X\times X \to \Re$ satisfying the ``some property'', there may not be another such function $d'$ to participate with $d$ in the triangle inequality.
+Instead we take an impredicative approach.
 
+Note that the collection of prometrics on a set $X$ is partially ordered by inclusion.
+Moreover, it is a complete lattice, with suprema constructed by closing up unions under finite maxima.
+That is, if $\{\cM_i\}$ is a set of prometrics on $X$, then $\bigvee_i \cM_i$ consists of all functions of the form $\max(d_1,\dots,d_n)$, where each $d_j \in \cM_{i_j}$ for some $i_j$.
+
+\begin{defn}
+  %, and let $d$ range over functions $X\times X\to \Re$.
+  % \begin{enumerate}
+  % \item
+  A prometric $\cM$ on a set $X$ is \textbf{saturated} (resp.\ \textbf{approach}, \textbf{uniform}, \textbf{proximal}, \textbf{topological}, \textbf{ordered}) if whenever $\cM'$ is a prometric on $X$ such that $\id_X:(X,\cM) \to (X,\cM')$ is short (resp.\ approach, uniformly continuous, proximally continuous, continuous, monotone) we have $\cM'\subseteq \cM$.
+  % \item $\cM$ is \textbf{approach} if $d$ is a distance as soon as for all $x\in X$ and $k,\eta\in \Qp$, there is a distance $d'$ such that for all $y\in X$ we have $\min(d(x,y),k) \le d'(x,y) +\eta$.
+  % \item $\cM$ is \textbf{uniform} if $d$ is a distance as soon as for all $\ep$ there is a distance $d'$ and a $\de$ such that for all $x,y\in X$, if $d'(x,y)<\de$ then $d(x,y)<\ep$.
+  % \item $\cM$ is \textbf{proximity} if $d$ is a distance as soon as for all $A\subseteq X$ and $\ep$ there is a distance $d'$ and a $\de$ such that for any $y\in X$, if there exists a $z\in A$ with $d'(z,y)<\de$ then there exists a $w\in A$ with $d(w,y)<\ep$.
+  % \item $\cM$ is \textbf{topological} if $d$ is a distance as soon as for all $x\in X$ and $\ep$ there is a distance $d'$ and a $\de$ such that for all $y\in X$, if $d'(x,y)<\de$ then $d(x,y)<\ep$.
+  % \item $\cM$ is \textbf{ordered} if $d$ is a distance as soon as $d(x,y)=0$ whenever $d'(x,y)=0$ for all distances $d'$.
+  % \end{enumerate}
+  %(For lower prometrics, we modify the last four definitions in the obvious way.)
+  We write $\SatPMet$, $\AppPMet$, $\UnifPMet$, $\ProxPMet$, $\TopPMet$, and $\OrdPMet$ for the categories whose objects are those defined above and whose morphisms \emph{in all cases} are the short maps.
+\end{defn}
+
+Note that this formal definition of saturation agrees with the simpler one given formerly.
+Since plain saturation is weaker than all the above notions, it follows that the morphisms in each of these categories can again be characterized by the more straightforward property ($\star$).
+Thus each of these categories is amnestic over $\Set$.
+Moreover, we have fully faithful inclusions
+\begin{multline*}
+  \OrdPMet \into \TopPMet \into \ProxPMet \into \UnifPMet\\
+  \into \AppPMet \into \SatPMet \into \PMet.
+\end{multline*}
+
+\begin{thm}
+  Let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a function.
+  \begin{enumerate}
+  \item If $X$ is approach, then $f$ is short if and only if it is an approach map.
+  \item If $X$ is uniform, then $f$ is short if and only if it is uniformly continuous.
+  \item If $X$ is proximity, then $f$ is short if and only if it is proximally continuous.
+  \item If $X$ is topological, then $f$ is short if and only if it is continuous.
+  \item If $X$ is ordered, then $f$ is short if and only if it is monotone.
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  In all cases ``only if'' is always true, so it suffices to show ``if''.
+  Let $\cM$ be the given prometric on $X$, and let $\cM_f$ be the initial prometric on $X$ induced by $f$.
+  Then $f:(X,\cM_f) \to Y$ is short, while $f:(X,\cM) \to Y$ is short, approach, uniformly continuous, proximally continuous, continuous, or monotone if and only if $\id_X:(X,\cM) \to (X,\cM_f)$ is so.
+  But if $\id_X$ has some form of continuity, then the appropriate kind of saturation for $\cM$ implies that $\cM_f \subseteq \cM$, and hence $\id_X$ is also short.
+\end{proof}
+
+\begin{thm}
+  Each of the categories $\SatPMet$, $\AppPMet$, $\UnifPMet$, $\ProxPMet$, $\TopPMet$, and $\OrdPMet$ is coreflective in $\PMet$, and in the case of $\SatPMet$ the adjunction is an equivalence.
+\end{thm}
+\begin{proof}
+  Let $\sC$ be one of the above categories; we will also speak of ``$\sC$-continuous maps'' (e.g.\ uniformly continuous, monotone, etc.)
+  Let the coreflection of $(X,\cM)$ be the join, in the poset of prometrics on $X$, of all prometrics $\cM'$ such that $\id_X :(X,\cM) \to (X,\cM')$ is $\sC$-continuous; call it $\sat{\cM}$.
+  Then $\id_X :(X,\cM) \to (X,\sat{\cM})$ is also $\sC$-continuous, while $\id_X : (X,\sat{\cM}) \to (X,\cM)$ is short since $\cM \subseteq \sat{\cM}$.
+
+  (In particular, $\id_X$ is an isomorphism in the corresponding \emph{supercategory} of $\PMet$ --- that is, $\PMetTop$, $\PMetUnif$, etc.
+  In the case $\sC=\SatPMet$ this shows that the inclusion is an equivalence.)
+
+  Now if $f:Y\to (X,\cM)$ is short and $Y\in\sC$, then $f:Y\to (X,\cM)$ is also $\sC$-continuous, and hence so is $f:Y\to (X,\sat{\cM})$.
+  But $Y\in\sC$, so $f:Y\to (X,\sat{\cM})$ is also short.
+  Thus it is the unique factorization of $f:Y\to (X,\cM)$ through $\id_X : (X,\sat{\cM}) \to (X,\cM)$.
+\end{proof}
+
+\begin{cor}
+  The following composites are equivalences of categories:
+  \begin{gather*}
+    \OrdPMet \into \PMet \into \PMetOrd\\
+    \TopPMet \into \PMet \into \PMetTop\\
+    \ProxPMet \into \PMet \into \PMetProx\\
+    \UnifPMet \into \PMet \into \PMetUnif\\
+    \AppPMet \into \PMet \into \PMetApp
+  \end{gather*}
+  In particular, the functors $\PMet \to \PMetTop$ and so on all have fully faithful left adjoints.\qed
+\end{cor}
+
+A constructivist, therefore, may reasonably argue at this point that we have perfectly serviceable notions of topological space, uniform space, and so on.
+Indeed, we have four of each of them, depending on what kind of real numbers we take as distances.
+However, there are still reasons to be unsatisfied.
+
+For instance, a topological prometric is an \emph{immense} object, containing all sorts of strange-looking distances; it is hard to get any intuitive feel for such a thing.
+It is much easier to understand and work with a less ``flabby'' structure.
+Moreover, such leaner structures are more amenable to generalization, notably to the point-free context.
+For this reason, we move on to consider structures defined \emph{relations} between points or subsets rather than distances between them.
 
 
 \section{Point-point relations: order and apartness}
