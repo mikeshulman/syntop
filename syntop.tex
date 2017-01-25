@@ -3,10 +3,21 @@
 \usepackage[status=draft]{fixme}
 \title{Unifying constructive general topology}
 \author{Toby Bartels and Michael Shulman}
+\def\Q{\mathbb{Q}}
+\def\Qp{\mathbb{Q}^+}
 \def\R{\mathbb{R}}
-\def\Re{\overline{\mathbb{R}}}
+\def\Re{\overline{\R}}
+\def\Rpd{[0,\infty]_d}
+\def\Rpm{[0,\infty]_m}
+\def\Rpu{[0,\infty]_u}
+\def\Rpl{[0,\infty]_{\ell}}
 \def\Rp{[0,\infty]}
-%\def\Rpf{[0,\infty)}
+\def\Red{\Re_d}
+\def\Rem{\Re_m}
+\def\Reu{\Re_u}
+\def\Rel{\Re_{\ell}}
+\def\upp#1{{#1}^{\sharp}}
+\def\low#1{{#1}^{\flat}}
 \def\F{\mathcal{F}}
 \def\apart{\mathrel{\#}}
 \def\napprox{\not\approx}
@@ -29,6 +40,23 @@
 \def\nn{\ensuremath{\neg\neg}}
 % Categories
 \def\Set{\mathbf{Set}}
+\def\PMet{\mathbf{PMet}}
+\def\QGau{\mathbf{QGau}}
+\def\Met{\mathbf{Met}}
+\def\MetTop{\mathbf{Met}_{\mathbf{Top}}}
+\def\PMetTop{\mathbf{PMet}_{\mathbf{Top}}}
+\def\PMetUnif{\mathbf{PMet}_{\mathbf{Unif}}}
+\def\PMetProx{\mathbf{PMet}_{\mathbf{Prox}}}
+\def\PMetApp{\mathbf{PMet}_{\mathbf{App}}}
+\def\PMetu{\mathbf{PMet}_u}
+\def\PMetTopu{\mathbf{PMet}_{\mathbf{Top},u}}
+\def\PMetUnifu{\mathbf{PMet}_{\mathbf{Unif},u}}
+\def\PMetProxu{\mathbf{PMet}_{\mathbf{Prox},u}}
+\def\PMetAppu{\mathbf{PMet}_{\mathbf{App},u}}
+\def\TopPMet{\mathbf{TopPMet}}
+\def\UnifPMet{\mathbf{UnifPMet}}
+\def\ProxPMet{\mathbf{ProxPMet}}
+\def\AppPMet{\mathbf{AppPMet}}
 \def\Preord{\mathbf{Preord}}
 \def\APreord{\mathbf{APreord}}
 \def\PTop{\mathbf{pTop}}
@@ -50,6 +78,7 @@
 \def\AQUnif{\mathbf{AQUnif}}
 \def\AUnifnn{\mathbf{AUnif}_{\nn}}
 \def\ldAQUnif{\mathbf{AQUnif}_{\mathbf{ld}}}
+
 \begin{document}
 \maketitle
 
@@ -62,30 +91,169 @@ Guiding principles:
 \item Nice categories including not-nice objects.  In particular, only impose separation axioms when needed, and include trivial cases like the empty set.
 \item There's nothing intrinsically wrong with points, although they don't tell the whole story.
 \item There's nothing intrinsically wrong with negation, as long as it is used correctly.
-  For instance, $x\le y$ can be defined for real numbers as $\neg(y<x)$.
+  For instance, $x\le y$ can be defined for Dedekind real numbers as $\neg(y<x)$.
 \item Topos-valid mathematics.  Equality means equality; it doesn't have to be ``proved'' that a function respects equality.  Sets don't come with a God-given apartness relation; indeed an apartness is a sort of topological structure that a set can be \emph{equipped} with.
 \end{enumerate}
+
+\section{Real numbers}
+\label{sec:reals}
+
+As is well-known, constructively there are many different kinds of ``real numbers''.
+Since the properties of metric (and gauge and prometric) spaces vary depending on which kind of real numbers we use as distance, we begin by reviewing all the relevant kinds of real number.
+
+Let $\Q$ denote the rational numbers and $\Qp = \setof{ q\in \Q | q>0}$ the set of positive rational numbers.
+
+\begin{defn}
+  An \textbf{extended upper real number} is a set $U\subseteq \Q$ such that
+  \begin{enumerate}
+  \item $y\in U$ if and only if there is an $x\in U$ with $x<y$ (upper-rounded).
+  \end{enumerate}
+  Similarly, an \textbf{extended lower real number} is a let $L\subseteq \Q$ such that
+  \begin{enumerate}
+  \item $x\in L$ if and only if there is a $y\in L$ with $x<y$ (lower-rounded).
+  \end{enumerate}
+  We write $\Reu$ and $\Rel$ for the sets of extended upper and lower real numbers, respectively.
+\end{defn}
+
+The word \emph{extended} indicates that $\pm\infty$ are included.
+In $\Reu$, we have $+\infty = \emptyset$ and $-\infty = \Q$, while in $\Rel$ the meanings are reversed.
+
+For $U_1,U_2\in \Reu$ we define
+\begin{itemize}
+\item $U_1 \le U_2$ if $U_2\subseteq U_1$.
+\item $U_1 < U_2$ if $\exists x\in \Q, (x\in U_1 \land x\notin U_2)$.
+\item $U_1 + U_2 = \setof{x+y | x\in U_1 \land y\in U_2}$.
+\end{itemize}
+Dually, for $L_1,L_2 \in\Rel$ we define
+\begin{itemize}
+\item $L_1 \le L_2$ if $L_1\subseteq L_2$.
+\item $L_1 < L_2$ if $\exists x\in \Q, (x\in L_2 \land x\notin L_1)$.
+\item $L_1 + L_2 = \setof{x+y | x\in L_1 \land y\in L_2}$.
+\end{itemize}
+In both cases, both inequalities are transitive, $\le$ is reflexive and antisymmetric, $<$ is irreflexive and a module over $\le$ on both sides.
+Moreover, addition is a commutative monoid that respects both inequalities; the unit of $\Reu$ is $0_u = \setof{q\in \Q | q > 0}$ and that of $\Rel$ is $0_\ell = \setof{q\in \Q | q < 0}$.
+In particular, both $\Reu$ and $\Rel$ are monoidal posets.
+
+If $U\in\Reu$, we define its \textbf{complementary lower real number} to be
+\[ \low U = \setof{x\in\Q | \exists y\in Q, (x<y \land y\notin U)}. \]
+Similarly, if $L\in\Rel$ we define its \textbf{complementary upper real number} to be
+\[ \upp L = \setof{y\in\Q | \exists x\in Q, (x<y \land x\notin L)}. \]
+
+\begin{thm}
+  $\low{(-)}$ and $\upp{(-)}$ both preserve $\le$ and $<$, and we have a normal monoidal adjunction of posets
+  \[ \upp{(-)} : \Rel \rightleftarrows \Reu : \low{(-)}.\]
+  In particular, $\upp{(-)}$ is normal colax monoidal and $\low{(-)}$ is normal lax monoidal, i.e.\ $\upp{(x+y)} \le \upp{x}+\upp{y}$ and $\low{x}+\low{y}\le \low{(x+y)}$, while both preserve $0$.
+\end{thm}
+\begin{proof}
+  If $U_1 \le U_2$, so that $U_2\subseteq U_1$, and if $x\in\low{U_1}$, we have $y\notin U_1$ such that $x<y$.
+  But then $y\notin U_2$, so $x\in \low{U_2}$ as well; thus $\low{U_1}\le \low{U_2}$.
+
+  If $U_1 < U_2$ we have an $x$ such that $x\in U_1$ and $x\notin U_2$.
+  But then since $U_1$ is rounded, we have a $y\in U_1$ with $y<x$, hence $y\notin U_2$ since $U_2$ is rounded; thus $y \in \low{U_2}$ and $y\notin \low{U_1}$, so $\low{U_1} < \low{U_2}$.
+
+  By definition, $\low{U_1} +\low{U_2}$ is the set of sums $x_1+x_2$ such that there exist $y_1,y_2$ with $x_1<y_1$ and $x_2<y_2$ and $y_1\notin U_1$ and $y_2\notin U_2$.
+  To show $\low{U_1} +\low{U_2} \subseteq \low{(U_1+U_2)}$, therefore, suppose given such $x_1,x_2,y_1,y_2$, and set $z=x_1+x_2$ and $w = y_1+y_2$.
+  Certainly $z<w$, so to prove $z\in \low{(U_1 + U_2)}$ it remains to prove that $w\notin U_1+U_2$.
+  Thus, suppose $w = w_1+w_2$ with $w_1\in U_1$ and $w_2\in U_2$; then by properties of addition in $\Q$, either $y_1\ge w_1$ or $y_2\ge w_2$, hence either $y_1\in U_1$ or $y_2\in U_2$, which are both contradictions.
+
+  Finally, $\low{0_u}$ is the set of $x\in \Q$ such that there is a $y>x$ with $y\le 0$, which is to say the set of all $x\in \Q$ such that $x<0$, i.e.\ $0_\ell$.
+  Thus $\low{(-)}$ is normal lax monoidal.
+
+  The proofs of all the analogous properties for $\upp{(-)}$ are dual, so it remains to check the adjunction.
+  To say $\upp L \le U$ is to say $U \subseteq \upp L$, i.e.\ for all $y\in U$ there exists an $x\in \Q$  with $x<y$ and $x\notin L$.
+  This certainly implies $U \subseteq \Q\setminus L$.
+  But conversely, if $U \subseteq \Q\setminus L$, then for any $y\in U$ there is an $x\in U$ with $x<y$, hence $x\notin L$.
+  Thus $\upp L \le U$ is equivalent to $U \subseteq \Q\setminus L$, i.e.\ to $L\cap U = \emptyset$.
+  Similarly, $L \le \low U$ is also equivalent to $L\cap U =\emptyset$. so they are equivalent to each other.
+\end{proof}
+
+Since any adjunction between posets is idempotent, this adjunction restricts to an isomorphism between the images of $\low{(-)}$ and $\upp{(-)}$.
+This common fixed poset is denoted $\Rem$, and its elements are called the \textbf{extended MacNeille real numbers}.
+They are equivalently definable as pairs $(L,U)$ of a lower and an upper extended real number such that
+\begin{align*}
+ L &= \setof{x\in\Q | \exists y\in \Q, (x<y \land y\notin U)}\\
+ U &= \setof{y\in\Q | \exists x\in \Q, (x<y \land x\notin L)}.
+\end{align*}
+Finally, an \textbf{extended Dedekind real number} is a similar pair $(L,U)$ such that
+\begin{center}
+  For any $x,y\in\Q$, if $x<y$, then either $x\in L$ or $y\in U$.
+\end{center}
+We write $\Red$ for the set of extended Dedekind real numbers; evidently $\Red \subseteq \Rem$.
+
+If $M_1,M_2\in\Rem$, then $M_1 \le M_2$ is equivalent to $\neg(M_2<M_1)$.
+Since $M_1=M_2$ is equivalent to $(M_1 \le M_2) \land (M_2 \le M_1)$, it follows that equality in $\Rem$ (and hence also in $\Red$) is \nn-stable.
+But even for Dedekind reals, $D_1<D_2$ is strictly stronger than $\neg(D_2 \le D_1)$, and $D_1\le D_2$ is strictly weaker than $(D_1=D_2) \lor (D_1 < D_2)$.
+
+For MacNeille and Dedekind reals (unlike upper and lower reals), we can define subtraction: the additive inverse of $(L,U)$ is $( \setof{-x | x\in U}, \setof{-y | y\in L})$.
+Thus $\Rem$ and $\Red$ are ordered abelian groups.
+(In fact they are even rings, and ``fields'' in (different) appropriate senses, but we will not have any use for their multiplications.)
+
+Finally, we note that the union of any number of upper real numbers (as subsets of $\Q$) is again such.
+Thus, $\Reu$ is a complete lattice under $\le$, with infima constructed as unions.
+Its therefore also has suprema, though these are not set-theoretic intersections but rather their interiors:
+\[ \bigvee U_i = \setof{ y\in\Q | \exists x\in\Q, (x<y \land \forall i, x\in U_i}\]
+Similarly, $\Rel$ has suprema constructed as unions and infima as the interiors of intersections.
+
+Since $\Rem$ is a coreflective sub-poset of $\Reu$ and a reflective sub-poset of $\Rel$, it is closed under suprema in $\Reu$ and infima in $\Rel$.
+Thus, it is also a complete lattice under $\le$, with suprema constructed as the interiors of intersections of upper sets, and infima constructed as the interiors of intersections of lower sets.
+However, $\Red$ is \emph{not} in general a complete lattice.
+
+Classically, all four kinds of real number coincide.
+By contrast, the extreme constructive differences between them are illustrated by the following observations.
+
+\begin{thm}
+  Let $P$ be any truth value.
+  \begin{enumerate}
+  \item Define $U_P = \setof{x\in \Q | x>0 \land P}$; then $U_P \in \Reu$ and we have
+    \[ (U_P = 0) \iff P. \]
+  \item Define $L_P = \setof{x\in \Q | x<0 \lor P}$; then $L_P\in \Rel$ and we have
+    \[ (L_P > 0) \iff P. \]
+  \item We have $\upp{L_P} = U_{\neg P}$ and $\low{U_P} = L_{\neg P}$.
+    Thus, if we define $M_P = (L_{\neg P},U_{\neg\neg P})$, then $M_P \in \Rem$, and we have
+    \[ (M_P = 0) \iff \neg\neg P \qquad\text{and}\qquad (M_P > 0) \iff \neg P \]
+  \item We have $M_P\in\Red$ if and only if $\neg\neg P\lor\neg P$.
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  That $U_P \in \Reu$ and $L_P\in \Rel$ are obvious.
+  Since $0_u = \setof{ x\in\Q | x>0 }$, to say $U_P = 0_u$ means $P$.
+  Similarly, since $0_\ell = \setof{x\in Q | x<0}$, to say $L_P > 0_\ell$ is to say there exists a $q\in L_P$ with $q\ge 0$, which means $P$.
+
+  Now $\upp{L_P}$ is the set of all $y\in \Q$ such that there is an $x<y$ with $x\notin L_P$, i.e.\ such that $x\ge 0$ and $\neg P$.
+  Such an $x$ exists if and only if $y>0$ and $\neg P$, which is to say $y\in U_{\neg P}$.
+
+  On the other hand, $\low{U_P}$ is the set of all $x\in Q$ such that there is a $y>x$ with $y\notin U_P$, i.e.\ such that $\neg (y>0 \land P)$.
+  Since inequality of rational numbers satisfies trichotomy, this implies either $y>0$ (in which case $\neg P$), or $y\le 0$ (in which case $x<0$); hence $x<0 \lor \neg P$, i.e.\ $x\in L_{\neg P}$.
+  Conversely, if $x<0 \lor \neg P$, then in the first case we can find a $y$ with $x<y<0$ and hence $y\notin U_P$, while in the second case any $y>x$ satisfies $y\notin U_P$.
+  Thus, $\low{U_P} = L_{\neg P}$.
+
+  It follows immediately that $M_P \in \Rem$.
+  The statements about $M_P=0$ and $M_P>0$ then follow from the analogous ones about $U_P$ and $L_P$.
+
+  If $\neg\neg P\lor \neg P$, then whenever $x<y$, one of the following cases must hold:
+  \begin{itemize}
+  \item We have $y\le 0$, whence $x<0$ and so $x\in L_{\neg P}$.
+  \item We have $\neg P$, whence $x\in L_{\neg P}$.
+  \item We have $y>0$ and $\neg\neg P$, in which case $y\in U_{\neg\neg P}$.
+  \end{itemize}
+  Thus, $M_P$ is Dedekind.
+  Conversely, if $M_P$ is Dedekind, then it must be either $>0$ or $<1$; but if $M_P>0$ then $\neg P$, and if $M_P<1$ then $\neg\neg P$.
+\end{proof}
+
+Thus, any truth value can be represented by an equality or inequality of upper or lower reals, while it is exactly the \nn-stable truth values that can be represented by an equality of MacNeille reals.
+(The converse direction of this follows from the observation above that equality in $\Rem$ is \nn-stable.)
+However, it is less clear which truth values can be represented by an inequality of MacNeille or Dedekind reals, although we can say that every complemented \nn-stable truth value can be represented by an equality of Dedekind reals.
+
+(In fact, it is known that we have $\Rem = \Red$ if and only if the ``weak law of excluded middle'' holds, i.e.\ $\neg\neg P \lor \neg P$ for all $P$.
+This is equivalent to ``de Morgan's law'', that $\neg (P\land Q) \iff \neg P \lor \neg Q$ for all $P,Q$.)
 
 
 \section{Metric, gauge, and prometric spaces}
 \label{sec:metric}
 
-Arguably, the goal of general topology is to describe ``spaces'' that are not metrizable but share many attributes of metric spaces.
-Thus, it is worth recalling the basic definitions and properties of metric spaces in a constructive context.
-
-We write $\Re$ for the set of extended Dedekind real numbers; these are pairs $(L,U)$ of sets of rational numbers such that:
-\begin{enumerate}
-\item if $x\in L$ and $y\in U$ then $x<y$,
-\item $x\in L$ if and only if there is a $y\in L$ with $x<y$ (roundedness),
-\item $y\in U$ if and only if there is an $x\in U$ with $x<y$ (roundedness), and
-\item if $x<y$ then either $x\in L$ or $y\in U$ (locatedness).
-\end{enumerate}
-If we also required $L$ and $U$ to be inhabited, we would get the set $\R$ of ordinary Dedekind real numbers.
-In classical mathematics, $\Re$ differs from $\R$ only by including $+\infty = (\mathbb{Q},\emptyset)$ and $-\infty = (\emptyset,\mathbb{Q})$.
-Constructively, we can say that $\R = \setof{ x\in \Re | -\infty < x < \infty }$.
-We also write
-\[\Rp = \setof{x\in\Re | x\ge 0 }.\]
-We remind the reader that constructively, the (extended) real numbers admit both a strict order $<$ and a non-strict order $\le$, where $x\le y$ is equivalent to $\neg(y<x)$, but $x<y$ is stronger than $\neg(y\le x)$, and $x\le y$ is weaker than $(x=y)\lor (x<y)$.
+In this section we let $\Re$ stand for one of the sets of extended real numbers --- upper, lower, MacNeille, or Dedekind --- and we write $\Rp = \setof{x\in \Re | x \ge 0 }$.
+Note that $\Rp$ is again an ordered commutative monoid.
+Whenever a definition involves $\Rp$, it is actually four definitions, one for each kind of real number; if we want to specify which, we add one of the adjectives ``upper'', ``lower'', ``MacNeille'', or ``Dedekind''.
 
 \begin{defn}
   An \textbf{extended quasi-pseudo-metric space} is a set $X$ together with a function $d:X\times X \to \Rp$ such that
@@ -93,17 +261,11 @@ We remind the reader that constructively, the (extended) real numbers admit both
   \item $d(x,x)=0$ for all $x\in X$ (reflexivity), and
   \item $d(x,z)\le d(x,y)+d(y,z)$ for all $x,y,z\in X$ (transitivity, or the triangle inequality).
   \end{enumerate}
-  A \textbf{quasi-pseudo-metric space} is an extended quasi-pseudo-metric space such that
+  Such a space is\dots
   \begin{enumerate}[resume]
-  \item $d(x,y)<\infty$ for all $x,y\in X$ (finite distances).
-  \end{enumerate}
-  A \textbf{pseudo-metric space} is a quasi-pseudo-metric space such that
-  \begin{enumerate}[resume]
-  \item $d(x,y)=d(y,x)$ for all $x,y\in X$ (symmetry).
-  \end{enumerate}
-  A \textbf{metric space} is a pseudo-metric space such that
-  \begin{enumerate}[resume]
-  \item if $d(x,y)=0$ then $x=y$ (separation).
+  \item a \textbf{quasi-pseudo-metric space} if $d(x,y)<\infty$ for all $x,y\in X$.
+  \item a \textbf{pseudo-metric space} if $d(x,y)=d(y,x)$ for all $x,y\in X$ (symmetry).
+  \item a \textbf{metric space} if $d(x,y)=0$ then $x=y$ (separation).
   \end{enumerate}
 \end{defn}
 
@@ -120,7 +282,7 @@ In fact, most topological constructions on metric spaces can easily be generaliz
   \item there exists some gauging distance (nullary filtration), and
   \item if $d_1$ and $d_2$ are gauging distances, there is a gauging distance $d_3$ such that $d_1(x,y)\le d_3(x,y)$ and $d_2(x,y)\le d_3(x,y)$ for all $x,y\in X$ (binary filtration).
   \end{enumerate}
-  An extended quasi-gauge space is\dots
+  Such a space is\dots
   \begin{enumerate}[resume]
   \item $\mathbf{T_1}$ if for any $x,y\in X$, if $d(x,y)=0$ for all gauging distances $d$, then $x=y$.
   \item $\mathbf{T_0}$ if for any $x,y\in X$, if $d(x,y)=0$ and $d(y,x)=0$ for all gauging distances $d$, then $x=y$.
@@ -132,7 +294,7 @@ Note that the qualifiers ``extended'' and ``quasi-'' carry over from the metrics
 Evidently the separation axioms $T_0$ and $T_1$ coincide in the symmetric case (gauge spaces), in which case they also imply the stronger topological separation axiom $T_2$ (Hausdorff), as well as $T_3$ (regularity).
 Thus, such a space is commonly called simply \textbf{separated}; but in the non-symmetric case it seems worth distinguishing different kinds of separation.
 
-Of course, any (extended quasi-)pseudo-metric space defines an (extended quasi-)gauge space with exactly one gauging distance.
+Of course, any pseudo-metric space (of any type) defines a gauge space (of the same type) with exactly one gauging distance.
 The essential difference between gauge spaces and metric spaces is that gauge spaces need not be ``countable'' in any of the senses that metric spaces must.
 For instance, any family of gauge spaces $\{X_k\}_{k\in K}$ has a product $\prod_k X_k$ with gauging distances of the form $d(x,y) = \max(d_1(\pi_{k_1}(x),\pi_{k_1}(y)),\dots,d_n(\pi_{k_n}(x),\pi_{k_n}(y)))$ where each $d_i$ is a gauging distance on $X_{k_i}$.
 An analogous construction for metric spaces only works if $K$ is finite (a slightly subtler one works if it is countable).
@@ -145,7 +307,7 @@ Yet more general than gauge spaces are prometric spaces~\cite{cht:one-setting}:
   \item there exists a distance (nullary filtration),
   \item if $d_1$ and $d_2$ are distances, there is a distance $d_3$ such that $d_1(x,y)\le d_3(x,y)$ and $d_2(x,y)\le d_3(x,y)$ for all $x,y\in X$ (binary filtration),
   \item $d(x,x)=0$ for every distance and all $x\in X$ (reflexivity),
-  \item for any distance $d_1$ there is a distance $d_2$ such that $d_1(x,z)\le d_2(x,y)+d_2(y,z)$ for all $x,y,z\in X$ (transitivity, or the triangle inequality).
+  \item for any distance $d_1$ there is a distance $d_2$ such that for all $x,y,z\in X$ we have $d_1(x,z)\le d_2(x,y)+d_2(y,z)$ (transitivity, or the triangle inequality).
   \end{enumerate}
   A prometric space is\dots
   \begin{enumerate}[resume]
@@ -156,83 +318,127 @@ Yet more general than gauge spaces are prometric spaces~\cite{cht:one-setting}:
 \end{defn}
 
 Since the terminology for prometric spaces is not well-established, we follow~\cite{cht:one-setting} in taking the ``extended quasi'' case to be the default, with symmetry stated explicitly whenever assumed.
-Obviously any extended quasi-gauge is also a prometric.
-We do not know any important examples of the extra generality afforded by prometric spaces, but they seem a natural level of generality; almost everything we have to say about metric spaces or gauge spaces in this paper applies just as well to prometric ones.
+Obviously any extended quasi-gauge space (of any type) is also a prometric space (of the same type).
 
-On the other hand, in constructive mathematics a very different (and much more general) notion is obtained by allowing distances to take values in the (nonnegative extended) \emph{upper} real numbers (sets $U$ of rational numbers satisfying the single axiom ``$y\in U$ if and only if there is an $x\in U$ with $x<y$'', plus $0\notin U$ for nonnegativity).
-In this case we will speak of an \textbf{upper prometric space}.\fxnote{What about lower reals?}
-%If necessary, we distinguish ordinary real numbers from upper ones by calling them \textbf{located}, and ordinary prometric spaces from upper ones by calling them \textbf{decomposable}.
+The differences between the various kinds of real numbers, when used as distances, are illustrated by the following example.
 
-The main difference is that unlike located real numbers, upper real numbers constructively admit arbitrary infima.
-Thus, for instance, any set $X$ admits a \emph{discrete} upper prometric with one distance defined by $d(x,y) = \inf \setof{ 0 | x=y }$, so that $d(x,x)=0$ but $d(x,y)=+\infty$ if $x\neq y$.
-This distance takes real values if and only if $X$ has decidable equality, since if $d(x,y)$ were real then it would be either $<2$ (in which case $x=y$) or $>1$ (in which case $x\neq y$).
-As we will see, locatedness of distances is crucial for the special behavior of (pro)metric spaces among arbitrary spaces in constructive mathematics.
-We will return to upper prometric spaces briefly in \cref{sec:uniformity}.
+\begin{eg}
+  Any set $X$ admits a ``discrete'' \emph{upper} prometric, with one distance defined by
+  \[ d(x,y) = U_{x=y} = \setof{ q\in \Q | q > 0 \land x=y} \]
+  Thus $d(x,y)=0$ if and only if $x=y$.
+  This distance is MacNeille if and only if $X$ has \nn-stable equality (i.e.\ $\neg\neg(x=y)\implies (x=y)$), and Dedekind if and only if $X$ has decidable equality (i.e.\ $(x=y)\lor \neg(x=y)$).
+\end{eg}
 
 A metric space, and even a prometric space, contains a lot of information.
 Some of that information is \emph{numerical}, since points are compared by real number distances.
 However, for many purposes we are only interested in ``topological'' or ``geometric'' features that are, for instance, invariant with respect to scaling of distances.
 Category-theoretically, this means we consider (pro)metric spaces as the objects of various different categories.
-The two primary types of morphism we will be interested in are the following.
-(Here $X$ and $Y$ denote prometric spaces; $\ep$ and $\de$ are assumed to range over $\Rp$; and $d_X$ and $d_Y$ are assumed to range over distances on $X$ and $Y$ respectively.)
+The most important types of morphism between prometric spaces are the following.
 
-\begin{itemize}
-\item A function $f:X\to Y$ is \textbf{continuous} if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
-\item Similarly, $f:X\to Y$ is \textbf{uniformly continuous} if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
-% \item We will say $f:X\to Y$ is \textbf{cocontinuous}\fxwarning{Does this have a standard name?} if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
-% \item Similarly, $f:X\to Y$ is \textbf{uniformly cocontinuous} if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
-\end{itemize}
+\begin{defn}
+  Let $X$ and $Y$ be upper prometric spaces (including, of course, MacNeille or Dedekind prometric spaces) and $f:X\to Y$ a function.
+  In what follows, $\ep$ and $\de$ are assumed to range over $\Qp$, and $d_X$ and $d_Y$ are assumed to range over distances on $X$ and $Y$ respectively.
+  \begin{enumerate}
+  \item $f$ is \textbf{continuous} if for all $x\in X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for all $y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
+  \item $f$ is \textbf{proximally continuous} if for all $A\subseteq X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for any $y\in X$, if there exists a $z\in A$ with $d_X(z,y)<\de$ then there exists a $w\in A$ with $d_Y(f(w),f(y))<\ep$.
+  \item $f$ is \textbf{uniformly continuous} if for all $d_Y$ and $\ep$ there are $d_X$ and $\de$ such that for all $x,y\in X$, if $d_X(x,y)<\de$ then $d_Y(f(x),f(y))<\ep$.
+  \item $f$ is an \textbf{approach map} if for all $x\in X$, $d_Y$, and $k,\eta\in \Qp$, there exists a $d_X$ such that for all $y\in X$ we have $\min(d_Y(f(x),f(y)),k) \le d_X(x,y) +\eta$.
+  \item $f$ is \textbf{short}, or a \textbf{contraction}, if for all $d_Y$ there is a $d_X$ such that for all $x,y\in X$ we have $d_Y(f(x),f(y)) \le d_X(x,y)$.
+  \end{enumerate}
+  We write $\PMetTopu$, $\PMetProxu$, $\PMetUnifu$, $\PMetAppu$, and $\PMetu$ for the categories of upper prometric spaces equipped with these five kinds of morphism, respectively.
+  If we restrict the objects to be MacNeille or Dedekind prometric spaces, we write $\PMet_m$, $\PMet_d$, and so on.
+  If we instead restrict them to be quasi-gauge or metric spaces, we write $\QGau_u$, $\Met_u$, and so on.
+\end{defn}
 
-The locatedness of distances enables us to characterize continuity in a converse fashion:
-
-\begin{lem}\label{thm:cocontinuous}
-  For prometric spaces $X$ and $Y$, a function $f:X\to Y$ is continuous if and only if for all $x\in X$, $d_Y$, and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
-\end{lem}
+\begin{thm}
+  The above kinds of morphism are arranged in increasing order of strictness.
+  That is, we have
+  \begin{center}
+    short $\implies$ approach $\implies$ uniform $\implies$ proximal $\implies$ continuous.
+  \end{center}
+\end{thm}
 \begin{proof}
-  If $f$ is continuous, then given $d_Y$ and $\ep$, let $d_X$ and $\de$ be as in the definition of continuity.
-  Then if $d_Y(f(x),f(y)) > \ep$, we cannot have $d_X(x,y) < \de$, so we must have $d_X(x,y) > \frac{\de}{2}$.
+  It is obvious that short $\implies$ approach: use the same $d_x$.
 
-  Conversely, if the stated condition holds, then given $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\hfep \implies d_X(x,y)>\de$.
-  Then if $d_X(x,y)<\de$, we cannot have $d_Y(f(x),f(y))>\hfep$, so we must have $d_Y(f(x),f(y))<\ep$.
+  For approach $\implies$ uniform, given $d_Y$ and $\ep$, let $\eta = \hfep$ and $k>\ep$.
+  Then by the approach condition, we have a $d_X$ such that $\min(d_Y(f(x),f(y)),k) \le d_X(x,y) +\eta$ for all $y$.
+  Let $\de=\hfep$; then if $d_X(x,y)<\de$ we have $\min(d_Y(f(x),f(y)),k) < \ep$.
+  But $k>\ep$, so this can only happen if $d_Y(f(x),f(y))<\ep$.
+
+  For uniform $\implies$ proximal, obtain $d_X$ and $\de$ from the uniform condition; then we can take $w=z$.
+  And finally, for proximal $\implies$ continuous, let $A = \singleton{x}$.
 \end{proof}
 
-\begin{lem}\label{thm:unif-cocontinuous}
-  For prometric spaces $X$ and $Y$, a function $f:X\to Y$ is uniformly continuous if and only if for all $d_Y$ and $\ep>0$ there are $d_X$ and $\de>0$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
-\end{lem}
+For \emph{lower} prometric spaces, we can use the same definitions of short and approach maps, but the other three should be modified as follows:
+
+\begin{defn}
+  Let $X$ and $Y$ be lower prometric spaces and $f:X\to Y$ a function.
+  \begin{enumerate}
+  \item $f$ is \textbf{continuous} if for all $x\in X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for all $y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
+  \item $f$ is \textbf{proximally continuous} if for all $A\subseteq X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for any $y\in X$, if $d_Y(f(w),f(y))>\ep$ for all $w\in A$, then $d_X(z,y)>\de$ for all $z\in A$.
+  \item $f$ is \textbf{uniformly continuous} if for all $d_Y$ and $\ep$ there are $d_X$ and $\de$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
+  \end{enumerate}
+  We have corresponding categories $\PMet_\ell$, etc.
+\end{defn}
+
+\begin{thm}
+  For lower prometric spaces we also have
+  \begin{center}
+    short $\implies$ approach $\implies$ uniform $\implies$ proximal $\implies$ continuous.
+  \end{center}
+\end{thm}
 \begin{proof}
-  Entirely analogous.
+  All the proofs are essentially the same, except for approach $\implies$ uniform.
+  Once again from $d_Y$ and $\ep$ we get a $d_X$ such that $\min(d_Y(f(x),f(y)),k) \le d_X(x,y) +\hfep$, where $k>\ep$, and we take $\de=\hfep$.
+  Then if $d_Y(f(x),f(y))>\ep$, we have $d_X(x,y)+\hfep >\ep$, which (even though we cannot in general subtract lower real numbers) implies $d_X(x,y)>\hfep = \de$.
 \end{proof}
 
-These lemmas are the beginning of the duality between ``closeness'' and ``apartness'' that will occupy us for much of the paper.
+Finally, since MacNeille and Dedekind reals can be regarded as both lower or upper reals, we ought to verify that these definitions are consistent.
 
-Among the notions that are invariants of continuity or uniform continuity are convergence and completeness.
-When there is only one prometric space $X$, we assume that the letter $d$ ranges over distances on $X$.
+\begin{thm}\label{thm:anti-continuous}
+  For MacNeille prometric spaces $X$ and $Y$, a function $f:X\to Y$ is continuous or uniformly continuous in the upper sense if and only if it is so in the lower sense.
+  And if $f$ is proximally continuous in the upper sense, it is also so in the lower sense.
+\end{thm}
+\begin{proof}
+  If $f$ is continuous in the upper sense, then given $x$, $d_Y$ and $\ep$, let $d_X$ and $\de$ be as in upper continuity.
+  Then whenever $d_Y(f(x),f(y)) > \ep$, we cannot have $d_X(x,y) < \de$, so by the MacNeille condition we must have $d_X(x,y) > \frac{\de}{2}$.
 
-\begin{itemize}
-\item $X$ is \textbf{totally bounded} if for all $d$ and $\ep>0$ there is a finite set $F\subseteq X$ such that for all $y\in X$ there is an $x\in F$ such that $d(x,y)<\ep$.
-\item A sequence $\{x_n\}$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $N$ such that for any $n$, if $n>N$ then $d(x,x_n)<\ep$.
-\item More generally, a filter $\F$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $y\in A$ we have $d(x,y)<\ep$.
-\item A sequence $\{x_n\}$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $N$ such that for any $n,m$, if $n,m>N$ then $d(x_n,x_m)<\ep$.
-\item A filter $\F$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $x,y\in A$ we have $d(x,y)<\ep$.
-\item $X$ is \textbf{complete} if every Cauchy filter converges to some point.
-\end{itemize}
+  Conversely, if $f$ is continuous in the lower sense, then given $x$, $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\hfep \implies d_X(x,y)>\de$.
+  Then if $d_X(x,y)<\de$, we cannot have $d_Y(f(x),f(y))>\hfep$, so by the MacNeille condition we must have $d_Y(f(x),f(y))<\ep$.
 
-For metric spaces in classical mathematics, it suffices to consider convergent and Cauchy \emph{sequences}.
-However, in the gauge and prometric cases we must deal with filters (or nets); and constructively (specifically, in the absence of both excluded middle and countable choice) this is true even for metric spaces.
-For instance, the completion of the metric space $\mathbb{Q}$ under limits of Cauchy sequences (the ``Cauchy real numbers'') is potentially much smaller than its full completion under limits of Cauchy filters (the Dedekind real numbers $\R$).
-In fact, there may not even be ``enough'' Cauchy filters, so that the completion is properly a non-spatial locale; we will return to this in \cref{sec:completion}.
+  The proofs in the uniform case are essentially identical.
+  In the proximal case, given $A$, $d_Y$, and $\ep$, let $d_X$ and $\de$ be as in upper proximal continuity.
+  If $d_Y(f(z),f(y))>\ep$ for all $z\in A$, then by contraposition we have $\neg (d_X(w,y)<\de)$ for all $w\in A$, hence $d_X(w,y)>\frac{\de}{2}$.
+\end{proof}
 
-Note also that the above definitions of Cauchy filter and complete space are only really sensible in the symmetric case.
-We will also return to this later.\fxnote{Do that}
+However, proximal continuity in the lower sense seems weaker than in the upper sense, since $\neg\forall \not\implies \exists\neg$.
+If necessary to disambiguate, we will refer to proximal continuity in the lower sense as \textbf{proximal anti-continuity}.
 
-In classical mathematics, a metric space is \emph{compact} if and only if it is complete and totally bounded.
-Constructively, this is not so; thus one generally either uses ``complete and totally bounded'' as a replacement for ``compact'', or passes to locales instead of spaces (see \cref{sec:locales}).
 
-% Classically, one can \emph{complete} a metric space by equipping a set of equivalence classes of Cauchy sequences with a metric.
+\section{Subcategories of prometric spaces}
+\label{sec:sub-promet}
 
-We now embark on a process of generalization whose goal is to remove the ``non-topological'' information contained in a prometric, and express the result in an intrinsic way.
-In particular, prometric spaces that are topologically isomorphic (by continuous functions), or in some cases uniformly isomorphic (by uniformly continuous functions), ought to give rise to ``topological'' structures that are actually indistinguishable.
+Roughly speaking, the goal of general topology is to ``remove'' the undesired information contained in a structure such as a metric, gauge, or prometric space, obtaining more abstract notion of space such as topological, uniform, proximity, and approach spaces.
+One reason that is often given for this is the poor behavior of categories of metric spaces: as already noted above, countably infinite ``products'' of metric spaces can be constructed only in an \textit{ad hoc} way (giving products in $\MetTop$ but not in $\Met$), while for uncountably infinite products we are out of luck completely.
+However, this problem is already resolved by passage to gauge or prometric spaces:
+
+\begin{thm}
+  topological over $\Set$.
+\end{thm}
+
+Why, then, do we seek more abstract notions of space?
+Remove undesired information.
+
+From a category-theoretic perspective, however, one might argue that this removal of information is already accomplished by the definitions of weaker kinds of maps.
+That is, one might reasonably \emph{define} an ``upper topological space'', say, to be an upper prometric space \emph{regarded as an object of} $\PMetTopu$, and the functor $\PMetu \to \PMetTopu$ (which is bijective on objects and faithful) as assigning the \emph{underlying topological space} of a prometric space.
+
+However, this removal is not visible at the level of objects; hard to detect isomorphism.
+
+Coreflective subcategories.
+
+Still too much flab: a topological prometric, for instance, is an immense object.
 In general the way we do this is by considering \emph{relations} between points or subsets rather than distances between them.
+
 
 
 \section{Point-point relations: order and apartness}
@@ -1348,11 +1554,40 @@ We now proceed to axiomatize these relations.
 %   \fxwarning{Which direction does this go in the quasi case?}
 % \end{defn}
 
-% Classically, the poset $\Rp$ is a complete lattice, and thus every subset is located.
+% Classically, the poset $\Rpd$ is a complete lattice, and thus every subset is located.
 % (Even the empty set: $d(x,\emptyset)=\infty$.
 % This is one good reason for allowing infinite distances.)
 % However, constructively there are ``wild'' subsets such as $\setof{x\in X | P}$, for some undecidable proposition $P$, that cannot be shown to be located in general.
 % \fxnote{Mention some theorems about located subsets.}
+
+\section{Completeness}
+\label{sec:completeness}
+
+Among the notions that are invariants of continuity or uniform continuity are convergence and completeness.
+When there is only one prometric space $X$, we assume that the letter $d$ ranges over distances on $X$.
+
+\begin{itemize}
+\item $X$ is \textbf{totally bounded} if for all $d$ and $\ep>0$ there is a finite set $F\subseteq X$ such that for all $y\in X$ there is an $x\in F$ such that $d(x,y)<\ep$.
+\item A sequence $\{x_n\}$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $N$ such that for any $n$, if $n>N$ then $d(x,x_n)<\ep$.
+\item More generally, a filter $\F$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $y\in A$ we have $d(x,y)<\ep$.
+\item A sequence $\{x_n\}$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $N$ such that for any $n,m$, if $n,m>N$ then $d(x_n,x_m)<\ep$.
+\item A filter $\F$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $x,y\in A$ we have $d(x,y)<\ep$.
+\item $X$ is \textbf{complete} if every Cauchy filter converges to some point.
+\end{itemize}
+
+For metric spaces in classical mathematics, it suffices to consider convergent and Cauchy \emph{sequences}.
+However, in the gauge and prometric cases we must deal with filters (or nets); and constructively (specifically, in the absence of both excluded middle and countable choice) this is true even for metric spaces.
+For instance, the completion of the metric space $\mathbb{Q}$ under limits of Cauchy sequences (the ``Cauchy real numbers'') is potentially much smaller than its full completion under limits of Cauchy filters (the Dedekind real numbers $\R$).
+In fact, there may not even be ``enough'' Cauchy filters, so that the completion is properly a non-spatial locale; we will return to this in \cref{sec:completion}.
+
+Note also that the above definitions of Cauchy filter and complete space are only really sensible in the symmetric case.
+We will also return to this later.\fxnote{Do that}
+
+In classical mathematics, a metric space is \emph{compact} if and only if it is complete and totally bounded.
+Constructively, this is not so; thus one generally either uses ``complete and totally bounded'' as a replacement for ``compact'', or passes to locales instead of spaces (see \cref{sec:locales}).
+
+% Classically, one can \emph{complete} a metric space by equipping a set of equivalence classes of Cauchy sequences with a metric.
+
 
 
 \bibliographystyle{alpha}
