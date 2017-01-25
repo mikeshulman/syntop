@@ -347,7 +347,7 @@ Yet more general than gauge spaces are prometric spaces~\cite{cht:one-setting}:
 Since the terminology for prometric spaces is not well-established, we follow~\cite{cht:one-setting} in taking the ``extended quasi'' case to be the default, with symmetry stated explicitly whenever assumed.
 Obviously any extended quasi-gauge space (of any type) is also a prometric space (of the same type).
 
-The differences between the various kinds of real numbers, when used as distances, are illustrated by the following example.
+The differences between the various kinds of real numbers, when used as distances, are illustrated by the following example.\fxnote{This is a special case of something in \cref{sec:point-point}; is it worthwhile to repeat it here for pedagogical emphasis?}
 
 \begin{eg}
   Any set $X$ admits a ``discrete'' \emph{upper} prometric, with one distance defined by
@@ -611,6 +611,7 @@ For this reason, we move on to consider structures defined \emph{relations} betw
 We begin with the simplest, almost trivial, case, of a single relation between pairs of points.
 There are two important such ``global'' relations in a prometric space.
 As always, $d$ will range over distances in a prometric space $X$.
+When we say a ``prometric space'' we mean one whose distances take values in any one of the four kinds of real number; if necessary to be more specific we will add adjectives.
 
 \begin{defn}\label{def:promet-ord}
   Let $x,y\in X$ be points of a prometric space.
@@ -620,13 +621,15 @@ As always, $d$ will range over distances in a prometric space $X$.
   \end{itemize}
 \end{defn}
 
-Since $\neg(a<b)$ is equivalent to $b\le a$ for located real numbers, in a prometric space we have
+Since $\neg(a<b)$ is equivalent to $b\le a$ for MacNeille real numbers, in a MacNeille prometric space we have
 \begin{equation}
   (x\leapx y) \iff \neg(x\oapt y).\label{eq:leapx-oapt}
 \end{equation}
 However, $\oapt$ cannot constructively be expressed in terms of $\leapx$; to say $x\oapt y$ is stronger than $x\neq y$ or even $x\not\leapx y$.
 
 The abstract structure possessed by $\leapx$ is obvious and well-known.
+Note that if $X$ is a lower prometric space, then we have $\upp{d}(x,y)=0$ if and only if $d(x,y)=0$, so that $\leapx$ in $X$ coincides with $\leapx$ in $\upp{X}$.
+Hence when speaking of $\leapx$ it suffices to restrict attention to upper metric spaces.
 
 \begin{thm}\label{thm:pmet-preord}
   Let $X$ be a prometric space.
@@ -674,14 +677,17 @@ But in the non-symmetric case, it seems useful to distinguish the two notions.\f
 \begin{thm}
   Let $X$ be a prometric space.
   \begin{enumerate}
-  \item The relation $\oapt$ is a comparison anti-preorder.  
-  \item If $X$ is symmetric, $\oapt$ is an apartness relation.
+  \item The relation $\oapt$ is an anti-preorder.
+  \item If $X$ is a lower prometric space (including MacNeille and Dedekind), then $\oapt$ is a comparison.
+  \item If $X$ is symmetric and lower, then $\oapt$ is an apartness relation.
   \item $X$ is $T_0$ if and only if $\oapt$ is connected.
   \item $X$ is $T_1$ if and only if $\oapt$ is tight.
   \end{enumerate}
 \end{thm}
 \begin{proof}
   Irreflexivity of $\oapt $ follows directly from reflexivity of a prometric.
+  TODO: LEFT OFF.
+
   Comparison is rather trickier: if $d(x,z)>0$, we have another distance $d'$ with $d'(x,y)+d'(y,z)\ge d(x,z)$.
   By locatedness of real numbers, $d'(x,y)$ and $d'(y,z)$ are both either $>0$ or $<\frac12 d(x,z)$.
   Thus either $x\oapt y$ or $y\oapt z$ or $d'(x,y)+d'(y,z) < d(x,z)$; but the latter case is a contradiction.
