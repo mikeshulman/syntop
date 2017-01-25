@@ -18,6 +18,8 @@
 \def\Rel{\Re_{\ell}}
 \def\upp#1{{#1}^{\sharp}}
 \def\low#1{{#1}^{\flat}}
+\def\U[#1]{\mathsf{U}[#1]}
+\def\L[#1]{\mathsf{L}[#1]}
 \def\F{\mathcal{F}}
 \def\apart{\mathrel{\#}}
 \def\napprox{\not\approx}
@@ -206,48 +208,72 @@ However, $\Red$ is \emph{not} in general a complete lattice.
 Classically, all four kinds of real number coincide.
 By contrast, the extreme constructive differences between them are illustrated by the following observations.
 
-\begin{thm}
-  Let $P$ be any truth value.
-  \begin{enumerate}
-  \item Define $U_P = \setof{x\in \Q | x>0 \land P}$; then $U_P \in \Reu$ and we have
-    \[ (U_P = 0) \iff P. \]
-  \item Define $L_P = \setof{x\in \Q | x<0 \lor P}$; then $L_P\in \Rel$ and we have
-    \[ (L_P > 0) \iff P. \]
-  \item We have $\upp{L_P} = U_{\neg P}$ and $\low{U_P} = L_{\neg P}$.
-    Thus, if we define $M_P = (L_{\neg P},U_{\neg\neg P})$, then $M_P \in \Rem$, and we have
-    \[ (M_P = 0) \iff \neg\neg P \qquad\text{and}\qquad (M_P > 0) \iff \neg P \]
-  \item We have $M_P\in\Red$ if and only if $\neg\neg P\lor\neg P$.
-  \end{enumerate}
+\begin{defn}
+  Let $P$ be any truth value; we define
+  \begin{align*}
+    \U[P] &= \setof{x\in \Q | (x>0) \land P}\\
+    \L[P] &= \setof{x\in \Q | (x<0) \lor P}
+  \end{align*}
+\end{defn}
+
+Evidently $\U[P] \in \Reu$ and $\L[P]\in \Rel$, and both are $\ge 0$.
+Note also that
+\[\U[\top] = \L[\bot] = 0 \qquad\text{and}\qquad \U[\bot] = \L[\top] = +\infty.\]
+
+\begin{thm}\label{thm:up}
+  For any truth values $P$, $Q$, and $R$, we have
+  \begin{gather}
+    (\U[P] = \U[Q]) \iff (P\leftrightarrow Q)\label{eq:up1}\\
+    (\L[P] = \L[Q]) \iff (P\leftrightarrow Q)\label{eq:up2}\\
+    (\U[P] = 0) \iff P\label{eq:up3}\\
+    (\L[P] > 0) \iff P\label{eq:up4}\\
+    \upp{\L[P]} = \U[\neg P]\label{eq:up5}\\
+    \low{\U[P]} = \L[\neg P]\label{eq:up6}\\
+    (\L[Q] \le \L[P]) \iff (\U[P] \le \U[Q]) \iff (Q\implies P)\label{eq:up7}\\
+    (\L[Q] < \L[P]) \iff (\U[P] < \U[Q]) \iff (P \land \neg Q)\label{eq:up8}\\
+    (\U[P] \le \U[Q] + \U[R]) \iff (Q\land R \implies P)\label{eq:up9}\\
+    (\L[Q] \le \L[P] + \L[R]) \iff (Q \implies P\lor R)\label{eq:up10}
+  \end{gather}
+  Moreover, $\U[P]$ and $\L[P]$ are MacNeille if and only if $\neg\neg P\implies P$, and Dedekind if and only if $P\lor\neg P$.
 \end{thm}
 \begin{proof}
-  That $U_P \in \Reu$ and $L_P\in \Rel$ are obvious.
-  Since $0_u = \setof{ x\in\Q | x>0 }$, to say $U_P = 0_u$ means $P$.
-  Similarly, since $0_\ell = \setof{x\in Q | x<0}$, to say $L_P > 0_\ell$ is to say there exists a $q\in L_P$ with $q\ge 0$, which means $P$.
+  Statements~\eqref{eq:up1} and~\eqref{eq:up2} are clear.
+  Note that~\eqref{eq:up1} implies~\eqref{eq:up3}, while~\eqref{eq:up7} also implies~\eqref{eq:up3} (take $Q=\top$).
+  Similarly,~\eqref{eq:up8} implies~\eqref{eq:up4} (take $Q=\bot$).
+  Moreover,~\eqref{eq:up9} and~\eqref{eq:up10} together imply~\eqref{eq:up7} (take $R=\top$ in~\eqref{eq:up9} and $R=\bot$ in~\eqref{eq:up10}).
+  Thus, it remains to prove~\eqref{eq:up5},~\eqref{eq:up6},~\eqref{eq:up8},~\eqref{eq:up9}, and~\eqref{eq:up10}, plus the final statement about MacNeille and Dedekind reals.
 
-  Now $\upp{L_P}$ is the set of all $y\in \Q$ such that there is an $x<y$ with $x\notin L_P$, i.e.\ such that $x\ge 0$ and $\neg P$.
-  Such an $x$ exists if and only if $y>0$ and $\neg P$, which is to say $y\in U_{\neg P}$.
+  For~\eqref{eq:up5}, $\upp{\L[P]}$ is the set of all $y\in \Q$ such that there is an $x<y$ with $x\notin \L[P]$, i.e.\ such that $x\ge 0$ and $\neg P$.
+  Such an $x$ exists if and only if $y>0$ and $\neg P$, which is to say $y\in U[\neg P]$.
 
-  On the other hand, $\low{U_P}$ is the set of all $x\in Q$ such that there is a $y>x$ with $y\notin U_P$, i.e.\ such that $\neg (y>0 \land P)$.
+  For~\eqref{eq:up6}, $\low{\U[P]}$ is the set of all $x\in \Q$ such that there is a $y>x$ with $y\notin \U[P]$, i.e.\ such that $\neg (y>0 \land P)$.
   Since inequality of rational numbers satisfies trichotomy, this implies either $y>0$ (in which case $\neg P$), or $y\le 0$ (in which case $x<0$); hence $x<0 \lor \neg P$, i.e.\ $x\in L_{\neg P}$.
-  Conversely, if $x<0 \lor \neg P$, then in the first case we can find a $y$ with $x<y<0$ and hence $y\notin U_P$, while in the second case any $y>x$ satisfies $y\notin U_P$.
-  Thus, $\low{U_P} = L_{\neg P}$.
+  Conversely, if $x<0 \lor \neg P$, then in the first case we can find a $y$ with $x<y<0$ and hence $y\notin \U[P]$, while in the second case any $y>x$ satisfies $y\notin \U[P]$.
+  Thus, $\low{\U[P]} = L[\neg P]$.
 
-  It follows immediately that $M_P \in \Rem$.
-  The statements about $M_P=0$ and $M_P>0$ then follow from the analogous ones about $U_P$ and $L_P$.
+  For~\eqref{eq:up8}, to say $\U[P] < \U[Q]$ means there is an $x\in \U[P]$ with $x\notin \U[Q]$, which means $P\land \neg Q$.
+  Similarly, $\L[Q] < \L[P]$ means there is an $x\in \L[P]$ with $x\notin \L[Q]$.
+  The first means $x<0$ or $P$, but if $x<0$ then $x\in \L[Q]$; hence $P$, and $x\notin \L[Q]$ implies $\neg Q$.
+  The converse is evident.
 
-  If $\neg\neg P\lor \neg P$, then whenever $x<y$, one of the following cases must hold:
-  \begin{itemize}
-  \item We have $y\le 0$, whence $x<0$ and so $x\in L_{\neg P}$.
-  \item We have $\neg P$, whence $x\in L_{\neg P}$.
-  \item We have $y>0$ and $\neg\neg P$, in which case $y\in U_{\neg\neg P}$.
-  \end{itemize}
-  Thus, $M_P$ is Dedekind.
-  Conversely, if $M_P$ is Dedekind, then it must be either $>0$ or $<1$; but if $M_P>0$ then $\neg P$, and if $M_P<1$ then $\neg\neg P$.
+  For~\eqref{eq:up9}, $\U[P] \le \U[Q] + \U[R]$ means that if $x\in \U[Q]$ and $y\in \U[R]$ then $x+y\in\U[P]$.
+  But having $x\in \U[Q]$ and $y\in \U[R]$ mean that $Q$ and $R$ hold, while having $x+y\in\U[P]$ means that $P$ holds, so this is equivalent to $Q\land R \implies P$.
+
+  For~\eqref{eq:up10}, $\L[Q] \le \L[P] + \L[R]$ means that if $z\in \L[Q]$, then there are $x\in \L[P]$ and $y\in \L[R]$ with $x+y=z$.
+  Having $z\in \L[Q]$ means either $z<0$ or $Q$.
+  If $z<0$, then it can always be written as $x+y$ with $x<0$ and $y<0$, hence $x\in \L[P]$ and $y\in \L[R]$, so the content is in the case when $z\ge 0$ and $Q$.
+  But if $x+y\ge 0$, then either $x$ or $y$ must be $\ge 0$, so that $x\in \L[P]$ and $y\in \L[R]$ imply that either $P$ or $R$ must hold.
+  Conversely, if $P$ holds we can take $x=z$ and $y=0$, and dually if $R$ holds.
+  Thus, $\L[Q] \le \L[P] + \L[R]$ is equivalent to $Q\implies P\lor R$.
+
+  The statement about MacNeille reals follows immediately from~\eqref{eq:up5} and~\eqref{eq:up6}.
+  Finally, to say that $\U[P]$ is Dedekind means in particular that either $1\in \U[P]$ (in which case $P$) or $0\in \low{\U[P]} = \L[\neg P]$ (in which case $\neg P$), so that $P\lor\neg P$.
+  The converse is immediate, and the case of $\L[P]$ is analogous.
 \end{proof}
 
 Thus, any truth value can be represented by an equality or inequality of upper or lower reals, while it is exactly the \nn-stable truth values that can be represented by an equality of MacNeille reals.
 (The converse direction of this follows from the observation above that equality in $\Rem$ is \nn-stable.)
-However, it is less clear which truth values can be represented by an inequality of MacNeille or Dedekind reals, although we can say that every complemented \nn-stable truth value can be represented by an equality of Dedekind reals.
+However, it is less clear which truth values can be represented by an inequality of MacNeille or Dedekind reals, although we can say that every complemented truth value can be represented by an equality of Dedekind reals.
 
 (In fact, it is known that we have $\Rem = \Red$ if and only if the ``weak law of excluded middle'' holds, i.e.\ $\neg\neg P \lor \neg P$ for all $P$.
 This is equivalent to ``de Morgan's law'', that $\neg (P\land Q) \iff \neg P \lor \neg Q$ for all $P,Q$.)
@@ -325,9 +351,17 @@ The differences between the various kinds of real numbers, when used as distance
 
 \begin{eg}
   Any set $X$ admits a ``discrete'' \emph{upper} prometric, with one distance defined by
-  \[ d(x,y) = U_{x=y} = \setof{ q\in \Q | q > 0 \land x=y} \]
+  \( d(x,y) = \U[x=y] \).
   Thus $d(x,y)=0$ if and only if $x=y$.
+  Note that the triangle inequality follows from~\eqref{eq:up9}.
   This distance is MacNeille if and only if $X$ has \nn-stable equality (i.e.\ $\neg\neg(x=y)\implies (x=y)$), and Dedekind if and only if $X$ has decidable equality (i.e.\ $(x=y)\lor \neg(x=y)$).
+  It is always symmetric and $T_1$.
+
+  On the other hand, if $X$ is equipped with an apartness relation $\apart$ (see \cref{sec:point-point}), then it has an ``anti-discrete'' \emph{lower} prometric, with one distance defined by
+  \( d(x,y) = \L[x\apart y] \).
+  Then $d(x,y)>0$ if and only if $x\apart y$, while $d(x,y)=0$ if and only if $\neg(x\apart y)$.
+  The triangle inequality follows from~\eqref{eq:up10}.
+  This prometric is always symmetric, and it is $T_1$ if and only if $\apart$ is tight.
 \end{eg}
 
 A metric space, and even a prometric space, contains a lot of information.
@@ -425,6 +459,9 @@ In fact they are only partially consistent:
 \end{proof}
 
 If necessary to disambiguate, we will refer to monotonicity or proximal continuity in the lower sense as \textbf{anti-monotonicity} and \textbf{proximal anti-continuity} respectively.
+
+TODO: Mention that a lower prometric induces an upper prometric by $\upp{d}(x,y) = \upp{d(x,y)}$, but not oppositely, since $\upp{(-)}$ is lax monoidal (for the reversed order $\ge$) but $\low{(-)}$ is colax monoidal.
+How functorial is this?
 
 
 \section{Categories of prometric spaces}
