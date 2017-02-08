@@ -112,10 +112,7 @@ Guiding principles:
 \begin{enumerate}
 \item Category theory.  Large categories should be well-behaved, constructions should be functorial and natural and related by universal properties.
 \item Nice categories including not-nice objects.  In particular, only impose separation axioms when needed, and include trivial cases like the empty set.
-\item There's nothing intrinsically wrong with points, although they don't tell the whole story.
-\item There's nothing intrinsically wrong with negation, as long as it is used correctly.
-  For instance, $x\le y$ can be defined for Dedekind real numbers as $\neg(y<x)$.
-\item Topos-valid mathematics.  Equality means equality; it doesn't have to be ``proved'' that a function respects equality.  Sets don't come with a God-given apartness relation; indeed an apartness is a sort of topological structure that a set can be \emph{equipped} with.
+\item Topos-valid mathematics.  Equality means equality; it doesn't have to be ``proved'' that a function respects equality.  Sets don't come with a God-given apartness relation.  Don't try to be predicative.
 \end{enumerate}
 
 \section{Real numbers}
@@ -153,7 +150,7 @@ Dually, for $L_1,L_2 \in\Rel$ we define
 \item $L_1 < L_2$ if $\exists x\in \Q, (x\in L_2 \land x\notin L_1)$.
 \item $L_1 + L_2 = \setof{x+y | x\in L_1 \land y\in L_2}$.
 \end{itemize}
-In both cases, both inequalities are transitive, $\le$ is reflexive and antisymmetric, $<$ is irreflexive and a module over $\le$ on both sides.
+In both cases, $\le$ is reflexive, transitive, and antisymmetric, $<$ is irreflexive, transitive, and a module over $\le$ on both sides.
 Moreover, addition is a commutative monoid that respects both inequalities; the unit of $\Reu$ is $0_u = \setof{q\in \Q | q > 0}$ and that of $\Rel$ is $0_\ell = \setof{q\in \Q | q < 0}$.
 In particular, both $\Reu$ and $\Rel$ are monoidal posets.
 
@@ -369,10 +366,9 @@ Obviously any extended quasi-gauge space (of any type) is also a prometric space
 
 \begin{rmk}
   Because of binary filtration, the triangle inequality is equivalent to the apparently weaker statement that for any distance $d_1$ there are distances $d_2,d_3$ such that for all $x,y,z\in X$ we have $d_1(x,z)\le d_2(x,y)+d_3(y,z)$.
-  This is occasionally useful to know.
 \end{rmk}
 
-The differences between the various kinds of real numbers, when used as distances, are illustrated by the following example.\fxnote{This is a special case of \cref{thm:preord-pmetu} and \cref{thm:qapt-pmetl}; is it worthwhile to repeat it here for pedagogical emphasis?}
+The differences between the various kinds of real numbers, when used as distances, are illustrated by the following example.\fxnote{This is a special case of \cref{thm:preord-pmetu} and \cref{thm:qapt-pmetl}; is it worthwhile to repeat it here for expositional emphasis?}
 
 \begin{eg}
   Any set $X$ admits a ``discrete'' \emph{upper} prometric, with one distance defined by
@@ -414,7 +410,7 @@ The most important types of morphism between prometric spaces are the following.
 \begin{thm}\label{thm:pmet-maps}
   For functions between upper prometric spaces, we have
   \begin{center}
-    short $\implies$ uniform $\implies$ proximal $\implies$ continuous $\implies$ monotone
+    short $\implies$ uniform $\implies$ proximal $\implies$ continuous $\implies$ monotone.
   \end{center}
 \end{thm}
 \begin{proof}
@@ -429,18 +425,18 @@ For \emph{lower} prometric spaces, we use the same definition of short maps, but
 \begin{defn}\label{def:pmetl-maps}
   Let $X$ and $Y$ be lower prometric spaces and $f:X\to Y$ a function.
   \begin{enumerate}
-  \item $f$ is \textbf{monotone} if for all $x,y\in X$ and $d_Y$, if $d_Y(x,y)>0$ there exists a $d_X$ such that $d_X(x,y)>0$.
-  \item $f$ is \textbf{continuous} if for all $x\in X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for all $y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
-  \item $f$ is \textbf{proximally continuous} if for all $A\subseteq X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for any $y\in X$, if $d_Y(f(w),f(y))>\ep$ for all $w\in A$, then $d_X(z,y)>\de$ for all $z\in A$.
-  \item $f$ is \textbf{uniformly continuous} if for all $d_Y$ and $\ep$ there are $d_X$ and $\de$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
+  \item $f$ is \textbf{anti-monotone} if for all $x,y\in X$ and $d_Y$, if $d_Y(x,y)>0$ there exists a $d_X$ such that $d_X(x,y)>0$.
+  \item $f$ is \textbf{anti-continuous} if for all $x\in X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for all $y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
+  \item $f$ is \textbf{proximally anti-continuous} if for all $A\subseteq X$, $d_Y$, and $\ep$ there are $d_X$ and $\de$ such that for any $y\in X$, if $d_Y(f(w),f(y))>\ep$ for all $w\in A$, then $d_X(z,y)>\de$ for all $z\in A$.
+  \item $f$ is \textbf{uniformly anti-continuous} if for all $d_Y$ and $\ep$ there are $d_X$ and $\de$ such that for all $x,y\in X$, if $d_Y(f(x),f(y))>\ep$ then $d_X(x,y)>\de$.
   \end{enumerate}
   We have corresponding categories $\PMet_\ell$, etc.
 \end{defn}
 
 \begin{thm}
-  For lower prometric spaces we also have
+  For functions between lower prometric spaces we also have
   \begin{center}
-    short $\implies$ uniform $\implies$ proximal $\implies$ continuous $\implies$ monotone
+    short $\implies$ anti-uniform $\implies$ anti-proximal $\implies$ anti-continuous $\implies$ anti-monotone.
   \end{center}
 \end{thm}
 \begin{proof}
@@ -453,44 +449,91 @@ In fact they are only partially consistent:
 \begin{thm}\label{thm:anti-continuous}
   Let $X$ and $Y$ be MacNeille prometric spaces and $f:X\to Y$ a function.
   \begin{enumerate}
-  \item $f$ is continuous or uniformly continuous in the upper sense if and only if it is so in the lower sense.
-  \item If $f$ is proximally continuous in the upper sense, it is also so in the lower sense.
-  \item If $f$ is monotone in the lower sense, it is also so in the upper sense.
+  \item $f$ is continuous if and only if it is anti-continuous.
+  \item $f$ is uniformly continuous if and only if it is uniformly anti-continuous.
+  \item If $f$ is proximally continuous, it is also proximally anti-continuous.
+  \item If $f$ is anti-monotone, it is also monotone.
   \end{enumerate}
 \end{thm}
 \begin{proof}
-  If $f$ is continuous in the upper sense, then given $x$, $d_Y$ and $\ep$, let $d_X$ and $\de$ be as in upper continuity.
+  If $f$ is continuous, then given $x$, $d_Y$ and $\ep$, let $d_X$ and $\de$ be as in continuity.
   Then whenever $d_Y(f(x),f(y)) > \ep$, we cannot have $d_X(x,y) < \de$, so by the MacNeille condition we must have $d_X(x,y) > \frac{\de}{2}$.
 
-  Conversely, if $f$ is continuous in the lower sense, then given $x$, $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\hfep \implies d_X(x,y)>\de$.
+  Conversely, if $f$ is anti-continuous, then given $x$, $d_Y$ and $\ep$, let $d_X$ and $\de$ be such that $d_Y(f(x),f(y))>\hfep \implies d_X(x,y)>\de$.
   Then if $d_X(x,y)<\de$, we cannot have $d_Y(f(x),f(y))>\hfep$, so by the MacNeille condition we must have $d_Y(f(x),f(y))<\ep$.
 
   The proofs in the uniform case are essentially identical.
 
-  In the proximal case, given $A$, $d_Y$, and $\ep$, let $d_X$ and $\de$ be as in upper proximal continuity.
+  In the proximal case, given $A$, $d_Y$, and $\ep$, let $d_X$ and $\de$ be as in proximal continuity.
   If $d_Y(f(z),f(y))>\ep$ for all $z\in A$, then by contraposition we have $\neg (d_X(w,y)<\de)$ for all $w\in A$, hence $d_X(w,y)>\frac{\de}{2}$.
 
   Finally, the monotone case follows from the fact that $a\le b$, for MacNeille reals, is equivalent to $\neg(b<a)$, and $\neg\exists$ is equivalent to $\forall\neg$.
 \end{proof}
 
-If necessary to disambiguate, we will refer to monotonicity or proximal continuity in the lower sense as \textbf{anti-monotonicity} and \textbf{proximal anti-continuity} respectively.
+Since $\upp{(-)}$ is normal colax monoidal for addition, meaning that $\upp{0} = 0$ and $\upp{a}+\upp{b} \le \upp{(a+b)}$, if $X$ is a lower prometric space then we can make an upper prometric space $\upp{X}$ whose distances are defined by $\upp{d}(x,y) = \upp{d(x,y)}$ for $d$ any distance of $X$.
+The triangle inequality follows since
+\[ \upp{d(x,z)} \le \upp{(d(x,y)+d(y,z))} \le \upp{d(x,y)} + \upp{d(y,z)}. \]
 
-\begin{rmk}
-  Since $\upp{(-)}$ is normal colax monoidal for addition, meaning that $\upp{0} = 0$ and $\upp{a}+\upp{b} \le \upp{(a+b)}$, if $X$ is a lower prometric space then we can make an upper prometric space $\upp{X}$ whose distances are defined by $\upp{d}(x,y) = \upp{d(x,y)}$ for $d$ any distance of $X$.
-  The triangle inequality follows since
-  \[ \upp{d(x,z)} \le \upp{(d(x,y)+d(y,z))} \le \upp{d(x,y)} + \upp{d(y,z)}. \]
-  This construction defines a functor $\upp{(-)} : \PMetl \to\PMetu$.
-  Intuitively, it seems as though it should have an adjoint $\low{(-)}$, but since $\low{(-)}:\Reu \to \Rel$ is is only \emph{lax} monoidal, it does not preserve the triangle inequality.
-  As we will see, remedying this asymmetry is one advantage of moving to more abstract notions of space.
-\end{rmk}
+\begin{thm}
+  The above construction defines a functor $\upp{(-)} : \PMetl \to\PMetu$, and similarly for all the above categories of prometric spaces with other kinds of function.
+\end{thm}
+\begin{proof}
+  Functoriality on short maps is immediate from functoriality of $\upp{(-)}:\Rel \to \Reu$.
+  For the other kinds of morphism, we use the fact that $\upp{d(x,y)} \le\ep$ is equivalent to $d(x,y) \le\ep$ for any $\ep\in\Q$, since $\upp{(-)}\dashv \low{(-)}$ and $\low{\ep} = \ep$.
 
-\begin{rmk}
-  Since upper and lower reals both have a strict order, all the notions in \cref{def:pmet-maps} also technically make sense for lower prometric spaces, and similarly those in \cref{def:pmetl-maps} also technically make sense for upper prometric spaces.
-  Note, though, that if $L\in\Rel$, then $\upp{L} = \setof{ x\in\Q | L < x }$.
-  %, and dually if $U\in\Reu$ then $\low{U} = \setof{x\in Q | x < U}$.
-  Thus, a definition that involves only distances being strictly less than things, when applied to a lower prometric space $X$, is actually only talking about the upper prometric space $\upp{X}$.
-  Unfortunately, it seems that we cannot say anything dual for upper prometric spaces.
-\end{rmk}
+  For instance, if $f:X\to Y$ is uniformly anti-continuous, then for any $\ep$ and $d_Y$, let $\de$ and $d_X$ be as in anti-continuity for $\hfep$ and $d_Y$.
+  Then if $\upp{d_X(x,y)} <\de$ we have $d_X(x,y) \le \de$ and thus $\neg (d_X(x,y) > \de)$, so that $\neg (d_Y(f(x),f(y))>\hfep)$.
+  In general $\neg(d_Y(f(x),f(y))>\hfep)$ need not be equivalent to $d_Y(f(x),f(y))\le\hfep$ for lower reals, but this is the case when $\hfep$ is rational; thus the latter holds, and so $d_Y(f(x),f(y))<\ep$.
+\end{proof}
+
+Intuitively, it seems as though these functors should have adjoints $\low{(-)}$.
+But since $\low{(-)}:\Reu \to \Rel$ is is only \emph{lax} monoidal, it does not preserve the triangle inequality, so we cannot apply it to an upper prometric to produce a lower prometric.
+Nevertheless, the above functors \emph{do} have adjoints, albeit impredicative ones.
+
+\begin{thm}\label{thm:pmet-topconcrete}
+  The category $\PMet$ (for any kind of real number) is topological over $\Set$, i.e.\ its forgetful functor to $\Set$ has initial lifts for all sources and (hence) final lifts for all sinks.
+  In particular, it is complete and cocomplete.
+  Moreover, the inclusions of $\PMet$ into all the other categories defined in \cref{def:pmet-maps} or \cref{def:pmetl-maps} preserve initial lifts of sources, and its subcategory $\QGau$ is closed under initial lifts of sources; thus these latter categories are also topological.
+  Finally, the functor $\upp{(-)} : \PMetl \to\PMetu$ also preserves initial lifts.
+\end{thm}
+\begin{proof}
+  Given a family of functions $\{f_i : X \to Y_i\}$, where each $Y_i$ is a prometric space, we define a prometric structure on $X$ consisting of the distances $\max(d^X_1,\dots,d^X_n)$, where each $d^X_j$ is defined by $d^X_j(x,y) = d_j^Y(f_{i_j}(x),f_{i_j}(y))$ for some $i_j$ and some distance $d_j^Y$ on $Y_{i_j}$.
+  These distances satisfy filtration by construction; note that the case $n=0$ gives the distance $d(x,y)=0$ for all $x,y$, so that $X$ satisfies nullary filtration even if there are no $Y_i$'s.
+  Reflexivity and transitivity follow from their truth for each $Y_i$, while each function $f_i$ is obviously short.
+  Moreover, if each $d_j^Y$ is an \eqp-metric, then so is $\max(d^X_1,\dots,d^X_n)$, so that $X$ is a quasi-gauge space if each $Y_i$ is.
+  And since $\upp{(-)}:\Rel \to \Reu$ is a left adjoint, it preserves suprema, so it respects this construction.
+
+  It remains to show that this structure on $X$ is an initial lift preserved by all the inclusions, which is to say that a function $g:Z\to X$ is short, uniform, proximal, continuous, or monotone as soon as all the composites $g\circ f_i$ are.
+  In all cases the proof is essentially the same: given a metric $\max(d^X_1,\dots,d^X_n)$ on $X$ and possibly some other things, each metric $d_j^Y$ on $Y_{i_j}$ induces by the appropriate property of $g\circ f_i$ a metric $d^Z_j$ on $Z$.
+  Let $d^Z$ dominate all the $d^Z_j$ by filtration of $Z$; then any assumed smallness of $d^Z$ implies smallness of each $d^Z_j$ and hence of each $d_j^Y$, hence also of $\max(d^X_1,\dots,d^X_n)$.
+  (In the lower case, the argument runs in reverse, with largeness of $\max(d^X_1,\dots,d^X_n)$ implying that of some $d_j^Y$, hence of some $d^Z_j$, and thus of $d^Z$.)
+\end{proof}
+
+Note that if each $Y_i$ is a metric space \emph{and} there are finitely many of them, then $X$ has a maximal metric and hence is isomorphic in $\PMet$ to a metric space; but in general $\Met$ is not closed under initial lifts.
+
+Now we use the following standard fact:
+
+\begin{thm}
+  If a functor over $\Set$ between topological categories preserves initial lifts, then it has a left adjoint over $\Set$.
+\end{thm}
+\begin{proof}
+  Let $G:\sC\to\sD$ preserve initial lifts.
+  For $(X,d)\in\sD$ (with $X$ a set and $d$ a ``$\sD$-structure''), the left adjoint $F(X,d)$ is constructed as the initial lift of the sink of identity maps $\{ \id_X : X\to X \}$ whose codomains consist of all $\sC$-structures $c$ on the set $X$ such that $\id_X : (X,d) \to G(X,c)$ is a $\sD$-morphism.
+\end{proof}
+
+In particular, $\upp{(-)} : \PMetl \to\PMetu$ has a left adjoint.
+(Note that this is indeed the sort of adjoint that we would hope to get from $\low{(-)}$, even though $\low{(-)}:\Reu \to \Rel$  is \emph{right} adjoint to $\upp{(-)}$, since when viewing (pro)metric spaces as enriched categories the ordering on $\Rp$ is the opposite of the usual one.)
+
+Similarly, the inclusion $\QGau\into\PMet$ also has a left adjoint, making $\QGau$ is a reflective subcategory.
+The quasi-gauge reflection of a prometric space $X$ has as gauging distances all \eqp-metrics $d$ on the set $X$ such that $d\le d'$ for some distance in the prometric of $X$.
+
+% \begin{rmk}
+%   Since upper and lower reals both have a strict order, all the notions in \cref{def:pmet-maps} also technically make sense for lower prometric spaces, and similarly those in \cref{def:pmetl-maps} also technically make sense for upper prometric spaces.
+%   Note, though, that if $L\in\Rel$, then $\upp{L} = \setof{ x\in\Q | L < x }$.
+%   %, and dually if $U\in\Reu$ then $\low{U} = \setof{x\in Q | x < U}$.
+%   Thus, a definition that involves only distances being strictly less than things, when applied to a lower prometric space $X$, is actually only talking about the upper prometric space $\upp{X}$.
+%   Unfortunately, it seems that we cannot say anything dual for upper prometric spaces.
+% \end{rmk}
 
 
 \section{Categories of prometric spaces}
@@ -500,27 +543,7 @@ In this section most of what we say will be independent of the type of real numb
 
 Roughly speaking, the goal of general topology is to ``remove'' the undesired information contained in a structure such as a metric, gauge, or prometric space, obtaining more abstract notion of space such as topological, uniform, and proximity spaces.
 One reason that is often given for this is the poor behavior of categories of metric spaces: while finite products of metric spaces are easy to construct, countably infinite ones can be constructed only in an \textit{ad hoc} way (and yield categorical products in $\MetTop$ but not in $\Met$), while for uncountably infinite products we are out of luck completely.
-However, this problem is already resolved by passage to gauge or prometric spaces:
-
-\begin{thm}
-  The category $\PMet$ is topological over $\Set$, i.e.\ its forgetful functor to $\Set$ has initial lifts for all sources and (hence) final lifts for all sinks.
-  In particular, it is complete and cocomplete.
-  Moreover, the inclusions of $\PMet$ into all the other categories defined in \cref{def:pmet-maps} preserve initial lifts of sources, and its subcategory $\QGau$ is closed under initial lifts of sources; thus these latter categories are also topological,
-\end{thm}
-\begin{proof}
-  Given a family of functions $\{f_i : X \to Y_i\}$, where each $Y_i$ is a prometric space, we define a prometric structure on $X$ consisting of the distances $\max(d^X_1,\dots,d^X_n)$, where each $d^X_j$ is defined by $d^X_j(x,y) = d_j^Y(f_{i_j}(x),f_{i_j}(y))$ for some $i_j$ and some distance $d_j^Y$ on $Y_{i_j}$.
-  These distances satisfy filtration by construction; note that the case $n=0$ gives the distance $d(x,y)=0$ for all $x,y$, so that $X$ satisfies nullary filtration even if there are no $Y_i$'s.
-  Reflexivity and transitivity follow from their truth for each $Y_i$, while each function $f_i$ is obviously short.
-  Moreover, if each $d_j^Y$ is an \eqp-metric, then so is $\max(d^X_1,\dots,d^X_n)$, so that $X$ is a quasi-gauge space if each $Y_i$ is.
-
-  It remains to show that this structure on $X$ is an initial lift preserved by all the inclusions, which is to say that a function $g:Z\to X$ is short, uniform, proximal, continuous, or monotone as soon as all the composites $g\circ f_i$ are.
-  In all cases the proof is essentially the same: given a metric $\max(d^X_1,\dots,d^X_n)$ on $X$ and possibly some other things, each metric $d_j^Y$ on $Y_{i_j}$ induces by the appropriate property of $g\circ f_i$ a metric $d^Z_j$ on $Z$.
-  Let $d^Z$ dominate all the $d^Z_j$ by filtration of $Z$; then any assumed smallness of $d^Z$ implies smallness of each $d^Z_j$ and hence of each $d_j^Y$, hence also of $\max(d^X_1,\dots,d^X_n)$.
-  (In the lower case, the argument runs in reverse, with largeness of $\max(d^X_1,\dots,d^X_n)$ implying that of some $d_j^Y$, hence of some $d^Z_j$, and thus of $d^Z$.)
-\end{proof}
-
-Note that if each $Y_i$ is a metric space \emph{and} there are finitely many of them, then $X$ has a maximal metric and hence is isomorphic in $\PMet$ to a metric space; but in general $\Met$ is not closed under initial lifts.
-Also, the closure of $\QGau$ under initial lifts implies that it is a reflective subcategory: the quasi-gauge reflection of a prometric space $X$ has as gauging distances all \eqp-metrics $d$ on the set $X$ such that $d\le d'$ for some distance in the prometric of $X$.
+However, \cref{thm:pmet-topconcrete} shows that this problem is already resolved by passage to gauge or prometric spaces.
 
 Why, then, do we seek more abstract notions of space?
 One answer is that a prometric space contains far \emph{more} information than we are interested in for topology, uniformity, and so on.
@@ -623,24 +646,9 @@ Moreover, such leaner structures are more amenable to generalization, notably to
 For this reason, we will soon move on to consider structures defined \emph{relations} between points or subsets rather than distances between them.
 
 \begin{rmk}
-
-
-  Unlike uniform, proximal, topological, and ordered structures, approach structures retain some of the numerical information of a prometric space.
-  Thus, we cannot expect to capture them using only point-set relations without some reference to real numbers; so this remark will be the last time we encounter them in the paper.
-  We included them here only to make the point that a prometric also induces other interesting abstract structures that have been studied by an inhabited set of mathematicians.
-
-  More about approach spaces, at least in classical mathematics, can be found in~\cite{approach}; we do not know of any constructive treatment.
-  In addition to the need to choose a definition of real numbers, the seven classically-equivalent definitions of approach space given in~\cite{approach} will probably not all remain equivalent constructively.
-  However, it is easy to see that classically, our definition of approach structure agrees with those of~\cite{approach}.
-  On one hand, what we have called an ``approach quasi-gauge space'' coincides exactly with the definition in~\cite{approach} in terms of gauges.
-  On the other hand, any prometric yields an ``approach basis'' in the sense of~\cite{approach}: this consists of a family $\{\mathcal{A}(x)\}_{x\in X}$ indexed by the points of $X$, where each $\mathcal{A}(x)$ is an ideal basis in $\Re^X$ satisfying a reflexivity and a transitivity property.
-  Defining $\mathcal{A}(x) = \setof{ d(x,-) | d \text{ a distance on } X }$ gives such an approach basis for any prometric space.
-
-  Thus, our ``approach prometric spaces'' and ``approach quasi-gauge spaces'' are two reasonable constructive notions of approach space.
-  It seems unlikely that the two are constructively equivalent for any kind of real number; the proof in~\cite{approach} uses arbitrary suprema and infima of real numbers (which exist for upper, lower, and MacNeille reals) but also the fact that $\sup A$ can be approximated arbitrarily closely by elements of $A$, which is not constructively true even for MacNeille reals.\fxnote{Is that right?}
-
-  \item $f$ is an \textbf{approach map} if for all $x\in X$, $d_Y$, and $\zeta,\eta\in \Qp$, there exists a $d_X$ such that for all $y\in X$ we have $\min(d_Y(f(x),f(y)),\zeta) \le d_X(x,y) +\eta$.
-
+  There are other interesting subcategories of $\PMet$ and $\QGau$.
+  For instance, one of the definitions in~\cite{approach} of an \emph{approach space} is as a quasi-gauge space satisfying the saturation condition that if $x\in X$, $d$, and $\zeta,\eta\in \Qp$, there exists a $d'$ such that for all $y\in X$ we have $\min(d'(x,y),\zeta) \le d(x,y) +\eta$.
+  A similar saturation condition may be imposed on prometric spaces; this produces a notion that is classically equivalent, since a thusly saturated prometric is a special sort of ``approach basis'' in the sense of~\cite{approach}, but not obviously so constructively.
 \end{rmk}
 
 
@@ -692,37 +700,41 @@ The structure possessed by $\oapt$ is less familiar to classical mathematicians,
 For reasons that will become clear later, we first define a weaker notion and then the more familiar stronger one.
 
 \begin{defn}\label{def:anti-preorder}
-  A \textbf{weak anti-preorder} is a binary relation $\oapt$ on a set $X$ such that:
+  A binary relation $\oapt$ on a set $X$ is:
   \begin{enumerate}
-  \item $\neg(x\oapt x)$ for all $x$ (irreflexivity).
-  \item If $\neg(x\oapt y)$ and $\neg(y\oapt z)$, then $\neg(x\oapt z)$ (weak transitivity).
-  \end{enumerate}
-  a weak anti-preorder is\dots
-  \begin{enumerate}[resume]
-  \item a \textbf{left anti-preorder} if whenever $x\oapt z$ and $\neg(y\oapt z)$ we have $(x\oapt y)$ (left transitivity).
-  \item a \textbf{right anti-preorder} if whenever $x\oapt z$ and $\neg(x\oapt y)$ we have $(y\oapt z)$ (right transitivity).
-  \item a \textbf{quasi-apartness} if whenever $x\oapt z$, then for any $y$ we have $x\oapt y$ or $y\oapt z$ (comparison).
+  \item \textbf{irreflexive} if $\neg(x\oapt x)$ for all $x$ (irreflexivity).
+  \item a \textbf{left anti-preorder} if it is irreflexive and whenever $x\oapt z$ and $\neg(y\oapt z)$ we have $(x\oapt y)$ (left transitivity).
+  \item a \textbf{right anti-preorder} if it is irreflexive and whenever $x\oapt z$ and $\neg(x\oapt y)$ we have $(y\oapt z)$ (right transitivity).
+  \item a \textbf{quasi-apartness} if it is irreflexive and whenever $x\oapt z$, then for any $y$ we have $x\oapt y$ or $y\oapt z$ (comparison).
   \item \textbf{symmetric} if $x\oapt y$ implies $y\oapt x$ (symmetry).
+  \item an \textbf{inequality} if it is symmetric and irreflexive.
+  \item an \textbf{anti-equivalence-relation} if it is a symmetric left anti-preorder (hence also a right anti-preorder).
   \item an \textbf{apartness} (usually written $\apart$) if it is a symmetric quasi-apartness.
   \item \textbf{connected} if $(\neg(x\oapt y)\land \neg(y\oapt x))\implies x=y$.
   \item \textbf{tight} if $\neg(x\oapt y) \implies x=y$.
   \end{enumerate}
 \end{defn}
 
-Note that comparison implies both left and right transitivity, which in turn each imply weak transitivity.
+Note that comparison implies both left and right transitivity.
 Tightness is usually defined only for symmetric relations, in which case it of course coincides with connectedness.
 But in the non-symmetric case, it seems useful to distinguish the two notions.\fxnote{Is this reasonable?}
 
 \begin{warn}
-  Some constructive mathematicians write $\neq$ for an arbitrary apartness relation.
+  Some constructive mathematicians write $\neq$ for an arbitrary apartness relation or even an inequality relation.
   We will always reserve slashed symbols such as $\neq,\not\leapx,\napprox,\notin$ for logical negations (i.e.\ $x\neq y$ means $\neg(x=y)$, $x\not\leapx y$ means $\neg(x\leapx y)$, etc.), and use other symbols such as $\apart$ and $\oapt$ for stronger ``positive'' relations.
 \end{warn}
+
+Of the notions defined in \cref{def:anti-preorder}, inequality relations and apartness relations get the most press in constructive mathematics.
+However, anti-equivalence-relations, and the corresponding non-symmetric notions of left and right preorder, seem to be a useful intermediate notion.
+Many, if not most, inequality relations that fail to be apartness relations are actually anti-equivalence-relations; and often they are the symmetrization of some more naturally occuring left or right anti-preorder (i.e.\ we define $x\apart y$ to mean $(x\oapt y)\lor (y\oapt x)$).
+For instance, we have:
 
 \begin{thm}\label{thm:pmet-apreord}
   Let $X$ be a prometric space.
   \begin{enumerate}
   \item The relation $\oapt$ is a left and right anti-preorder.
   \item If $X$ is a lower prometric space (including MacNeille and Dedekind), then $\oapt$ is a quasi-apartness.
+  \item If $X$ is symmetric, then $\oapt$ is an anti-equivalence-relation.
   \item If $X$ is symmetric and lower, then $\oapt$ is an apartness relation.
   \item $X$ is $T_0$ if and only if $\oapt$ is connected.
   \item $X$ is $T_1$ if and only if $\oapt$ is tight.
@@ -745,6 +757,17 @@ But in the non-symmetric case, it seems useful to distinguish the two notions.\f
 \end{proof}
 
 In particular, the equality relation of a $T_0$ prometric space is (like that of any set with a connected irreflexive relation) \nn-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)\land \neg(y\oapt x)$, hence $x=y$.
+We mention one further example of anti-preorders:
+
+\begin{eg}
+  If $Y$ is any set, then its power set $X = \wp(Y)$ has a left anti-preorder defined by
+  \[ (A\oapt B) \iff \exists x, (x\in A \land x\notin B)\]
+  For left transitivity, if $A\oapt C$, so that we have an $x$ with $x\in A$ and $x\notin C$, and moreover $\neg (B\oapt C)$, then $\neg (x\in B \land x\notin C)$.
+  Since $x\notin C$, this implies $x\notin B$, hence $A\oapt B$.
+
+  The symmetrization of this $\oapt$ is an anti-equivalence-relation on $\wp(Y)$, equivalently expressed by saying that $A\apart B$ whenever the \emph{symmetric difference} $A \mathbin{\triangle} B$ is inhabited.
+  In particular, we have $A\apart \emptyset$ whenever $A$ is inhabited.
+\end{eg}
 
 Preorders and anti-preorders are closely related.
 In fact, in classical mathematics they are entirely equivalent notions.
@@ -755,23 +778,24 @@ To state the corresponding constructive fact, we first define the appropriate ca
   \begin{enumerate}
   \item If $X$ and $Y$ are preorders, then $f$ is \textbf{monotone} if $x\leapx y \implies f(x)\leapx f(y)$ for all $x,y\in X$.
     We write $\Preord$ for the category of preorders and monotone maps.
-  \item If $X$ and $Y$ are anti-preorders, then $f$ is \textbf{monotone}, or \textbf{strongly extensional}, if $f(x)\oapt f(y) \implies x\oapt y$ for all $x,y\in X$.
-    We write $\WAPreord$, $\LAPreord$, $\RAPreord$, and $\QApt$ for the categories of weak, left, and right anti-preorders or quasi-apartnesses, and monotone maps.
+  \item If $X$ and $Y$ are left or right xanti-preorders, then $f$ is \textbf{monotone}, or \textbf{strongly extensional}, if $f(x)\oapt f(y) \implies x\oapt y$ for all $x,y\in X$.
+    We write $\LAPreord$, $\RAPreord$, and $\QApt$ for the categories of left and right anti-preorders and quasi-apartnesses, respectively, and monotone maps.
   \end{enumerate}
 \end{defn}
 
 \begin{thm}\label{thm:ord-le-apt}
   If $X$ is a preorder, then the relation $\neg(x\leapx y)$ is a left and right anti-preorder $\anti(X)$.
-  Dually, if $X$ is a weak anti-preorder, then the relation $\neg(x\oapt y)$ is a preorder $\neigh(X)$.
-  These operations define an idempotent adjunction $\anti\adj\neigh$:
-  \[\anti : \Preord \rightleftarrows \WAPreord : \neigh\]
+  Dually, if $X$ is a left or right anti-preorder, then the relation $\neg(x\oapt y)$ is a preorder $\neigh(X)$.
+  These operations give idempotent adjunctions:
+  \[\anti : \Preord \rightleftarrows \LAPreord : \neigh\]
+  \[\anti : \Preord \rightleftarrows \RAPreord : \neigh\]
 \end{thm}
 \begin{proof}
   Reflexivity is easy in both directions.
   If $X$ is a preorder, then for left transitivity of its dual, suppose $\neg(x\leapx z)$ and $\neg\neg(y\leapx z)$; we must show $\neg(x\leapx y)$.
   Suppose $x\leapx y$; then since we are trying to prove a contradiction, we may assume $y\leapx z$, hence $x\leapx z$ by transitivity of $\leapx$, contradiction our other assumption.
   Right transitivity is similar.
-  On the other hand, weak transitivity of an anti-preorder is precisely ordinary transitivity of its dual.
+  On the other hand, if $X$ is a left or right anti-preorder, transitivity of its dual follows by a simple contraposition.
 
   Functoriality in both directions is obvious from the contravariance of $\neg$.
   For the unit and counit of the adjunction we take identity functions.
@@ -790,6 +814,7 @@ Further justification will have to wait for \cref{thm:top-ord} and \cref{sec:syn
 
 Any idempotent adjunction restricts to an equivalence between the full images of the right and left adjoints.
 Thus, preorders that are \textbf{\nn-stable} (i.e.\ $\neg\neg(x\leapx y) \implies x\leapx y$) are equivalent to anti-preorders that are \nn-stable.
+(In particular, a \nn-stable left anti-preorder is also a right anti-preorder, and dually.)
 
 \begin{thm}\label{thm:macneille-preord}
   If $X$ is a MacNeille prometric space, then its underlying preorder is obtained from its underlying anti-preorder by the functor $\neigh$ of \cref{thm:ord-le-apt}.
@@ -804,7 +829,7 @@ However, this seems to be due mainly to the impoverished nature of a single bina
 
 Finally, we show that preorders and anti-preorders capture exactly the ``order-theoretic'' information in prometric spaces.
 
-\begin{thm}\label{thm:preord-pmetl}
+\begin{thm}\label{thm:preord-pmetu}
   For any preorder $X$, define $d(x,y) = \U[x\leapx y]$.
   This single distance is an upper prometric on $X$, this construction defines a fully faithful functor $\Preord \to \PMetu$, and the composite $\Preord \to \PMetu \to \PMetOrdu$ is an equivalence of categories whose inverse is the preorder construction from \cref{thm:pmet-preord}.
   Moreover, this prometric is\dots
@@ -883,7 +908,7 @@ We will use Greek letters $\al,\be,\gm$ to denote special binary relations conta
 Similarly, we will use $\rho,\si,\tau$ to denote special binary relations disjoint from the diagonal, with $
 (x,y)\in\rho$ written $x \aent\rho y$.
 
-We write $\neg\al$ for the complement of a relation $\al$, for which we also invert the notation $\leapx/\oapt$.
+We write $\neg\al$ for the complement of a relation $\al$, for which we also switch the notations $\leapx$ and $\oapt$.
 That is, $(x \aent{\neg\al} y)$ means $\neg (x\ent{\al} y)$ and similarly.
 We write $\al\implies\be$ to mean that $\forall x\forall y,(x\ent\al y \implies x\ent\be y)$ or similarly (i.e.\ $\al\subseteq \be$ as subsets of $X\times X$).
 
@@ -905,7 +930,7 @@ We write $\al\implies\be$ to mean that $\forall x\forall y,(x\ent\al y \implies 
   \end{enumerate}
   If $X$ and $Y$ are quasi-uniform spaces, a function $f:X\to Y$ is \textbf{uniformly continuous} if for any entourage $\al$ in $Y$ there is an entourage $\be$ in $X$ such that $\forall x\forall y, (x\ent\be y \implies f(x)\ent\al f(y))$.
   We write $\QUnif$ for the category of quasi-uniform spaces and uniformly continuous maps, and similarly
-  $\Unif$, $\QUnifnn$, and $\ldUnif$ for its full subcategories of uniform, \nn-stable,
+  $\Unif$, $\QUnifnn$, and $\ldQUnif$ for its full subcategories of uniform, \nn-stable,
   and locally decomposable quasi-uniform spaces.
 \end{defn}
 
@@ -917,7 +942,7 @@ Likewise, any set has a discrete uniformity in which all reflexive relations are
 Less well-known is the dual notion of uniform apartness.
 
 \begin{defn}
-  A \textbf{weak anti-quasi-uniform space} is a set $X$ together with a family of binary relations, called \textbf{anti-entourages}, satisfying the following axioms.
+  A \textbf{pre-anti-quasi-uniform space} is a set $X$ together with a family of binary relations, called \textbf{anti-entourages}, satisfying the following axioms.
   \begin{enumerate}
   \item If $\rho$ is an anti-entourage and $\si\implies\rho$, then $\si$ is an anti-entourage (isotony).
   \item There exists an anti-entourage (nullary filtration).
@@ -926,16 +951,16 @@ Less well-known is the dual notion of uniform apartness.
   \item $\forall \rho \exists \si \forall xyz, (\neg(x\aent\si y) \land \neg(y\aent\si z) \implies \neg(x\aent\rho z))$ (weak transitivity).
         %For any anti-entourage $\rho$, there exists an anti-entourage $\si$ such that for any $x,y,z\in X$, if $\neg(x\aent\si y)$ and $\neg(y\aent\si z)$ then $\neg(x\aent\rho z)$ (weak transitivity).
   \end{enumerate}
-  A weak anti-quasi-uniform space is\dots
+  A pre-anti-quasi-uniform space is\dots
   \begin{enumerate}[resume]
-  \item \textbf{left} (resp.\ \textbf{right}) anti-quasi-uniform if
+  \item a \textbf{left} (resp.\ \textbf{right}) \textbf{anti-quasi-uniform} space if
     \begin{align*}
     &\forall \rho \exists \si \forall xyz, (x\aent\rho z \land \neg(y\aent\si z) \implies x\aent\si y) \;\text{(left transitivity)}\\
     \text{(resp. } &\forall \rho \exists \si \forall xyz, (x\aent\rho z \land \neg(x\aent\si y) \implies y\aent\si z)\;\text{(right transitivity))}
     \end{align*}
     %for any anti-entourage $\rho$, there exists an anti-entourage $\si$ such that for any $x,y,z\in X$, if $x\aent\rho z$, then $\neg(y\aent\si z)\implies (x\aent\si y)$ (resp.\ $\neg(x\aent\si y)\implies (y\aent\si z)$).  (left/right transitivity)
   \item a \textbf{quasi-uniform apartness space} if
-    \fxwarning{Is this good terminology?  It generalizes the posetal case, but doesn't generalize to the topological case, unless we make it do so.}
+    \fxwarning{Is this good terminology?}
     \[ \forall \rho \exists \si \forall xyz, (x\aent\rho z \implies x\aent\si y \lor y\aent\si z) \;\text{(comparison)}\]
     % for any anti-entourage $\rho$, there is an anti-entourage $\si$ such that for any $x,y,z\in X$, if $x\aent\rho z$ then either $x\aent\si y$ or $y\aent\si z$ (comparison).
   \item an \textbf{anti-uniform space} if
@@ -948,7 +973,7 @@ Less well-known is the dual notion of uniform apartness.
     Note that then automatically $\rho\implies\si$.
   \end{enumerate}
   If $X$ and $Y$ are anti-quasi-uniform spaces, a function $f:X\to Y$ is \textbf{uniformly continuous} if for any anti-entourage $\al$ in $Y$ there is an anti-entourage $\be$ in $X$ such that $\forall x\forall y, (f(x)\aent\al f(y) \implies x\aent\be y)$.
-  We have categories $\WAQUnif,\LAQUnif,\RAQUnif,\QUnifApt,\AQUnifnn$, and $\ldAQUnif$.
+  We have categories $\LAQUnif,\RAQUnif,\QUnifApt,\AQUnifnn$, and $\ldAQUnif$.
 \end{defn}
 
 As usual, a \textbf{base} for a uniformity is a subset of ``basic'' entourages such that every entourage contains a basic one.
@@ -958,15 +983,21 @@ A set of entourages or anti-entourages is a base for \emph{some} uniformity or a
 
 We note immediately the following.
 
+TODO: left off
+
 \begin{thm}
   If $X$ is a preorder, then its relation $\leapx$ is a base for a quasi-uniformity.
-  This defines a fully faithful functor $\Preord\to\QUnif$ whose image consists of the quasi-uniform spaces with a smallest entourage.
+  This defines a fully faithful functor whose image consists of the quasi-uniform spaces with a smallest entourage.
 
-  Dually, if $X$ is an anti-preorder, then its relation $\oapt$ is a base for an anti-quasi-uniformity.
-  This defines a fully faithful functor $\APreord\to\AQUnif$ whose image consists of the anti-quasi-uniform spaces with a largest anti-entourage, and under which the (quasi-)apartness relations correspond to the (quasi-)uniform apartness spaces.
+  Dually, if $X$ is a left or right anti-preorder, then its relation $\oapt$ is a base for a left or right anti-quasi-uniformity.
+  This defines two fully faithful functors whose images consists of the (left or right) anti-quasi-uniform spaces with a largest anti-entourage, and under which the (quasi-)apartness relations correspond to the (quasi-)uniform apartness spaces.
+
+  Furthermore, these three functors
+  \[ \Preord\to\QUnif\qquad \LAPreord \to \LAQUnif \qquad \RAPreord \to \RAQUnif \]
+  have right adjoints.
 \end{thm}
 
-TODO: These are coreflective subcategories.
+
 
 Of course, the comparison axiom implies the transitivity axiom.
 In the other direction, we have:
