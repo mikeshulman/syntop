@@ -100,9 +100,15 @@
 \def\LAQUnif{\mathbf{LAQUnif}}
 \def\RAQUnif{\mathbf{RAQUnif}}
 \def\QUnifApt{\mathbf{QUnifApt}}
-\def\ldAQUnif{\mathbf{AQUnif}_{\mathbf{ld}}}
+\def\ldQUnifApt{\mathbf{QUnifApt}_{\mathbf{ld}}}
 \def\QUnifTop{\mathbf{QUnif}_{\mathbf{Top}}}
+\def\QUnifProx{\mathbf{QUnif}_{\mathbf{Prox}}}
+\def\TopQUnif{\mathbf{TopQUnif}}
+\def\ProxQUnif{\mathbf{ProxQUnif}}
 \def\RAQUnifTop{\mathbf{RAQUnif}_{\mathbf{Top}}}
+\def\RAQUnifProx{\mathbf{RAQUnif}_{\mathbf{Prox}}}
+\def\TopRAQUnif{\mathbf{TopRAQUnif}}
+\def\ProxRAQUnif{\mathbf{ProxRAQUnif}}
 \def\QUnifAptTop{\mathbf{QUnifApt}_{\mathbf{Top}}}
 \hyphenation{pro-metric}
 \begin{document}
@@ -601,7 +607,7 @@ Thus each of these categories is amnestic over $\Set$.
 Moreover, we have fully faithful inclusions corresponding to the implications in \cref{thm:pmet-maps}:
 \[ \OrdPMet \into \TopPMet \into \ProxPMet \into \UnifPMet \into \PMet \]
 
-\begin{thm}
+\begin{thm}\label{thm:sat-maps}
   Let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a function.
   If $X$ is uniform (resp.\ proximal, topological, ordered), then $f$ is short if and only if it is uniformly continuous (resp.\ proximally continuous, continuous, monotone).
 \end{thm}
@@ -628,7 +634,7 @@ Moreover, we have fully faithful inclusions corresponding to the implications in
   Thus it is the unique factorization of $f:Y\to (X,\cM)$ through $\id_X : (X,\sat{\cM}) \to (X,\cM)$.
 \end{proof}
 
-\begin{cor}
+\begin{cor}\label{thm:pmet-coref-equiv}
   The following composites are equivalences of categories:
   \begin{gather*}
     \OrdPMet \into \PMet \into \PMetOrd\\
@@ -830,7 +836,7 @@ Thus, preorders that are \textbf{\nn-stable} (i.e.\ $\neg\neg(x\leapx y) \implie
 This is an instance of the fact that constructively, it is often better to work with anti-preorders (such as apartness relations) than preorders (such as equivalence relations), since many preorders are the dual of some anti-preorder but not conversely.
 However, this seems to be due mainly to the impoverished nature of a single binary relation; in later sections we will see that for more refined topological structures we can impose natural conditions (satisfied by any prometric space) to make the ``closeness'' and ``apartness'' notions coincide.
 
-Finally, we show that preorders and anti-preorders capture exactly the ``order-theoretic'' information in prometric spaces.
+Finally, we show that preorders and anti-preorders capture exactly the ``order-theoretic'' information in upper and lower prometric spaces, respectively.
 
 \begin{thm}\label{thm:preord-pmetu}
   For any preorder $X$, define $d(x,y) = \U[x\leapx y]$.
@@ -907,6 +913,9 @@ Similarly, a function $d:X\times X \to \Rel$ is characterized by the relations `
 Thus, a prometric on $X$, of either sort, is determined by a collection of such families.
 The \emph{uniform structure} of $X$ is obtained by simply forgetting the ``indexing'' of these binary relations on $X$ by distances $d$ and rationals $\ep$.
 
+\subsection{Uniform and anti-uniform spaces}
+\label{sec:unif}
+
 We will use Greek letters $\al,\be,\gm$ to denote special binary relations containing the diagonal, with $(x,y)\in \al$ written as $x\ent\al y$.
 Similarly, we will use $\rho,\si,\tau$ to denote special binary relations disjoint from the diagonal, with $
 (x,y)\in\rho$ written $x \aent\rho y$.
@@ -977,7 +986,7 @@ Less well-known is the dual notion of uniform apartness.
     Note that then automatically $\rho\implies\si$.
   \end{enumerate}
   If $X$ and $Y$ are anti-quasi-uniform spaces, a function $f:X\to Y$ is \textbf{uniformly continuous} if for any anti-entourage $\al$ in $Y$ there is an anti-entourage $\be$ in $X$ such that $\forall x\forall y, (f(x)\aent\al f(y) \implies x\aent\be y)$.
-  We have categories $\LAQUnif,\RAQUnif,\QUnifApt$, and $\ldAQUnif$.
+  We have categories $\LAQUnif,\RAQUnif,\QUnifApt$, and $\ldQUnifApt$.
 \end{defn}
 
 As usual, a \textbf{base} for a uniformity is a subset of ``basic'' entourages such that every entourage contains a basic one.
@@ -1001,19 +1010,21 @@ In the other direction, we have:
 
 We also note the following.
 
-\begin{thm}
+\begin{thm}\label{thm:unif-ord}
   If $X$ is a preorder, then its relation $\leapx$ is a base for a quasi-uniformity.
   This defines a fully faithful left adjoint $\Preord\to\QUnif$ whose image consists of the quasi-uniform spaces with a smallest entourage, and both it and its right adjoint preserve \nn-stability.
+  Its right adjoint also agrees with \cref{def:promet-ord} when applied to the quasi-uniformity of an upper prometric spaces.
 \end{thm}
 \begin{proof}
   This is all essentially obvious except for the fact that the functor is a left adjoint.
   Its right adjoint takes the intersection of all the entourages of a quasi-uniform space; that is, we define $x\leapx y$ to mean $\forall \al, x\ent\al y$.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{thm:aunif-ord}
   If $X$ is a left or right anti-preorder, then its relation $\oapt$ is a base for a left or right anti-quasi-uniformity.
   This defines two fully faithful left adjoints $\LAPreord \to \LAQUnif$ and $\RAPreord \to \RAQUnif$, whose images consists of the (left or right) anti-quasi-uniform spaces with a largest anti-entourage.
   Moreover, both these functors and their right adjoints preserve \nn-stability, and the quasi-apartness relations correspond to the quasi-uniform apartness spaces in both directions.
+  Finally, the right adjoint $\QUnifApt \to \QApt$ also agrees with \cref{def:promet-ord} when applied to the quasi-uniform apartness of a lower prometric spaces.
 \end{thm}
 \begin{proof}
   Again, this is essentially obvious.
@@ -1025,8 +1036,8 @@ On the other hand, the (anti-)quasi-uniformity corresponding to an \mbox{(anti-)
 We also note that the definitions are categorically well-behaved.
 
 \begin{thm}
-  The categories $\QUnif$ and $\AQUnif$ are both topological over $\Set$.
-  Moreover, their subcategories $\Unif$, $\ldQUnif$, $\AQUnif$, $\QUnifApt$, and $\ldAQUnif$ are closed under initial lifts of sources, hence are also topological over $\Set$ and are reflective in their supercategory.
+  The categories $\QUnif$, $\LAQUnif$, and $\RAQUnif$ are all topological over $\Set$.
+  Moreover, their subcategories $\Unif$, $\ldQUnif$, $\QUnifApt$, and $\ldQUnifApt$ are closed under initial lifts of sources, hence are also topological over $\Set$ and are reflective in their supercategory.
 \end{thm}
 \begin{proof}
   TODO.
@@ -1036,24 +1047,30 @@ The relation between quasi-uniform and anti-quasi-uniform spaces is entirely ana
 As in that case, using the weaker sort of anti-uniform transitivity, rather than the comparison axiom, enables us to pass back and forth in both directions.
 
 \begin{thm}\label{thm:qunif-aqunif}
-  If $X$ is a quasi-uniform space, the complements $\neg\al$ of entourages form a base for an anti-quasi-uniformity.
-  Dually, if $X$ is an anti-quasi-uniform space, the complements $\neg\rho$ of the anti-entourages form a base for a quasi-uniformity.
-  These operations define an idempotent adjunction
-  \[ \anti : \QUnif \rightleftarrows \AQUnif : \neigh. \]
+  If $X$ is a quasi-uniform space, the complements $\neg\al$ of entourages form a base for a left and right anti-quasi-uniformity.
+  Dually, if $X$ is an anti-quasi-uniform space of either sort, the complements $\neg\rho$ of the anti-entourages form a base for a quasi-uniformity.
+  These operations define idempotent adjunctions
+  \[ \anti : \QUnif \rightleftarrows \LAQUnif : \neigh. \]
+  \[ \anti : \QUnif \rightleftarrows \RAQUnif : \neigh. \]
   Moreover:
   \begin{enumerate}
-  \item The fixed objects on both sides are exactly the \nn-stable ones, so we have an induced equivalence $\QUnifnn \simeq \AQUnifnn$.
+  \item The fixed objects on both sides are exactly the \nn-stable ones, so we have induced equivalences between these.
+    (Note that an \nn-stable left anti-quasi-uniformity is also a right anti-quasi-uniformity, and dually.) 
+    % $\QUnifnn \simeq \AQUnifnn$.
 % quasi-uniform spaces are those such that for any entourage $\al$, there is an entourage $\be$ such that $\neg\neg\be\implies \al$.
 %     The fixed anti-quasi-uniform spaces are those such that for any anti-entourage $\rho$, there is an entourage $\si$ such that $\neg\neg\rho \implies \si$.
 %     We call these objects \textbf{\nn-stable}.
   \item Both $\anti$ and $\neigh$ preserve local decomposability.
-  \item Since locally decomposable (anti)-quasi-uniform spaces are \nn-stable, we have an induced equivalence $\ldQUnif \simeq \ldAQUnif$.
+  \item Since locally decomposable (anti)-quasi-uniform spaces are \nn-stable, we have an induced equivalence $\ldQUnif \simeq \ldQUnifApt$.
   \item Both $\anti$ and $\neigh$ preserve symmetry, so the above adjunction and equivalences restrict from the quasi-uniform case to the uniform case.
   \end{enumerate}
 \end{thm}
 \begin{proof}
   TODO
 \end{proof}
+
+\subsection{Uniform spaces versus prometrics}
+\label{sec:unif-pmet}
 
 Now we establish the relation of uniform structures to prometrics.
 
@@ -1123,14 +1140,60 @@ Now we establish the relation of uniform structures to prometrics.
   This follows from the above observation and the fact that the functors of \cref{thm:pmet-unif} are fully faithful.
 \end{proof}
 
-Thus, quasi-uniform spaces and quasi-uniform apartness spaces capture exactly the uniform information in upper and lower prometric spaces.
-Note, though, that a given quasi-uniform (apartness) space can be represented by many different prometrics (i.e.\ non-isomorphic objects of $\PMet$), and indeed there is more than one full embedding $\QUnif \to \PMetu$ or $\QUnifApt \to \PMetl$.
-The constructions of \cref{thm:pmet-unif} and \cref{thm:pmet-aunif} give two such embeddings, but different embeddings are obtained by composing them with the uniform coreflections from \cref{thm:pmet-coref}.
+Thus, quasi-uniform spaces and quasi-uniform apartness spaces capture exactly the uniform information in upper and lower prometric spaces, respectively.
+
+Of course, a given quasi-uniform (apartness) space can be represented by many different prometrics (i.e.\ non-isomorphic objects of $\PMet$).
+Indeed, there is even more than one full embedding $\QUnif \to \PMetu$ or $\QUnifApt \to \PMetl$.
+The constructions of \cref{thm:pmet-unif} and \cref{thm:pmet-aunif} give one pair of such embeddings, but different embeddings are obtained by composing them with the uniform coreflections from \cref{thm:pmet-coref}.
 
 The questions of which (anti-)quasi-uniform spaces constructively admit a MacNeille or Dedekind prometric, or a quasi-gauge of any sort, is less clear.
 Of course, a MacNeille prometric has a \nn-stable uniformity and a Dedekind prometric has a locally decomposable one, but it is unclear whether these conditions are sufficient.
 It is also tricky, constructively, to produce quasi-gauges rather than prometrics, due in part to the failure of every uniform space to be completely regular (see \cref{sec:separation}).
 Probably more can be said in the presence of countable choice than it its absence.
+
+We end this section by identifying subclasses of uniform structures that contain only proximal or topological information, analogously to the subcategories of prometric spaces from \cref{sec:sub-promet}.
+
+\begin{defn}
+  Let $f:X\to Y$ be a function between quasi-uniform spaces.
+  \begin{enumerate}
+  \item $f$ is \textbf{continuous} if for any point $x\in X$ and any entourage $\al$ of $Y$, there is an entourage $\be$ of $X$ such that $\forall y\in X, (x\ent\be y\implies f(x) \ent\al f(y))$.
+  \item $f$ is \textbf{proximally continuous} if for all $A\subseteq X$ and any entourage $\al$ of $Y$, there is an entourage $\be$ of $X$ such that for any $y\in X$, if there exists a $z\in A$ with $z\ent\be y$ then there exists a $w\in A$ with $f(w) \ent\al f(y)$.
+  \end{enumerate}
+  This defines categories $\QUnifTop$ and $\QUnifProx$.
+\end{defn}
+
+\begin{defn}
+  Let $f:X\to Y$ be a function between anti-quasi-uniform spaces (of any sort).
+  \begin{enumerate}
+  \item $f:X\to Y$ is \textbf{anti-continuous} if for any point $x\in X$ and any anti-entourage $\rho$ of $Y$, there is an anti-entourage $\si$ of $X$ such that $\forall y\in X, (f(x)\aent\rho f(y) \implies x\aent\si y)$.
+  \item $f$ is \textbf{proximally anti-continuous} if for all $A\subseteq X$ and anti-entourage $\rho$ of $Y$ there exists an anti-entourage $\si$ of $X$ such that for any $y\in X$, if $f(w) \aent\rho f(y)$ for all $w\in A$, then $z \aent\si y$ for all $z\in A$.
+  \end{enumerate}
+  This defines categories such as $\RAQUnifTop$, $\QUnifAptTop$, $\RAQUnifProx$, and so on.
+\end{defn}
+
+Note that by isotony for uniform and anti-uniform structures, a function $f:X\to Y$ between quasi-uniform spaces is uniformly continuous if and only if for each entourage $\al$ of $Y$, the relation $f(x)\ent\al f(y)$ is an entourage of $X$, and similarly a function $f:X\to Y$ between anti-quasi-uniform spaces is uniformly continuous if and only if for each anti-entourage $\rho$ of $Y$, the relation $f(x)\aent\rho f(y)$ is an anti-entourage of $X$.
+This suggests:
+
+\begin{defn}
+  A quasi-uniformity or anti-quasi-uniformity $\cU$ on $X$ is \textbf{fine} (resp.\ \textbf{proximally fine}) if whenever $\cU'$ is a quasi-uniformity on $X$ such that $\id_X : (X,\cU) \to (X,\cU')$ is continuous (resp.\ proximally continuous), we have $\cU'\subseteq \cU'$.
+  We write $\TopQUnif,\ProxQUnif,\TopRAQUnif,\ProxRAQUnif$, and so on for the categories of such spaces and \emph{uniformly} continuous maps.
+\end{defn}
+
+\begin{thm}\label{thm:unif-coref}
+  Let $X$ and $Y$ be quasi-uniform or anti-quasi-uniform spaces and $f:X\to Y$ a function.
+  If $X$ is fine (resp.\ proximally fine), then $f$ is uniformly continuous if and only if it is continuous (resp.\ proximally continuous).
+  Moreover, the categories $\TopQUnif$ and $\ProxQUnif$ are coreflective in $\QUnif$, the categories $\TopRAQUnif$ $\ProxRAQUnif$ are coreflective in $\RAQUnif$, and so on; and the following composites are equivalences of categories:
+  \begin{gather*}
+    \TopQUnif \into \QUnif \into \QUnifTop\\
+    \ProxQUnif \into \QUnif \into \QUnifProx\\
+    \TopRAQUnif \into \RAQUnif \into \RAQUnifTop\\
+    \ProxRAQUnif \into \RAQUnif \into \RAQUnifProx
+  \end{gather*}
+\end{thm}
+\begin{proof}
+  Just like \cref{thm:sat-maps}, \cref{thm:pmet-coref}, and \cref{thm:pmet-coref-equiv}.
+  The join of uniformities or anti-uniformities is given by closing up unions under finite intersections of entourages or finite unions of anti-entourages, respectively.
+\end{proof}
 
 
 \section{Point-set relations: topology}
@@ -1156,7 +1219,7 @@ Our treatment is strongly inspired by that of~\cite{bridges-vita}, but we make s
 In \cref{sec:top-compare} we will compare our definitions to theirs.
 
 
-\subsection{Neighborhood, apartness, and closure spaces}
+\subsection{Neighborhood and apartness spaces}
 \label{sec:top}
 
 In contrast to \cref{sec:point-point}, here we will also consider structures that lack transitivity.
@@ -1173,7 +1236,7 @@ We write $\cpl{A} = X\setminus A = \setof{x\in X | x\notin A}$ for the relative 
   A pretopological neighborhood $X$ space is\dots
   \begin{enumerate}[resume]
   \item \textbf{topological} if whenever $x\ll A$, we have $x \ll \setof{ y | y\ll A}$ (transitivity).
-  % \item \textbf{\nn-stable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll \cpl{B} \subseteq A$.
+  \item \textbf{\nn-stable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll \cpl{B} \subseteq A$.
   \item \textbf{locally decomposable} if whenever $x\ll A$, there is a subset $B$ such that $x\ll B$ and $\forall y, (y\notin B \lor y \ll A)$.
   \end{enumerate}
   If $X$ and $Y$ are pretopological neighborhood spaces, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\ll A$ implies $x\ll f\inv(A)$.
@@ -1205,7 +1268,7 @@ So the distinction between the two is only visible in the constructive world.
   \item \textbf{locally decomposable} if whenever $x\bowtie A$, there exists $B$ such that $x\bowtie B$ and $\forall y, (y\in B \lor y\bowtie A)$ (comparison).
   \end{enumerate}
   If $X$ and $Y$ are pretopological apartness space, a function $f:X\to Y$ is \textbf{continuous} if $f(x)\bowtie f(A)$ implies $x\bowtie A$.
-  We write $\PATop$ for the category of pretopological apartness spaces and continuous maps, and $\LATop$, $\RTop$, $\PATopnn$, and $\ldATop$ for the above subcategories.
+  We write $\PATop$ for the category of pretopological apartness spaces and continuous maps, and $\LATop$, $\RATop$, $\PATopnn$, and $\ldATop$ for the above subcategories.
 \end{defn}
 
 As in previous cases, a locally decomposable pretopological apartness space is both left and right topological.
@@ -1233,7 +1296,7 @@ Finally, in a pretopological apartness space, the \textbf{exterior} of a set $A$
 It is less natural to rephrase the axioms of $\bowtie$ in terms of $\ext$, however.
 
 \begin{thm}\label{thm:top-topconcrete}
-  The categories $\PTop$ and $\PATop$ are ``topological over $\Set$'', i.e.\ their forgetful functor to $\Set$ has initial lifts for all sources and (hence) final lifts for all sinks.
+  The categories $\PTop$ and $\PATop$ are topological over $\Set$.
   In particular:
   \begin{enumerate}
   \item They are complete and cocomplete.
@@ -1301,10 +1364,11 @@ For the relationship between neighborhood and apartness spaces, we have the foll
   \[ \anti : \PTop \rightleftarrows \PATop : \neigh. \]
   Moreover:
   \begin{enumerate}
-  \item Like any idempotent adjunction, it restricts to an equivalence between the fixed objects on each side.
-    A pretopological neighborhood space is fixed if and only if whenever $x\ll A$, there is a subset $B$ such that $x\ll \cpl{B} \subseteq A$.
-    A pretopological apartness space is fixed if and only if whenever $x\bowtie A$, we have $x\bowtie \cpl{\cpl{A}}$.
-    We call these objects \textbf{\nn-stable}.
+  \item The fixed objects on both sides are the \nn-stable ones, so the adjunction restricts to an equivalence between these.
+  % \item Like any idempotent adjunction, it restricts to an equivalence between the fixed objects on each side.
+  %   A pretopological neighborhood space is fixed if and only if whenever $x\ll A$, there is a subset $B$ such that $x\ll \cpl{B} \subseteq A$.
+  %   A pretopological apartness space is fixed if and only if whenever $x\bowtie A$, we have $x\bowtie \cpl{\cpl{A}}$.
+  %   We call these objects \textbf{\nn-stable}.
   \item If $X$ is a topological neighborhood space, then $\anti(X)$ is a left topological apartness space.
   \item If $X$ is a right topological apartness space, then $\neigh(X)$ is a topological neighborhood space.
   \item Both functors $\anti$ and $\neigh$ preserve local decomposability, and locally decomposable spaces are \nn-stable.
@@ -1341,7 +1405,7 @@ For the relationship between neighborhood and apartness spaces, we have the foll
   But $x\ll \setof{y|y\ll \cpl{A}}$ by transitivity for $\ll$, and $(y\ll \cpl{A})\implies\neg\neg(y\ll\cpl{A})$, so the result follows by isotony.
 
   To see that $\neigh$ takes right transitivity to transitivity, suppose $x\ll A$ in $\neigh(X)$, i.e.\ $x\bowtie B$ and $\cpl{B}\subseteq A$.
-  Then we have a $C$ with $x\bowtie C$ and $\forall y, (y\notin C \implies y\bowtie B$.
+  Then we have a $C$ with $x\bowtie C$ and $\forall y, (y\notin C \implies y\bowtie B)$.
   This implies that $\cpl{C}\subseteq \setof{y | y\ll A}$, so that $C$ witnesses $x\ll \setof{y | y\ll A}$.
 
   A locally decomposable neighborhood space is \nn-stable since if $\forall y, (y\notin B \lor y \ll A)$ then $\neg\neg B \subseteq A$.
@@ -1368,12 +1432,10 @@ For the relationship between neighborhood and apartness spaces, we have the foll
   % This implies that it is also topological over $\Set$ in its own right, though it is not closed under initial lifts in $\PATop$.
 \end{rmk}
 
-We now relate topological structures to quasi-uniform ones, and hence to prometrics.
+\subsection{Topology versus uniformity}
+\label{sec:top-unif}
 
-\begin{defn}
-  A function $f:X\to Y$ between quasi-uniform spaces is \textbf{continuous} if for any point $x\in X$ and any entourage $\al$ of $Y$, there is an entourage $\be$ of $X$ such that $\forall y\in X, (x\ent\be y\implies f(x) \ent\al f(y))$.
-  This defines a category $\QUnifTop$.
-\end{defn}
+We now relate topological structures to quasi-uniform ones, and hence to prometrics.
 
 \begin{thm}\label{thm:unif-top}
   If $X$ is a quasi-uniform space, define $x\ll A$ to mean $\exists \al, \forall y, (x\ent\al y \implies y\in A)$.
@@ -1383,14 +1445,13 @@ We now relate topological structures to quasi-uniform ones, and hence to prometr
   TODO (standard)
 \end{proof}
 
-\begin{defn}
-  A function $f:X\to Y$ between anti-quasi-uniform spaces is \textbf{anti-continuous} if for any point $x\in X$ and any anti-entourage $\rho$ of $Y$, there is an anti-entourage $\si$ of $X$ such that $\forall y\in X, (f(x)\aent\rho f(y) \implies x\aent\si y)$.
-  This defines categories such as $\RAQUnifTop$ and $\QUnifAptTop$.
-\end{defn}
-
 \begin{thm}\label{thm:aunif-atop}
   If $X$ is a right anti-quasi-uniform space, define $x\bowtie A$ to mean $\exists\rho, \forall y, (y\in A \implies x\aent\rho y)$.
   Then $X$ becomes a right topological apartness space, and this defines a fully faithful functor $\RAQUnifTop \to \RATop$.
+  Moreover, the following square commutes:
+  \[ \xymatrix{
+    \RAQUnifTop \ar[r]^-{\ref{thm:aunif-atop}} \ar[d]_{\neigh} & \RATop \ar[d]^{\neigh}\\
+    \QUnifTop \ar[r]_-{\ref{thm:unif-top}} & \Top  }\]
 \end{thm}
 \begin{proof}
   Isotony is obvious, reflexivity follows from anti-uniform reflexivity, and additivity from anti-uniform filtration.
@@ -1403,91 +1464,111 @@ We now relate topological structures to quasi-uniform ones, and hence to prometr
   Thus, $f$ is continuous in the topological sense.
   Conversely, if $f$ is continuous in the topological sense, then for any $x\in X$ and anti-entourage $\rho$ on $Y$, we have $f(x) \bowtie \setof{y | f(x) \aent\rho y}$ and hence $x \bowtie \setof{z | f(x) \aent\rho f(z) }$.
   Thus, by definition of $\bowtie$, there is a $\si$ such that $f(x)\aent\rho f(z)$ implies $x\aent\si z$, as desired.
+
+  Finally, if we define $\bowtie$ as above, then from the $\neigh$ of \cref{thm:top-ll-bowtie} we find that $x\ll A$ means that there are a $\rho$ and a $B$ such that $\cpl{B}\subseteq A$ and $\forall y, (y\in B \implies x\aent\rho y)$.
+  In this case, if $y$ is such that $\neg(x\aent\rho y)$, then $y\notin B$, and hence $y\in A$; thus $x\ll A$ according to the other path around the square.
+  On the other hand, if $\forall y, (\neg(x\aent\rho y) \implies y\in A)$, let $B = \setof{y | x\aent\rho y}$; then $\cpl{B}\subseteq A$ by assumption, and $\forall y, (y\in B \implies x\aent\rho y)$ by definition.
 \end{proof}
 
-It does not seem possible to prove topological left transitivity from anti-uniform left transitivity, or even anti-uniform comparison.
-However, anti-uniform local decomposability does suffice:
+It does not seem possible to constructively prove topological left transitivity from anti-uniform left transitivity, or even anti-uniform comparison.
+But local decomposability suffices:
 
 \begin{thm}
-  If $X$ is a locally decomposable (anti-)uniform space, then its underlying topological structures are also locally decomposable, and the above functors commute with the equivalences.
-  (TODO: Phrase better)
+  If $X$ is a locally decomposable uniform (resp.\ anti-uniform) space, then its underlying topological neighborhood (resp.\ apartness) space is also locally decomposable.
 \end{thm}
 \begin{proof}
   TODO.
-  Also, to what extent do the above functors commute with the adjunctions in general?
 \end{proof}
 
-TODO: a converse embedding, and also the fine coreflection.  Relation to prometrics.
+Moreover, just as every quasi-uniform space can be prometrized, every topological space can be quasi-uniformized.
 
-
-Recall that in \cref{thm:pmet-top} we showed that a prometric space has both a locally decomposable neighborhood relation and a locally decomposable apartness.
-
-\begin{thm}\label{thm:promet-top}
-  The $\bowtie$ and $\ll$ underlying any prometric space are identified with each other by the equivalence of \cref{thm:top-ll-bowtie}\ref{item:top-ll-bowtie-equiv}.
-  Moreover, this defines a fully faithful functor from prometric spaces and continuous functions to $\ldTop$ (or equivalently $\ldATop$).
+\begin{thm}\label{thm:top-unif}
+  If $X$ is a topological neighborhood space, for any subset $A$ define $x\ent A y$ to mean $x\ll A \implies y\in A$.
+  This defines a base for a quasi-uniformity on $X$, giving a fully faithful functor $\Top \to \QUnif$ such that the composite $\Top \to \QUnif \to \QUnifTop$ is an equivalence of categories inverse to the functor of \cref{thm:unif-top}.
 \end{thm}
 \begin{proof}
-  Let $X$ be a prometric space; we first show that $x\bowtie A$ if and only if $x\ll \cpl{A}$ according to \cref{defn:toprels}, so that the two structures are identified by $\anti$.
-  If $x\bowtie A$, we have $d,\ep$ such that $y\in A \implies d(x,y)>\ep$ for any $y$.
-  By a contrapositive, it follows that $d(x,y)\le \ep \implies y\notin A$, giving $x\ll \cpl{A}$.
-  Conversely, if $x\ll\cpl{A}$, we have $d,\ep$ such that $d(x,y)< \ep \implies y\notin A$ for any $y$.
-  The contrapositive is now $\neg\neg(y\in A) \implies d(x,y)\ge \ep$, which implies $y\in A \implies d(x,y)> \hfep$, so $x\bowtie A$.
-
-  Now let $X$ and $Y$ be prometric spaces and $f:X\to Y$ a function.
-  Suppose first that $f$ is prometrically continuous, and let $f(x)\ll A$, so that we have $d_Y,\ep$ with $d_Y(f(x),y)< \ep \implies y\in A$ for any $y\in Y$.
-  By continuity, there is a $d_X$ and a $\de$ such that $d_X(x,x')<\de \implies d_Y(f(x),f(x'))<\ep$ for any $x'\in X$, and hence $d_X(x,x')<\de \implies x'\in f\inv(A)$.
-  Thus $x\ll f\inv(A)$, so $f$ is $\ll$-continuous.
-
-  On the other hand, if $f$ is $\ll$-continuous, for any $x$ and any $d_Y,\ep$ we have $f(x)\ll \setof{y|d_Y(f(x),y)<\ep}$.
-  Thus $x\ll \setof{x'|d_Y(f(x),f(x'))<\ep}$, which means (by definition of $\ll$) we have $d_X,\de$ such that $d_X(x,x')<\de \implies d_Y(f(x),f(x'))<\ep$, giving prometric continuity.
+  TODO.
 \end{proof}
 
+Thus, topological neighborhood spaces capture exactly the ``topological information'' in a quasi-uniform space, and hence also that in an upper prometric space.
+(As before, note that there is more than one embedding of $\Top$ into $\QUnif$ and similarly; the embedding of \cref{thm:top-unif}, if composed with the coreflection of \cref{thm:unif-coref} it yields a different embedding.)
+Similarly, right topological apartness spaces capture exactly the topological information in right anti-quasi-uniform spaces:
 
-\subsection{Separation axioms}
-\label{sec:separation}
+\begin{thm}\label{thm:atop-aunif}
+  If $X$ is a right topological neighborhood space, for any subset $A$ define $x\aent A y$ to mean $x\bowtie A \land y\in A$.
+  This defines a base for a right anti-quasi-uniformity on $X$, giving a fully faithful functor $\RATop \to \RAQUnif$ such that the composite $\RATop \to \RAQUnif \to \RAQUnifTop$ is an equivalence of categories inverse to the functor of \cref{thm:aunif-atop}.
+\end{thm}
+\begin{proof}
+  TODO
+\end{proof}
 
-However, prometric spaces (especially symmetric ones and gauge spaces) are still very special objects of $\ldTop$, and much of their specialness is captured by additional \emph{separation axioms}.
+It is unclear whether there is a natural subclass of topological apartness spaces that correspond to quasi-uniform apartness spaces or lower prometric spaces.
+Likewise, uniform local decomposability seems strictly stronger than topological local decomposability, and Dedekind prometrizability seems even stronger.
+
+Some of the additional topological information in Dedekind prometric spaces (especially symmetric ones and gauge spaces) are captured by their satisfaction of additional \emph{separation axioms}.
 (Local decomposability itself is also naturally regarded as a separation axiom, albeit one that is only nontrivial constructively.
 This will be clearer in later sections, when its close relationship with regularity becomes evident.)
 
-We will not exhaustively survey separation axioms, but there are a few others worth mentioning.
-The first few are naturally phrased using the fact that point-set relations give rise to point-point relations.
+\subsection{Topology versus order}
+\label{sec:top-order}
 
-%TODO: Left adjoints
-% giving a left adjoint to the functor taking a topological neighborhood space to its underlying $\leapx$.
-%This likewise gives a left adjoint to the functor taking a pretopological apartness relation to its underlying $\oapt$ (which is only irreflexive in the pretopological case), and 
+We will not exhaustively survey separation axioms, but there are a few worth mentioning.
+The first few are naturally phrased using the fact that point-set relations give rise to point-point relations.
 
 \begin{thm}\label{thm:top-ord}\ 
   \begin{enumerate}
   \item If $X$ is a topological neighborhood space, define $x\leapx y$ to mean that $\forall A, (x\ll A \to y\ll A)$.
-    Then $\leapx$ is a preorder, called the \textbf{specialization order} of $X$.
-  \item If $X$ is a topological apartness space, define $x\oapt y$ to mean $x \bowtie \singleton{y}$.
-    Then $\oapt$ is an anti-preorder, called the \textbf{specialization anti-preorder} of $X$.
-    If $X$ is locally decomposable, then $\oapt$ is a comparison.
+    Then $\leapx$ is a preorder, called the \textbf{specialization order} of $X$, and this defines a functor $\Top \to \Preord$.
+  \item If $X$ is a left (resp.\ right) topological apartness space, define $x\oapt y$ to mean $x \bowtie \singleton{y}$.
+    Then $\oapt$ is a left (resp.\ right) anti-preorder, called the \textbf{specialization anti-preorder} of $X$.
+    If $X$ is locally decomposable, then $\oapt$ is a quasi-apartness.
   \end{enumerate}
-  Moreover, if $X$ is a prometric space then both of these relations agree with those defined in \cref{def:promet-ord}.
 \end{thm}
 \begin{proof}
   In the neighborhood case, reflexivity and transitivity of $\leapx$ follow directly from reflexivity and transitivity of $\implies$.
-  If $X$ is a prometric space and $\forall d, d(x,y)=0$, then whenever $x\ll A$ we have $d,\ep$ with $d(x,z)<\ep \implies z\in A$ for any $z$.
-  Let $d'$ be as in prometric transitivity for $d$; then $d'(x,y)=0$, so if $d'(y,z)<\ep$ we have $d(x,z)<\ep$, hence $z\in A$.
-  Thus $d',\ep$ exhibit $y\ll A$.
-
-  Conversely, if $\forall A, (x\ll A \implies y\ll A)$, then for any $d,\ep$ let $A = \setof{z|d(x,z)<\ep}$.
-  Then $x\ll A$, so $y\ll A$, and in particular $y\in A$, so $d(x,y)<\ep$.
-  Since this is true for all $\ep$, we have $d(x,y)=0$ for all $d$.
+  For functoriality, suppose $f:X\to Y$ is continuous and $x\leapx y$ in $X$.
+  If $f(x)\ll A$ in $Y$, then $x\ll f\inv(A)$ in $X$, hence $y\ll f\inv(A)$ since $x\leapx y$, and thus $f(y)\ll A$.
+  Thus $f(x)\leapx f(y)$, so $f$ is monotone.
 
   In the apartness case, irreflexivity is obvious.
-  For bilocal transitivity, if $x\oapt z$ so that $x\bowtie \singleton{z}$, then by transitivity for $\bowtie$ we have $x \bowtie \setof{y|y\not \bowtie \singleton{z}}$.
+  For left transitivity, if $x\oapt z$ so that $x\bowtie \singleton{z}$, then by left transitivity for $\bowtie$ we have $x \bowtie \setof{y|y\not \bowtie \singleton{z}}$.
   Thus, if $\neg (y\oapt z)$, so that $\neg (y\bowtie \singleton{z})$, then $y$ belongs to a set that is apart from $x$; hence $x\bowtie \singleton{y}$ by isotony, i.e.\ $x\oapt y$.
 
-  For the comparison axiom, we note first that local decomposability implies the following property that we call \textbf{weak local decomposability}: if $x\bowtie A$, then $\forall y, (x\bowtie \singleton{y} \lor y\bowtie A)$.
+  If instead $X$ is right transitive, we have $x\bowtie B$ and $\forall y, (y\notin B \implies y\bowtie \singleton{z})$.
+  Thus, if $\neg (x\oapt y)$, then $\neg (x\bowtie \singleton{y})$ and hence $y\notin B$, thus $y\bowtie\singleton{z}$, i.e.\ $y\oapt z$.
+
+  For the comparison axiom in the locally decomposable case, we note first that local decomposability implies the following property that we call \textbf{weak local decomposability}: if $x\bowtie A$, then $\forall y, (x\bowtie \singleton{y} \lor y\bowtie A)$.
   For if $x\bowtie B$ and $y\in B$ as in local decomposability, then $x\bowtie \singleton{y}$.
   Moreover, weak local decomposability implies that $\oapt$ is a comparison, by taking $A = \singleton{y}$.
 
-  Finally, if $X$ is a prometric space and we have a $d$ with $d(x,y)>0$, then taking $\ep=\frac12 d(x,y)$ we find $x\bowtie \singleton{y}$.
-  Conversely, if $x\bowtie \singleton{y}$, then we have $d,\ep$ with $\forall z, (z\in \singleton{y} \implies d(x,z)>\ep)$, which is to say $d(x,y)>\ep$, hence $d(x,y)>0$.
+  Finally, suppose $f:X\to Y$ is a continuous map of pretopological apartness spaces, and $f(x)\oapt f(y)$ in $Y$.
+  Then $f(x) \bowtie \singleton{ f(y)} = f(\singleton{y})$, so $x\bowtie \singleton{y}$ and $x\oapt y$; hence $f$ is monotone.
 \end{proof}
+
+Note that the specialization order is equivalently obtained by embedding $\Top$ into $\QUnif$ as in \cref{thm:top-unif} and then applying the coreflection $\QUnif \to \Preord$ from \cref{thm:unif-ord}.
+In particular, the underlying preorder of a quasi-uniform space depends only on its underlying topology.
+Similarly, the specialization anti-preorder of a right topological apartness space can be obtained by embedding $\RATop$ into $\RAQUnif$ and applying \cref{thm:aunif-ord}.
+
+\begin{eg}\label{eg:alexandrov}
+  Any reflexive relation $\leapx$ induces a pretopological neighborhood relation where $x\ll A$ means $\forall y, (x\leapx y \implies y\in A)$.
+  When $\leapx$ is transitive and hence a preorder, this $\ll$ is topological; indeed it is the standard \textbf{Alexandrov topology} of a preorder.
+  The functor taking a preorder to its Alexandrov (pre)topology is left adjoint to the functor $\Top \to \Preord$, and the spaces obtained in this way are precisely those with the property that whenever $x\ll A_i$ for all $i$ we have $x\ll \bigcap_i A_i$.
+  Note that the Alexandrov topology is locally decomposable if and only if $\leapx$ is decidable, and that it includes the case of discrete topologies when $\leapx$ is equality.
+  
+  % isotony and additivity are obvious, while reflexivity for $\ll$ follows from reflexivity for $\leapx$.
+  % For transitivity, if $x\ll A$, so that $\forall y, (x\leapx y \implies y\in A)$, to show $x\ll \setof{y|y\ll A}$ we must show that if $x\leapx y$ then $y\ll A$, i.e.\ if $y\leapx z$ then $z\in A$.
+  % But transitivity of $\leapx$ gives $x\leapx z$, so $z\in A$ by assumption.
+  % Note that this \emph{Alexandrov neighborhood space} is locally decomposable if and only if $\leapx$ is decidable, i.e.\ $\forall x\forall y, (x\leapx y \lor x\not\leapx y )$.
+
+  % If $X$ is a preorder and $Y$ a topological neighborhood space, then $f:X\to Y$ is continuous for this structure if and only if $f(x) \ll A$ implies $\forall y, (x\leapx y \implies y\in f\inv(A))$.
+  % Put differently, this means that if $x\leapx y$, then $f(x)\ll A$ implies $f(y)\ll A$, i.e.\ $x\leapx y \implies f(x)\leapx_Y f(y)$, where $\leapx_Y$ is defined as in \cref{thm:top-ord}.
+  % This gives adjointness.
+
+  Dually, any irreflexive relation $\oapt$ induces a pretopological apartness relation, where $x\bowtie A$ means $\forall y, (y\in A \implies x\oapt y)$, which we might call the \textbf{Alexandrov apartness}.
+  The pretopological apartness spaces obtained in this way are precisely those in which $x\bowtie A_i$ for all $i$ implies $x\bowtie \bigcup_i A_i$.
+  However, the Alexandrov apartness is not usually left or right topological; even the comparison property $x\oapt y \lor y\oapt z$ for a quasi-apartness $\oapt$ seems insufficient, constructively, to ensure any kind of transitivity of $\bowtie$.
+  % TODO: Something about the $\oapt$-topology defined using a $\vee$...
+\end{eg}
 
 \begin{defn}
   Let $X$ be a topological neighborhood space.
@@ -1501,94 +1582,51 @@ The first few are naturally phrased using the fact that point-set relations give
   \item $X$ is $\mathbf{T_0}$ if $(\neg(x\oapt y) \land \neg(y\oapt x)) \implies x=y$ (i.e.\ $\oapt$ is connected).
   \item $X$ is $\mathbf{T_1}$ if $\neg(x\oapt y)\implies x=y$ (i.e.\ $\oapt$ is tight).
   % \item $X$ is $\apart$-$\mathbf{T_1}$ if $x\apart y \implies x\oapt y$, for some tight relation $\apart$.
-  \item $X$ is \textbf{strongly} $\mathbf{R_0}$ if $\oapt$ is symmetric (hence, if $X$ is also locally decomposable, $\oapt$ is an apartness relation).
+  \item $X$ is \textbf{strongly} $\mathbf{R_0}$ if $\oapt$ is symmetric (hence an anti-equivalence relation).
   \end{enumerate}
 \end{defn}
 
 \begin{thm}
-  Let $X$ be a prometric space.
+  We have natural transformations as shown below, whose components are identity functions:
+  \[\xymatrix{
+    \Top \ar[r]^-{\ref{thm:top-ord}} \ar[d]_\anti \drtwocell\omit & \Preord \ar[d]^\anti\\
+    \LATop \ar[r]_-{\ref{thm:top-ord}} & \LAPreord }
+  \qquad
+  \xymatrix{ \Top \ar[r]^-{\ref{thm:top-ord}}  & \Preord   \\
+    \RATop \ar[r]_-{\ref{thm:top-ord}} \ar[u]^{\neigh} \urtwocell\omit & \RAPreord \ar[u]_{\neigh} }
+  \]
+  Moreover, if $X$ is a right topological apartness space, then:
   \begin{enumerate}
-  \item $X$ is $T_1$ or $T_0$ if and only if its underlying topology is so.
-  \item If $X$ is symmetric, then its underlying topology is strongly $R_0$.
+  \item $X$ is $T_0$ if and only if $\neigh(X)$ is $T_0$.
+  \item $X$ is $T_1$ if and only if $\neigh(X)$ is $T_1$.
+  \item If $X$ is locally decomposable, the right-hand transformation becomes an equality, i.e.\ we have
+    \begin{equation}
+      (x\leapx y) \iff \neg(x\oapt y)\label{eq:top-ord-ld}
+    \end{equation}
+  \item If $X$ is locally decomposable and strongly $R_0$, then $\neigh(X)$ is $R_0$.
   \end{enumerate}
 \end{thm}
 \begin{proof}
-  Obvious.
+  If $X$ is a topological neighborhood space, the top-right composite of the left-hand square defines $x\oapt y$ to mean $\neg \forall A, (x\ll A \implies y\ll A)$, whise the left-bottom composite defines it to mean $x\ll \cpl{\singleton{y}}$.
+  We have to show that the latter implies the former; but if $x\ll \cpl{\singleton{y}}$, then $A = \cpl{\singleton{y}}$ is a set such that $x\ll A$ but $y\not\ll A$, contradicting $\forall A, (x\ll A \implies y\ll A)$.
+
+  If instead $X$ is a right topological apartness space, then the left-top composite of the right-hand square defines $x\leapx y$ to mean
+  \[\forall A, ((\exists B, (x\bowtie B \land \cpl{B} \subseteq A)) \implies(\exists B, (y\bowtie B \land \cpl{B} \subseteq A)))\]
+  while the bottom-right composite defines it to mean $\neg (x\bowtie \singleton{y})$.
+  If the former holds, and $x\bowtie\singleton{y}$, then taking $A=\cpl{\singleton{y}}$ we would conclude that there is a $B$ with $y\bowtie B$ and $\cpl{B} \subseteq \cpl{\singleton{y}}$.
+  But then $y\notin B$ and hence $y\notin \singleton{y}$, a contradiction.
+
+  Conversely, if $X$ is locally decomposable and $\neg (x\bowtie \singleton{y})$, suppose we have $A$ and $B$ such that $x\bowtie B$ and $\cpl{B} \subseteq A$.
+  By local decomposability, there is a $C$ with $x\bowtie C$ and $\forall z, (z\bowtie B \lor z\in C)$.
+  In particular, either $y\bowtie B$, in which case $\exists B, (y\bowtie B \land \cpl{B} \subseteq A)$; or $y\in C$, in which case $x\bowtie \singleton{y}$, a contradiction.
+
+  The statements about $T_0$ and $T_1$ follow since these separation axioms in the apartness case are defined in terms of the negation of the specialization anti-preorder, i.e.\ the bottom-right composite in the right-hand square above, and the direction of the transformation therein means that this is implied by the specialization order of $\neigh(X)$.
+  Finally, the statement about $R_0$ follows immediately from~\eqref{eq:top-ord-ld}.
 \end{proof}
 
-\begin{thm}\label{thm:ldtop-ord}
-  If $X$ is a locally decomposable topological space, then for any $x,y\in X$ we have
-  \[ (x\leapx y) \iff \neg(x\oapt y) \]
-  and the two definitions of $T_1$ and $T_0$ above agree, while strong $R_0$ implies $R_0$.
-\end{thm}
-\begin{proof}
-  First let $x\leapx y$, so that $\forall A, (x\ll A \implies y\ll A)$, and suppose for contradiction that $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$.
-  The latter means by definition that $x\ll \cpl{\singleton{y}}$, so by assumption we have $y\ll \cpl{\singleton{y}}$, a contradiction since $y\notin \cpl{\singleton{y}}$.
 
-  On the other hand, suppose $\neg(x\oapt y)$, and let $x\ll A$; we will show $y\ll A$.
-  By local decomposability we have a $B$ with $x\ll B$ and $\forall z, (z\ll A \lor z\notin B)$.
-  Thus, to show $y\ll A$ it suffices to show that $y\notin B$ leads to a contradiction.
-  But if $y\notin B$ then $B\subseteq \cpl{\singleton{y}}$, so $x\ll \cpl{\singleton{y}}$ by isotony and thus $x\bowtie \singleton{y}$, contradicting $\neg(x\oapt y)$.
-
-  The remaining statements are obvious.
-\end{proof}
-
-In keeping with our categorical perspective, we observe also that \cref{thm:ldtop-ord} can be promoted to a natural transformation.
-
-\begin{thm}
-  Let $\mathbf{Refl}$ and $\mathbf{Irref}$ denote the categories of reflexive and irreflexive relations respectively, with morphisms defined to preserve and anti-preserve the relation as in $\Preord$ and $\APreord$ respectively.
-  Then the constructions of \cref{thm:top-ord} generalize to functors $\PTop \to \mathbf{Refl}$ and $\PATop \to \mathbf{Irref}$, and we have a mate-pair of natural transformations lying over the identity in $\Set$:
-  \[
-  \xymatrix{ \PTop \ar[r] \ar[d]_{\anti} \drtwocell\omit & \mathbf{Refl} \ar[d]^{\anti} \\
-    \PATop \ar[r]  & \mathbf{Irref}  }
-  \qquad
-  \xymatrix{ \PTop \ar[r]  & \mathbf{Refl}   \\
-    \PATop \ar[r] \ar[u]^{\neigh} \urtwocell\omit & \mathbf{Irref}\ar[u]_{\neigh} }
-  \]
-  of which the second becomes an isomorphism when restricted to locally decomposable spaces:
-  \[ \xymatrix{ \ldTop \ar[r]  & \Preord   \\
-    \ldATop \ar[r] \ar[u]^{\neigh}_{\simeq} \urtwocell\omit{\cong} & \APreord \ar[u]_{\neigh} }
-  \]
-\end{thm}
-\begin{proof}
-  First let $f:X\to Y$ be a continuous map of pretopological neighborhood spaces, and $x\leapx y$ in $X$.
-  If $f(x)\ll A$ in $Y$, then $x\ll f\inv(A)$ in $X$, hence $y\ll f\inv(A)$ since $x\leapx y$, and thus $f(y)\ll A$.
-  Thus $f(x)\leapx f(y)$, and we have a functor $\PTop \to \mathbf{Refl}$.
-
-  Second, let $f:X\to Y$ be a continuous map of pretopological apartness spaces, and $f(x)\oapt f(y)$ in $Y$.
-  Then $f(x) \bowtie \singleton{ f(y)} = f(\singleton{y})$, so $x\bowtie \singleton{y}$ and $x\oapt y$.
-  Thus we have a functor $\PATop \to \mathbf{Irref}$.
-
-  By the mate-correspondence, it suffices to construct the right-hand transformation.
-  Thus let $X$ be a pretopological apartness space.
-  In the putative domain of the transformation, $x\leapx y$ means $\forall A, (x\ll A \implies y\ll A)$ in $\neigh(X)$, while in the putative codomain, $x\leapx y$ means $\neg (x\bowtie \singleton{y})$.
-  Assume the former, and for contradiction that $x\bowtie \singleton{y}$.
-  Then $x\ll \cpl{\singleton{y}}$ in $\neigh(X)$, whence $y\ll \cpl{\singleton{y}}$, but this is a contradiction since $y\notin \cpl{\singleton{y}}$.
-
-  The fact that this becomes an isomorphism on locally decomposable spaces is the $\Leftarrow$ direction of \cref{thm:ldtop-ord}.
-\end{proof}
-
-In fact, the functors $\PTop \to \mathbf{Refl}$ and $\PATop \to \mathbf{Irref}$ defined above have left adjoints:
-
-\begin{eg}\label{eg:alexandrov}
-  Any reflexive relation $\leapx$ induces a pretopological neighborhood relation where $x\ll A$ means $\forall y, (x\leapx y \implies y\in A)$.
-  When $\leapx$ is transitive and hence a preorder, this $\ll$ is topological; indeed it is the standard \textbf{Alexandrov topology} of a preorder.
-  The functor taking a reflexive relation or preorder to its Alexandrov (pre)topology is left adjoint to the functor $\PTop \to \mathbf{Refl}$ or $\Top \to \Preord$, and the spaces obtained in this way are precisely those with the property that whenever $x\ll A_i$ for all $i$ we have $x\ll \bigcap_i A_i$.
-  Note that the Alexandrov topology is locally decomposable if and only if $\leapx$ is decidable, and that it includes the case of discrete topologies when $\leapx$ is equality.
-  
-  % isotony and additivity are obvious, while reflexivity for $\ll$ follows from reflexivity for $\leapx$.
-  % For transitivity, if $x\ll A$, so that $\forall y, (x\leapx y \implies y\in A)$, to show $x\ll \setof{y|y\ll A}$ we must show that if $x\leapx y$ then $y\ll A$, i.e.\ if $y\leapx z$ then $z\in A$.
-  % But transitivity of $\leapx$ gives $x\leapx z$, so $z\in A$ by assumption.
-  % Note that this \emph{Alexandrov neighborhood space} is locally decomposable if and only if $\leapx$ is decidable, i.e.\ $\forall x\forall y, (x\leapx y \lor x\not\leapx y )$.
-
-  % If $X$ is a preorder and $Y$ a topological neighborhood space, then $f:X\to Y$ is continuous for this structure if and only if $f(x) \ll A$ implies $\forall y, (x\leapx y \implies y\in f\inv(A))$.
-  % Put differently, this means that if $x\leapx y$, then $f(x)\ll A$ implies $f(y)\ll A$, i.e.\ $x\leapx y \implies f(x)\leapx_Y f(y)$, where $\leapx_Y$ is defined as in \cref{thm:top-ord}.
-  % This gives adjointness.
-
-  Dually, any irreflexive relation $\oapt$ induces a pretopological apartness relation, where $x\bowtie A$ means $\forall y, (y\in A \implies x\oapt y)$, which we might call the \textbf{Alexandrov apartness}.
-  This defines a left adjoint to the functor $\PATop \to \mathbf{Irref}$, and the apartness spaces obtained in this way are precisely those in which $x\bowtie A_i$ for all $i$ implies $x\bowtie \bigcup_i A_i$.
-  However, the Alexandrov apartness is not usually topological; even the comparison property $x\oapt y \lor y\oapt z$ for $\oapt$ seems insufficient, constructively, to ensure transitivity of $\bowtie$.
-\end{eg}
+\subsection{Regularity and complete regularity}
+\label{sec:regularity}
 
 The other pair of separation axioms we will be interested in are regularity and complete regularity.
 We define them only for neighborhood spaces, since as we will see below they both imply local decomposability.
@@ -1624,9 +1662,11 @@ We define them only for neighborhood spaces, since as we will see below they bot
 \end{proof}
 
 \begin{thm}\label{thm:sympmet-reg}
-  If $X$ is a symmetric prometric space, then its underlying topology is regular.
+  If $X$ is a locally decomposable uniform space (such as a symmetric Dedekind prometric space), then its underlying topology is regular.
 \end{thm}
 \begin{proof}
+  TODO: Write in the uniform case.
+  
   Given $x\ll A$, we have $d_1,\ep$ such that $\forall y, (d_1(x,y)<\ep \implies y\in A)$.
   Let $d_2$ be as in prometric transitivity for $d_1$, and define $B = \setof{y|d_2(x,y)<\hfep}$ and $C = \setof{y|d_2(x,y)>\hfep}$.
   Then clearly $x\ll B$ and $B\cap C = \emptyset$.
@@ -1645,11 +1685,11 @@ We define them only for neighborhood spaces, since as we will see below they bot
   Therefore $\forall z, (d_4(y,z)<\ep' \implies z\in C)$, so $y\ll C$.
 \end{proof}
 
-Note the similarity between the proofs of \cref{thm:creg-reg} and \cref{thm:sympmet-reg}: in the latter we use a distance whereas in the former we use an unknown continuous function.
-This suggests that prometric spaces should in fact be completely regular with distances playing the role of the separating functions; but only in the gauge case can we show that distances are continuous.
+Classically, every uniform space, and hence every symmetric prometric space, is completely regular.
+However, constructively we can only seem to show this in the gauge case.
 
 \begin{thm}\label{thm:symgauge-creg}
-  If $X$ is a (symmetric) gauge space, then its underlying topology is completely regular.
+  If $X$ is a (symmetric) Dedekind gauge space, then its underlying topology is completely regular.
 \end{thm}
 \begin{proof}
   Given $x\ll A$, we have a gauging distance $d$ and an $\eta>0$ such that $\forall y, (d(x,y)<\eta \implies y\in A)$.
@@ -1667,19 +1707,7 @@ This suggests that prometric spaces should in fact be completely regular with di
   as desired.
 \end{proof}
 
-In classical mathematics, prometric spaces are also completely regular (with a less direct proof), since they are uniformizable (see \cref{sec:uniformity}).
-But in the absence of excluded middle and countable choice, this seems no longer true.
-
-Classically, complete regularity also completely determines the gauge spaces: every completely regular space can be given by a gauge.
-\fxnote{Is that also true constructively?}
-
-\cref{thm:sympmet-reg} and \cref{thm:symgauge-creg} do depend crucially on symmetry.
-Classically, \emph{any} topological space can be given by a quasi-gauge (although constructively, even a prometric space satisfies the nontrivial condition of local decomposability).
-
-\begin{thm}
-  TODO: Underlying topology of uniform structures, how it commutes with the adjunctions $\anti\dashv \neigh$ and preserves local decomposability.
-  The topology underlying a locally decomposable (symmetric) uniform space is regular.
-\end{thm}
+Of course, \cref{thm:sympmet-reg} and \cref{thm:symgauge-creg} do depend crucially on symmetry; we have seen that every topological neighborhood space can be given a quasi-uniform structure and hence an (upper) prometric.
 
 TODO: More about uniform regularity, as discussed on the nLab and nForum.
 
@@ -1687,12 +1715,12 @@ TODO: More about uniform regularity, as discussed on the nLab and nForum.
 \subsection{Comparing definitions}
 \label{sec:top-compare}
 
-Our definition of topological apartness space is clearly inspired by the point-set apartness spaces of Bridges and Vita~\cite[Chapter 2]{bridges-vita}, but there are several minor differences.
+Our definition of \emph{left} topological apartness space is clearly inspired by the point-set apartness spaces of Bridges and Vita~\cite[Chapter 2]{bridges-vita}, but there are several minor differences.
 
 Firstly, they assume $X$ to be inhabited, whereas we follow instead the lesson of category theory that trivial examples should not be arbitrarily excluded.
 In particular, an assumption of inhabitedness would destroy \cref{thm:top-topconcrete} by removing the initial object.
 
-Secondly, they assume that the set $X$ comes with a given symmetric irreflexive relation $\apart$ (they write it as $\neq$), and modify various of the axioms to refer to this relation rather than the denial inequality $\neg(x=y)$ (which, recally, is what \emph{we} mean by ``$x\neq y$'').
+Secondly, they assume that the set $X$ comes with a given symmetric irreflexive relation $\apart$ (they write it as $\neq$), and modify various of the axioms to refer to this relation rather than the denial inequality $\neg(x=y)$ (which, recall, is what \emph{we} mean by ``$x\neq y$'').
 In particular, their reflexivity axiom is
 \begin{equation}
   x\bowtie A \implies \forall y\in A, (x\apart y)\label{eq:top-apart-refl}
@@ -1716,20 +1744,22 @@ Finally, and most importantly, they use a weaker transitivity axiom:
 \begin{equation}
   x\bowtie A \implies x \bowtie \setof{ y | \forall z, (z\bowtie A \implies z\apart y)}.\label{eq:top-wktrans}
 \end{equation}
-This is clearly implied by our transitivity axiom, since $\forall z, (z\bowtie A \implies z\apart y)$ implies $y\not\bowtie A$.
+This is clearly implied by our left transitivity axiom, since $\forall z, (z\bowtie A \implies z\apart y)$ implies $y\not\bowtie A$.
 However, it seems too weak even in classical mathematics.
 For instance, if $X = \{x,y,z\}$ with an irreflexive relation defined by $x\apart z$ and $z\apart x$ and nothing else, then the corresponding Alexandrov pretopological apartness space (\cref{eg:alexandrov}) satisfies~\eqref{eq:top-wktrans}; but classically it is a pretopological space that is not topological.
 Moreover,~\eqref{eq:top-wktrans} also destroys \cref{thm:top-topconcrete}; indeed it is not even inherited by subspaces.
 
-It is worth noting that in the presence of~\eqref{eq:top-wktrans} and~\eqref{eq:top-apart-refl}, our stronger transitivity axiom is equivalent to what~\cite{bridges-vita} calls the \textbf{reverse Kolmogorov property}: whenever $x\bowtie A$ and $y\not\bowtie A$ then $x\apart y$.
-This is equivalent to saying $\setof{y|y\not\bowtie A} \subseteq \setof{ y | \forall z, (z\bowtie A \implies z\apart y)}$, which together with~\eqref{eq:top-wktrans} and isotony implies our transitivity axiom.
-On the other hand, assuming our transitivity axiom, if $x\bowtie A$ and $y\not\bowtie A$, then since $x\bowtie \setof{y|y\not\bowtie A}$, hence by~\eqref{eq:top-apart-refl} we have $x\apart y$.
+It is worth noting that in the presence of~\eqref{eq:top-wktrans} and~\eqref{eq:top-apart-refl}, our stronger left transitivity axiom is equivalent to what~\cite{bridges-vita} calls the \textbf{reverse Kolmogorov property}: whenever $x\bowtie A$ and $y\not\bowtie A$ then $x\apart y$.
+This is equivalent to saying $\setof{y|y\not\bowtie A} \subseteq \setof{ y | \forall z, (z\bowtie A \implies z\apart y)}$, which together with~\eqref{eq:top-wktrans} and isotony implies our left transitivity axiom.
+On the other hand, assuming our left transitivity axiom, if $x\bowtie A$ and $y\not\bowtie A$, then since $x\bowtie \setof{y|y\not\bowtie A}$, hence by~\eqref{eq:top-apart-refl} we have $x\apart y$.
 Thus, the differences are fairly minor.
 
 If $\apart$ coincides with $\neq$, then our functor $\anti$ constructs what~\cite{bridges-vita} call the \emph{topological apartness} associated to a topological space.
 Our functor $\neigh$ is not mentioned therein.
-Its adjointness to $\anti$ makes it clearly of categorical interest, but it is also obviously problematic in that it doesn't preserve transitivity.
-Instead they use the following construction, called the \emph{apartness topology}:
+Its adjointness to $\anti$ makes it clearly of categorical interest, but it is also obviously problematic in that it doesn't preserve left transitivity.
+But we have seen that it does preserve \emph{right} transitivity, and moreover that right transitivity rather than left transitivity is what arises from lower prometrics.
+
+Instead,~\cite{bridges-vita} use the following construction instead of $\neigh$, called the \emph{apartness topology}:
 
 \begin{thm}\label{thm:aptop}
   In any pretopological apartness space $X$, define $x\ll A$ to mean
@@ -1740,7 +1770,7 @@ Instead they use the following construction, called the \emph{apartness topology
   Then $X$ becomes a topological neighborhood space, denoted $\neigh'(X)$.
   Moreover:
   \begin{enumerate}
-  \item If $X$ is a topological apartness space, then $\anti(\neigh'(X)) \cong X$.\label{item:aptop1}
+  \item If $X$ is a left topological apartness space, then $\anti(\neigh'(X)) \cong X$.\label{item:aptop1}
   \item If $X$ is a \nn-stable topological neighborhood space, then $\neigh'(\anti(X)) \cong X$.\label{item:aptop2}
   \end{enumerate}
 \end{thm}
@@ -1759,7 +1789,7 @@ Instead they use the following construction, called the \emph{apartness topology
   This certainly implies $x\ll A$ (as long as $X$ is topological), while the converse follows from \nn-stability.
 \end{proof}
 
-Unfortunately, $\neigh'$ does not seem to be a functor $\ATop\to \Top$ at all.
+Unfortunately, $\neigh'$ does not seem to be a functor $\LATop\to \Top$ at all.
 If $f:X\to Y$ is $\bowtie$-continuous and $f(x)\ll A$ in $\neigh' Y$, then we have $B\subseteq Y$ with $f(x)\bowtie B$ and $\forall y\in Y, (y\bowtie B \implies y\in A)$.
 Since $f(f\inv(B)) \subseteq B$, we have $f(x)\bowtie f(f\inv(B))$ and thus $x\bowtie f\inv(B)$, while for all $z\in X$ we have $f(z)\bowtie B \implies f(z)\in A$, i.e.\ $f(z)\bowtie B \implies z\in f\inv(A)$.
 But $f(z)\bowtie B$ is not implied by $z\bowtie f\inv(B)$.
