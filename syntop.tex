@@ -1271,6 +1271,8 @@ So the distinction between the two is only visible in the constructive world.
   We write $\PATop$ for the category of pretopological apartness spaces and continuous maps, and $\LATop$, $\RATop$, $\PATopnn$, and $\ldATop$ for the above subcategories.
 \end{defn}
 
+TODO: The terminology ``apartness relation'' for an $\apart$ satisfying the strong disjunctive comparison axiom, especially if extended to ``quasi-apartness'' and ``quasi-uniform apartness space'', suggests that a ``topological apartness space'' should satisfy some similar disjunctive condition.  Indeed,~\cite{bridges-vita} require an apartness space to satisfy ``weak local decomposability'', although arguably full local decomposability would be a better analogue.
+
 As in previous cases, a locally decomposable pretopological apartness space is both left and right topological.
 This is obvious for right transitivity; for the dual we note that left transitivity can equivalently be expressed as ``whenever $x\bowtie A$, there exists $B$ such that $x\bowtie B$ and $\forall y, (y\not\bowtie A \implies y\in B)$.
 Similarly, in classical mathematics any left or right topological apartness space is locally decomposable.
@@ -1737,7 +1739,7 @@ Their $T_1$ axiom implies ours as long as $\apart$ is itself tight.
 
 Thirdly, their definition of a point-set apartness space (as opposed to what they call a ``pre-apartness space'') also includes the following axiom:
 \[ x\bowtie A \implies \forall y, (x\apart y \lor y\bowtie A). \]
-If $\apart$ coincides with $\oapt$, then this axiom becomes the statementthat in the proof of \cref{thm:top-ord} we called \emph{weak local decomposability}.
+If $\apart$ coincides with $\oapt$, then this axiom becomes the statement that in the proof of \cref{thm:top-ord} we called \emph{weak local decomposability}.
 As with local decomposability, we regard it as a separation axiom rather than something that should be part of a definition.
 
 Finally, and most importantly, they use a weaker transitivity axiom:
@@ -1754,12 +1756,12 @@ This is equivalent to saying $\setof{y|y\not\bowtie A} \subseteq \setof{ y | \fo
 On the other hand, assuming our left transitivity axiom, if $x\bowtie A$ and $y\not\bowtie A$, then since $x\bowtie \setof{y|y\not\bowtie A}$, hence by~\eqref{eq:top-apart-refl} we have $x\apart y$.
 Thus, the differences are fairly minor.
 
-If $\apart$ coincides with $\neq$, then our functor $\anti$ constructs what~\cite{bridges-vita} call the \emph{topological apartness} associated to a topological space.
+If $\apart$ is the denial inequality $\neq$, then our functor $\anti$ constructs what~\cite{bridges-vita} call the \emph{topological apartness} associated to a topological space.
 Our functor $\neigh$ is not mentioned therein.
 Its adjointness to $\anti$ makes it clearly of categorical interest, but it is also obviously problematic in that it doesn't preserve left transitivity.
-But we have seen that it does preserve \emph{right} transitivity, and moreover that right transitivity rather than left transitivity is what arises from lower prometrics.
+We have seen that it does preserve \emph{right} transitivity, and moreover that right transitivity rather than left transitivity is what arises from lower prometrics; but $\anti$ doesn't yield right transitivity, so in any case there is a mismatch.
 
-Instead,~\cite{bridges-vita} use the following construction instead of $\neigh$, called the \emph{apartness topology}:
+Instead of $\neigh$,~\cite{bridges-vita} use the following construction, which they call the \emph{apartness topology}:
 
 \begin{thm}\label{thm:aptop}
   In any pretopological apartness space $X$, define $x\ll A$ to mean
