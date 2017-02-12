@@ -124,7 +124,10 @@ Guiding principles:
 \item Topos-valid mathematics.  Equality means equality; it doesn't have to be ``proved'' that a function respects equality.  Sets don't come with a God-given apartness relation.  Don't try to be predicative.
 \end{enumerate}
 
-\section{Real numbers}
+\section{Point-point distances: prometrics}
+\label{sec:metric}
+
+\subsection{Real numbers}
 \label{sec:reals}
 
 As is well-known, constructively there are many different kinds of ``real numbers''.
@@ -304,9 +307,8 @@ However, it is less clear which truth values can be represented by an inequality
 (In fact, it is known that we have $\Rem = \Red$ if and only if the ``weak law of excluded middle'' holds, i.e.\ $\neg\neg P \lor \neg P$ for all $P$.
 This is equivalent to ``de Morgan's law'', that $\neg (P\land Q) \iff \neg P \lor \neg Q$ for all $P,Q$.)
 
-
-\section{Metric, gauge, and prometric spaces}
-\label{sec:metric}
+\subsection{Metric, gauge, and prometric spaces}
+\label{sec:met-gau-pmet}
 
 In this section we let $\Re$ stand for one of the sets of extended real numbers --- upper, lower, MacNeille, or Dedekind --- and we write $\Rp = \setof{x\in \Re | x \ge 0 }$.
 Note that $\Rp$ is again an ordered commutative monoid.
@@ -376,23 +378,6 @@ Obviously any extended quasi-gauge space (of any type) is also a prometric space
 \begin{rmk}
   Because of binary filtration, the triangle inequality is equivalent to the apparently weaker statement that for any distance $d_1$ there are distances $d_2,d_3$ such that for all $x,y,z\in X$ we have $d_1(x,z)\le d_2(x,y)+d_3(y,z)$.
 \end{rmk}
-
-The differences between the various kinds of real numbers, when used as distances, are illustrated by the following example.\fxnote{This is a special case of \cref{thm:preord-pmetu} and \cref{thm:qapt-pmetl}; is it worthwhile to repeat it here for expositional emphasis?}
-
-\begin{eg}
-  Any set $X$ admits a ``discrete'' \emph{upper} prometric, with one distance defined by
-  \( d(x,y) = \U[x=y] \).
-  Thus $d(x,y)=0$ if and only if $x=y$.
-  Note that the triangle inequality follows from~\eqref{eq:up9}.
-  This distance is MacNeille if and only if $X$ has \nn-stable equality (i.e.\ $\neg\neg(x=y)\implies (x=y)$), and Dedekind if and only if $X$ has decidable equality (i.e.\ $(x=y)\lor \neg(x=y)$).
-  It is always symmetric and $T_1$.
-
-  On the other hand, if $X$ is equipped with an apartness relation $\apart$ (see \cref{sec:point-point}), then it has an ``anti-discrete'' \emph{lower} prometric, with one distance defined by
-  \( d(x,y) = \L[x\apart y] \).
-  Then $d(x,y)>0$ if and only if $x\apart y$, while $d(x,y)=0$ if and only if $\neg(x\apart y)$.
-  The triangle inequality follows from~\eqref{eq:up10}.
-  This prometric is always symmetric, and it is $T_1$ if and only if $\apart$ is tight.
-\end{eg}
 
 A metric space, and even a prometric space, contains a lot of information.
 Some of that information is \emph{numerical}, since points are compared by real number distances.
@@ -544,8 +529,56 @@ The quasi-gauge reflection of a prometric space $X$ has as gauging distances all
 %   Unfortunately, it seems that we cannot say anything dual for upper prometric spaces.
 % \end{rmk}
 
+To conclude, we survey some naturally-occurring examples.
+Of course, Dedekind metric spaces are ubiquitous in mathematics and well-trusted constructively, so it is the further generalizations above that require justification by examples.
 
-\section{Categories of prometric spaces}
+\begin{eg}
+  As remarked above, $\Met$ is not closed in $\PMet$ under initial lifts, and hence not under limits.
+  For instance, the product of infinitely many metric spaces is a prometric space (indeed, a gauge space), but does not naturally admit a single metric.
+  Thus, Dedekind gauge spaces, at least, arise very naturally as limits of Dedekind metric spaces.
+\end{eg}
+
+\begin{eg}
+  Any set $X$ admits a ``discrete'' \emph{upper} prometric, with one distance defined by
+  \( d(x,y) = \U[x=y] \).
+  Thus $d(x,y)=0$ if and only if $x=y$.
+  Note that the triangle inequality follows from~\eqref{eq:up9}.
+  This distance is MacNeille if and only if $X$ has \nn-stable equality (i.e.\ $\neg\neg(x=y)\implies (x=y)$), and Dedekind if and only if $X$ has decidable equality (i.e.\ $(x=y)\lor \neg(x=y)$).
+  It is always symmetric and $T_1$.
+  (This is a special case of \cref{thm:preord-pmetu}.)
+
+  Combining this with the previous example, we find that \emph{prodiscrete spaces} are naturally upper prometric spaces.
+\end{eg}
+
+\begin{eg}
+  On the other hand, if $X$ is equipped with an apartness relation $\apart$ (see \cref{sec:point-point}), then it has an ``anti-discrete'' \emph{lower} prometric, with one distance defined by
+  \( d(x,y) = \L[x\apart y] \).
+  Then $d(x,y)>0$ if and only if $x\apart y$, while $d(x,y)=0$ if and only if $\neg(x\apart y)$.
+  The triangle inequality follows from~\eqref{eq:up10}.
+  This prometric is always symmetric, and it is $T_1$ if and only if $\apart$ is tight.
+  (This is a special case of \cref{thm:qapt-pmetl}.)
+\end{eg}
+
+\begin{eg}\label{eg:linf}
+  If $X$ is an upper, lower, or MacNeille prometric space and $A$ is an arbitrary set, then the function set $X^A$ admits a \emph{supremum prometric} with distances defined by
+  \[ d^\infty(f,g) = \sup_{a\in A} d(f(a),g(a)). \]
+  where $d$ ranges over distances on $X$.
+  For instance, if $X$ is a normed space with metric defined by $d(x,y) = \|x-y\|$, and we restrict to the subspace of $X^A$ consisting of functions for which $d^\infty(0,f) <\infty$, this gives the metric underlying the traditional $L^\infty$-norm.
+  We emphasize that it is not Dedekind even if the original norm on $X$ was.
+  Since suprema of lower reals are better-behaved than suprema of upper or MacNeille reals, usually if $X$ is Dedekind we want to consider $X^A$ as a lower prometric space.
+\end{eg}
+
+\begin{eg}\label{eg:haus}
+  Classically, the \emph{Hausdorff distance} between subsets $A,B\subseteq X$ of a metric space is usually defined as the symmetrization of the distance $d(A,B) = \sup_{x\in A} \inf_{y\in B} d(x,y)$.
+  Constructively, this looks suspect since it uses both suprema and infima, and for no kind of real number do we have both well-behaved suprema and infima.
+  However, it is classically equivalent to:
+  \[ d(A,B) = \inf \setof{ \ep>0 | \forall x\in A, \exists y\in B, d(x,y) < \ep }. \]
+  This is perfectly reasonable constructively for \emph{upper} real numbers, and can be applied distance-wise to a quasi-gauge or prometric as well, producing an upper prometric on the powerset $\wp(X)$, which is only an upper prometric even if $X$ was Dedekind.
+  It is not generally symmetric even if $X$ is, but can of course be symmetrized, as one usually does.
+\end{eg}
+
+
+\subsection{Categories of prometric spaces}
 \label{sec:sub-promet}
 
 In this section most of what we say will be independent of the type of real number, so we will omit the subscripts.
@@ -672,7 +705,7 @@ There are two important such ``global'' relations in a prometric space.
 As always, $d$ will range over distances in a prometric space $X$.
 When we say a ``prometric space'' we mean one whose distances take values in any one of the four kinds of real number; if necessary to be more specific we will add adjectives.
 
-\begin{defn}\label{def:promet-ord}
+\begin{defn}\label{def:pmet-ord}
   Let $x,y\in X$ be points of a prometric space.
   \begin{itemize}
   \item We say $x\leapx y$ if $\forall d, d(x,y)=0$.\fxwarning{ordering convention?}
@@ -703,7 +736,7 @@ Hence when speaking of $\leapx$ it suffices to restrict attention to upper metri
   Reflexivity and transitivity of $\leapx$ follow from reflexivity and transitivity (i.e.\ the triangle inequality) of a prometric, and likewise for symmetry and the separation axioms.
 \end{proof}
 
-Of course, $\leapx$ is an instance of the \emph{specialization order} underlying a topology; we will return to this in \cref{sec:separation}.
+Of course, $\leapx$ is an instance of the \emph{specialization order} underlying a topology; we will return to this in \cref{sec:top-order}.
 
 The structure possessed by $\oapt$ is less familiar to classical mathematicians, but well-known to constructive ones.  
 For reasons that will become clear later, we first define a weaker notion and then the more familiar stronger one.
@@ -946,13 +979,50 @@ We write $\al\implies\be$ to mean that $\forall x\forall y,(x\ent\al y \implies 
   and locally decomposable quasi-uniform spaces.
 \end{defn}
 
+As usual, a \textbf{base} for a uniformity is a subset of ``basic'' entourages such that every entourage contains a basic one.
+A set of entourages is a base for \emph{some} uniformity exactly when it satisfies all of the axioms except isotony.
+(We have stated the axioms in such a way as to make this true, though in the presence of isotony the filtration axioms have a simpler form.)
+
 Uniform spaces are well-known in classical mathematics.
 Constructively, some authors such as~\cite{bridges-vita} include uniform local decomposability as part of the definition, but we regard it as a separation axiom to be imposed only when required.
-For instance, any topological group is a uniform space in the usual way, but it need not be locally decomposable.
-Likewise, any set has a discrete uniformity in which all reflexive relations are entourages, but this is locally decomposable only when the set has decidable equality.
+For instance, it would exclude the following examples.
+
+\begin{eg}\label{thm:unif-ord}
+  If $X$ is a preorder, then its relation $\leapx$ is a base for a quasi-uniformity.
+  This defines a fully faithful functor $\Preord\to\QUnif$ whose image consists of the quasi-uniform spaces with a smallest entourage.
+  It has a right adjoint that takes the intersection of all the entourages of a quasi-uniform space; that is, we define $x\leapx y$ to mean $\forall \al, x\ent\al y$.
+  Both of these functors preserve \nn-stability and symmetry.
+
+  In particular, taking $\leapx$ to be equality, we see that every set admits a discrete uniformity, in which all reflexive relations are entourages.
+  It is locally decomposable if and only if $X$ has decidable equality.
+\end{eg}
+
+We will see in \cref{sec:unif-pmet} that this is a special case of the quasi-uniformity underlying any \emph{upper} prometric, and that in general the latter is locally decomposable only when the prometric is Dedekind.
 Note that local decomposability implies \nn-stability (use the same $\al$ and $\be$).
 
-Less well-known is the dual notion of uniform apartness.
+\begin{eg}\label{eg:unif-uconv}
+  If $X$ is a quasi-uniform space and $A$ is any set, then every entourage $\al$ of $X$ induces a relation on the function set $X^A$ defined by
+  \[ f \ent\al g \iff \forall a\in A, (f(a)\ent\al g(a)) \]
+  This is a base for a quasi-uniformity on $X^A$ called the \emph{quasi-uniformity of uniform convergence}; it is symmetric if $X$ is.
+  In general we cannot prove it to be locally decomposable, even if $X$ is, unless $A$ is finite (in which case it coincides with the product quasi-uniformity $\prod_{a\in A} X$.
+\end{eg}
+
+\begin{eg}\label{eg:unif-topgp}
+  Let $G$ be any topological group, i.e.\ a topological space in the usual sense (see also \cref{sec:point-set}) with a continuous group structure.
+  Then for each neighborhood $U$ of the identity $e\in G$, define $x\ent U y$ to mean $x\inv y\in U$.
+  This is a base for a uniformity on $G$.
+  In general we cannot prove it to be locally decomposable; indeed, as we will see in \cref{sec:regularity}, if it were locally decomposable then $G$ would be regular, but we cannot prove that all topological groups are regular (e.g.\ if $G$ is discrete, then it is regular iff it has decidable equality).
+\end{eg}
+
+\begin{eg}\label{eg:unif-haus}
+  If $X$ is a quasi-uniform space, then for subsets $A,B\subseteq X$ and any entourage $\al$ of $X$ we define
+  \[ A \ent\al B \iff \forall x\in A, \exists y\in B, x\ent\al y. \]
+  This is a base for a quasi-uniformity on the powerset $\wp(X)$.
+  It is not generally symmetric even if $X$ is; its symmetrization is called the \emph{Hausdorff uniformity} of a uniform space.
+  In general we cannot prove it to be locally decomposable, even if $X$ is.
+\end{eg}
+
+Less well-known than uniformity is the dual notion of uniform apartness.
 
 \begin{defn}
   A \textbf{pre-anti-quasi-uniform space} is a set $X$ together with a family of binary relations, called \textbf{anti-entourages}, satisfying the following axioms.
@@ -961,8 +1031,7 @@ Less well-known is the dual notion of uniform apartness.
   \item There exists an anti-entourage (nullary filtration).
   \item If $\rho$ and $\si$ are anti-entourages, there exists an anti-entourage $\tau$ such that $\rho\implies\tau$ and $\si\implies\tau$ (binary filtration).
   \item We have $\neg(x\aent\rho x)$ for all anti-entourages $\rho$ and all $x\in X$ (reflexivity).
-  \item $\forall \rho \exists \si \forall xyz, (\neg(x\aent\si y) \land \neg(y\aent\si z) \implies \neg(x\aent\rho z))$ (weak transitivity).
-        %For any anti-entourage $\rho$, there exists an anti-entourage $\si$ such that for any $x,y,z\in X$, if $\neg(x\aent\si y)$ and $\neg(y\aent\si z)$ then $\neg(x\aent\rho z)$ (weak transitivity).
+  % \item $\forall \rho \exists \si \forall xyz, (\neg(x\aent\si y) \land \neg(y\aent\si z) \implies \neg(x\aent\rho z))$ (weak transitivity).
   \end{enumerate}
   A pre-anti-quasi-uniform space is\dots
   \begin{enumerate}[resume]
@@ -989,11 +1058,6 @@ Less well-known is the dual notion of uniform apartness.
   We have categories $\LAQUnif,\RAQUnif,\QUnifApt$, and $\ldQUnifApt$.
 \end{defn}
 
-As usual, a \textbf{base} for a uniformity is a subset of ``basic'' entourages such that every entourage contains a basic one.
-Dually, a base for an anti-uniformity is a subset of basic anti-entourages such that every anti-entourage is contained in a basic one.
-A set of entourages or anti-entourages is a base for \emph{some} uniformity or anti-uniformity exactly when it satisfies all of the axioms except isotony.
-(We have stated the axioms in such a way as to make this true, though in the presence of isotony the filtration axioms have a simpler form.)
-
 Of course, a quasi-uniform apartness space is both a left and right anti-quasi-uniform space.
 In the other direction, we have:
 
@@ -1008,30 +1072,24 @@ In the other direction, we have:
   The case of right transitivity is dual, and \nn-stability is clear from the definitions (use the same $\rho$ and $\si$).
 \end{proof}
 
-We also note the following.
+As for examples, we will see in \cref{sec:unif-pmet} that every \emph{lower} prometric space yields a quasi-uniform apartness space.
+We also have an analogue of \cref{thm:unif-ord}.
+(A \textbf{base} for an anti-uniformity is a subset of basic anti-entourages such that every anti-entourage is \emph{contained in} a basic one.)
 
-\begin{thm}\label{thm:unif-ord}
-  If $X$ is a preorder, then its relation $\leapx$ is a base for a quasi-uniformity.
-  This defines a fully faithful left adjoint $\Preord\to\QUnif$ whose image consists of the quasi-uniform spaces with a smallest entourage, and both it and its right adjoint preserve \nn-stability.
-  Its right adjoint also agrees with \cref{def:promet-ord} when applied to the quasi-uniformity of an upper prometric spaces.
-\end{thm}
-\begin{proof}
-  This is all essentially obvious except for the fact that the functor is a left adjoint.
-  Its right adjoint takes the intersection of all the entourages of a quasi-uniform space; that is, we define $x\leapx y$ to mean $\forall \al, x\ent\al y$.
-\end{proof}
-
-\begin{thm}\label{thm:aunif-ord}
+\begin{eg}\label{thm:aunif-ord}
   If $X$ is a left or right anti-preorder, then its relation $\oapt$ is a base for a left or right anti-quasi-uniformity.
-  This defines two fully faithful left adjoints $\LAPreord \to \LAQUnif$ and $\RAPreord \to \RAQUnif$, whose images consists of the (left or right) anti-quasi-uniform spaces with a largest anti-entourage.
-  Moreover, both these functors and their right adjoints preserve \nn-stability, and the quasi-apartness relations correspond to the quasi-uniform apartness spaces in both directions.
-  Finally, the right adjoint $\QUnifApt \to \QApt$ also agrees with \cref{def:promet-ord} when applied to the quasi-uniform apartness of a lower prometric spaces.
-\end{thm}
-\begin{proof}
-  Again, this is essentially obvious.
-  The corresponding right adjoints take the unions of all anti-entourages, i.e.\ $x\oapt y$ means $\exists \rho, x\aent\rho y$.
-\end{proof}
+  This defines two fully faithful functors $\LAPreord \to \LAQUnif$ and $\RAPreord \to \RAQUnif$, whose images consists of the (left or right) anti-quasi-uniform spaces with a largest anti-entourage.
+  They have right adjoints that take the unions of all anti-entourages, i.e.\ $x\oapt y$ means $\exists \rho, x\aent\rho y$.
+  Moreover, all of these functors preserve \nn-stability and symmetry, and the quasi-apartness relations correspond to the quasi-uniform apartness spaces in both directions.
+  However, the anti-quasi-uniformity corresponding to an anti-preorder is only locally decomposable if the anti-preorder is decidable.
+\end{eg}
 
-On the other hand, the (anti-)quasi-uniformity corresponding to an \mbox{(anti-)}pre\-order is only locally decomposable if the (anti-)preorder is decidable.
+\begin{eg}\label{eg:aunif-uconv}
+  Dualizing \cref{eg:unif-uconv}, if $X$ is a anti-quasi-uniform space and $A$ is any set, every anti-entourage $\rho$ of $X$ induces a relation on the function set $X^A$ defined by
+  \[ f \aent\rho g \iff \exists a\in A, (f(a) \aent\rho g(a)). \]
+  This gives a base for an anti-quasi-uniformity on $X^A$, called the \emph{anti-quasi-uniformity of uniform convergence}.
+  It is symmetric or a quasi-uniform apartness if $X$ is, but in general we cannot prove it to be locally decomposable even if $X$ is, unless $A$ is finite.
+\end{eg}
 
 We also note that the definitions are categorically well-behaved.
 
@@ -1069,6 +1127,19 @@ As in that case, using the weaker sort of anti-uniform transitivity, rather than
   TODO
 \end{proof}
 
+\begin{eg}
+  The functors of \cref{thm:unif-ord} and \cref{thm:aunif-ord} commute with the functors $\anti$ and $\neigh$ from \cref{thm:qunif-aqunif} and \cref{thm:ord-le-apt}.
+\end{eg}
+
+\begin{eg}
+  If $X$ is an anti-quasi-uniform space, then the structures of uniform convergence from \cref{eg:unif-uconv} and \cref{eg:aunif-uconv} satisfy
+  \[ \neigh(X^A) = \neigh(X)^A, \]
+  essentially since $\neg\exists = \forall\neg$.
+  However, since $\neg\forall \neq \exists\neg$, the dual fails: if $X$ is a quasi-uniform space, then we cannot prove $\anti(X^A) = \anti(X)^A$.
+  This is a uniform-space version of the observation in \cref{eg:linf} that the $L^\infty$-norm is best defined with lower real numbers.
+\end{eg}
+
+
 \subsection{Uniform spaces versus prometrics}
 \label{sec:unif-pmet}
 
@@ -1088,6 +1159,7 @@ Now we establish the relation of uniform structures to prometrics.
     \PMetUnifu \ar[r] & \QUnif } \]
   \item If $X$ is a MacNeille prometric space, then its underlying quasi-uniformity and quasi-uniform apartness are \nn-stable, and correspond to each other under the adjunction of \cref{thm:qunif-aqunif}.
   \item If $X$ is a Dedekind prometric space, then its underlying (anti-)quasi-uniformity is locally decomposable.
+  \item The composites $\PMetUnifu \to \QUnif \to \Preord$ and $\PMetUnifl \to \QUnifApt \to \QApt$, of the functors defined above with the right adjoints from \cref{thm:unif-ord} and \cref{thm:aunif-ord}, are equal to the functors of \cref{sec:point-point}.
   \end{enumerate}
 \end{thm}
 \begin{proof}
@@ -1114,9 +1186,24 @@ Now we establish the relation of uniform structures to prometrics.
   If $X$ is MacNeille, it remains to show that its underlying anti-quasi-uniformity is \nn-stable.
   But if $\neg\neg(x \oapt_{d,\ep} y)$ then $\neg(d(x,y) < \ep)$, which by the MacNeille condition implies $d(x,y) > \hfep$, i.e.\ $x\oapt_{d,\hfep} y$.
 
-  Finally, if $X$ is Dedekind, then given $(d,\ep)$ consider the entourage $(d,\hfep)$.
+  If instead $X$ is Dedekind, then given $(d,\ep)$ consider the entourage $(d,\hfep)$.
   Then for any $x,y$ we have $d(x,y)<\ep$ or $d(x,y)>\hfep$, hence $d(x,y)<\ep$ or $\neg(d(x,y)<\hfep)$.
+
+  Finally, the statements about underlying (anti-)preorders follow by inspection of \cref{def:pmet-ord}.
 \end{proof}
+
+\begin{eg}
+  If $X$ is an upper prometric space, then the Hausdorff (quasi-)uniformity from \cref{eg:unif-haus} is the underlying (quasi-)uniformity of the Hausdorff prometric from \cref{eg:haus}.
+\end{eg}
+
+\begin{eg}
+  If $X$ is an upper prometric space, then the quasi-uniformity underlying the supremum prometric from \cref{eg:linf} is that of uniform convergence from \cref{eg:unif-uconv}.
+  For if $\sup_{a\in A} d(f(a),g(a)) < \ep$, then there is an $\ep'<\ep$ with $d(f(a),g(a))\le \ep'<\ep$ for all $a$; and conversely, for any $\ep$, if $d(f(a),g(a)) <\hfep$ for all $a$ then $\sup_{a\in A} d(f(a),g(a)) < \ep$.
+
+  Dually, if $X$ is a lower prometric space, then the quasi-uniform apartness underlying the supremum prometric from \cref{eg:linf} is that of uniform convergence from \cref{eg:aunif-uconv}.
+  This is even easier, since for \emph{lower} reals we have $\sup_{a\in A} d(f(a),g(a)) > \ep$ if and only if there exists an $a\in A$ such that $d(f(a),g(a))>\ep$.
+  But note that it would fail if we used the MacNeille or upper real supremum instead.
+\end{eg}
 
 \begin{thm}\label{thm:pmet-aunif}
   If $X$ is a quasi-uniform space, from any entourage $\al$ define a distance by $d_\al(x,y) = \U[x\ent\al y]$.
@@ -1148,7 +1235,7 @@ The constructions of \cref{thm:pmet-unif} and \cref{thm:pmet-aunif} give one pai
 
 The questions of which (anti-)quasi-uniform spaces constructively admit a MacNeille or Dedekind prometric, or a quasi-gauge of any sort, is less clear.
 Of course, a MacNeille prometric has a \nn-stable uniformity and a Dedekind prometric has a locally decomposable one, but it is unclear whether these conditions are sufficient.
-It is also tricky, constructively, to produce quasi-gauges rather than prometrics, due in part to the failure of every uniform space to be completely regular (see \cref{sec:separation}).
+It is also tricky, constructively, to produce quasi-gauges rather than prometrics, due in part to the failure of every uniform space to be completely regular (see \cref{sec:regularity}).
 Probably more can be said in the presence of countable choice than it its absence.
 
 We end this section by identifying subclasses of uniform structures that contain only proximal or topological information, analogously to the subcategories of prometric spaces from \cref{sec:sub-promet}.
@@ -1271,7 +1358,12 @@ So the distinction between the two is only visible in the constructive world.
   We write $\PATop$ for the category of pretopological apartness spaces and continuous maps, and $\LATop$, $\RATop$, $\PATopnn$, and $\ldATop$ for the above subcategories.
 \end{defn}
 
-TODO: The terminology ``apartness relation'' for an $\apart$ satisfying the strong disjunctive comparison axiom, especially if extended to ``quasi-apartness'' and ``quasi-uniform apartness space'', suggests that a ``topological apartness space'' should satisfy some similar disjunctive condition.  Indeed,~\cite{bridges-vita} require an apartness space to satisfy ``weak local decomposability'', although arguably full local decomposability would be a better analogue.
+\begin{rmk}
+TODO: The terminology ``apartness relation'' for an $\apart$ satisfying the strong disjunctive comparison axiom, especially if extended to ``quasi-apartness'' and ``quasi-uniform apartness space'', suggests that a ``topological apartness space'' should satisfy some similar disjunctive condition, without which these should be called something like an ``anti-topological space''.
+Indeed,~\cite{bridges-vita} require an ``apartness space'' to satisfy ``weak local decomposability''.
+Arguably full local decomposability would be an even better analogue.
+Should we do this?
+\end{rmk}
 
 As in previous cases, a locally decomposable pretopological apartness space is both left and right topological.
 This is obvious for right transitivity; for the dual we note that left transitivity can equivalently be expressed as ``whenever $x\bowtie A$, there exists $B$ such that $x\bowtie B$ and $\forall y, (y\not\bowtie A \implies y\in B)$.
@@ -1507,15 +1599,40 @@ Similarly, right topological apartness spaces capture exactly the topological in
 It is unclear whether there is a natural subclass of topological apartness spaces that correspond to quasi-uniform apartness spaces or lower prometric spaces.
 Likewise, uniform local decomposability seems strictly stronger than topological local decomposability, and Dedekind prometrizability seems even stronger.
 
-Some of the additional topological information in Dedekind prometric spaces (especially symmetric ones and gauge spaces) are captured by their satisfaction of additional \emph{separation axioms}.
-(Local decomposability itself is also naturally regarded as a separation axiom, albeit one that is only nontrivial constructively.
-This will be clearer in later sections, when its close relationship with regularity becomes evident.)
+\begin{eg}\label{eg:aunif-topgp}
+  This seems an appropriate place to put the following example.
+  Recall from \cref{eg:unif-topgp} that, just as in classical mathematics, any topological neighborhood space with a compatible group structure admits a canonical uniform structure (in fact, two of them, obtained by switching the order of multiplication in $G$).
+  Now suppose instead $G$ is a pretopological \emph{apartness} space with a compatible group structure.
+  For each subset $A\subseteq G$ such that $e\bowtie A$, define 
+  \[ x \aent A y \iff x\inv y \in A .\]
+  These basic anti-entourages clearly satisfy irreflexivity (since $e\notin A$) as well as nullary and binary filtration (by nullary and binary additivity for $\bowtie$).
+  Moreover, since inversion $G\to G$ is continuous, we have $e\bowtie A\inv$ if and only if $e\bowtie A$, giving symmetry; thus they form a base for a pre-anti-uniformity.
+
+  To prove transitivity, we first note that by the construction in \cref{thm:top-topconcrete} of products in $\PATop$, in $X\times Y$ we have $(x,y) \bowtie C$ if and only if there exist $A\subseteq X$ and $B\subseteq Y$ such that $C \subseteq (A\times Y)\cup (X\times B)$ while $x\bowtie A$ and $y\bowtie B$.
+  Thus, continuity of multiplication $m:G\times G\to G$ implies that if $e\bowtie C\subseteq G$, then $f\inv(C) \subseteq (A\times G)\cup (G\times B)$ where $e\bowtie A$ and $e\bowtie B$.
+  Letting $D = A\cup B$, we have $f\inv(C) \subseteq (D\times G)\cup (G\times D)$ while $e\bowtie D$.
+
+  We claim that $\aent D$ satisfies the uniform comparison axiom for $\aent C$.
+  Thus, suppose $x \aent C z$, i.e.\ $x\inv z \in C$.
+  Since $x\inv z = (x\inv y) (y\inv z)$, we have $(x\inv y, y\inv z) \in f\inv (C)$, and hence either $x\inv y \in D$ or $y\inv z \in D$.
+  But in the former case $x\aent D y$, and in the latter case $y\aent D z$.
+  
+  Thus, any ``pretopological apartness group'' is automatically a ``uniform apartness group'' (and in two ways, the one described above and its dual using $x y\inv$).
+  Moreover, the underlying topological apartness of this uniform apartness space is the original one.
+  By definition, $x\bowtie A$ in the former means that there is a set $B$ such that $e\bowtie B$ and $\forall y, (y\in A \implies x\aent B y)$, and the latter is to say $A\subseteq x B$.
+  But $e\bowtie B$ implies $x \bowtie x B$ by continuity of multiplication, hence $A\subseteq x B$ implies $x\bowtie A$ by isotony; and conversely, if $x\bowtie A$, we can take $B = x\inv A$.
+
+  Note that transitivity of the original structure comes for free.
+  This is not anything special about apartness, though: a pretopological neighborhood group is automatically topological as well.
+
+  Note that if $G$ is topologically locally decomposable, then it is also uniformly so; and in that case, this construction agrees with the standard one for topological neighborhood spaces and uniform spaces mentioned in \cref{eg:unif-topgp}.
+  However, there are also interesting non-locally-decomposable examples.
+  For instance, if $X$ is a lower-real-valued normed space, such as the $L^\infty$-norm on a function-space from \cref{eg:linf}, this shows that its uniform apartness structure is determined by its underlying topological apartness and its (abelian) group structure.
+\end{eg}
+
 
 \subsection{Topology versus order}
 \label{sec:top-order}
-
-We will not exhaustively survey separation axioms, but there are a few worth mentioning.
-The first few are naturally phrased using the fact that point-set relations give rise to point-point relations.
 
 \begin{thm}\label{thm:top-ord}\ 
   \begin{enumerate}
@@ -1569,7 +1686,8 @@ Similarly, the specialization anti-preorder of a right topological apartness spa
   Dually, any irreflexive relation $\oapt$ induces a pretopological apartness relation, where $x\bowtie A$ means $\forall y, (y\in A \implies x\oapt y)$, which we might call the \textbf{Alexandrov apartness}.
   The pretopological apartness spaces obtained in this way are precisely those in which $x\bowtie A_i$ for all $i$ implies $x\bowtie \bigcup_i A_i$.
   However, the Alexandrov apartness is not usually left or right topological; even the comparison property $x\oapt y \lor y\oapt z$ for a quasi-apartness $\oapt$ seems insufficient, constructively, to ensure any kind of transitivity of $\bowtie$.
-  % TODO: Something about the $\oapt$-topology defined using a $\vee$...
+
+  % TODO: Something about the $\oapt$-topology defined using a $\vee$, refer forwards to localic perspective.
 \end{eg}
 
 \begin{defn}
@@ -1625,94 +1743,6 @@ Similarly, the specialization anti-preorder of a right topological apartness spa
   The statements about $T_0$ and $T_1$ follow since these separation axioms in the apartness case are defined in terms of the negation of the specialization anti-preorder, i.e.\ the bottom-right composite in the right-hand square above, and the direction of the transformation therein means that this is implied by the specialization order of $\neigh(X)$.
   Finally, the statement about $R_0$ follows immediately from~\eqref{eq:top-ord-ld}.
 \end{proof}
-
-
-\subsection{Regularity and complete regularity}
-\label{sec:regularity}
-
-The other pair of separation axioms we will be interested in are regularity and complete regularity.
-We define them only for neighborhood spaces, since as we will see below they both imply local decomposability.
-
-\begin{defn}
-  Let $X$ be a topological neighborhood space.
-  \begin{enumerate}
-  \item $X$ is \textbf{regular} if whenever $x\ll A$, there are a $B$ and $C$ such that $x\ll B$, $B\cap C = \emptyset$, and $\forall y, (y\ll A \lor y\ll C)$.
-  \item $X$ is \textbf{completely regular} if whenever $x\ll A$, there is a continuous function $f:X\to \R$ such that $f(x)=0$ and $\forall y, (f(y)<1 \implies y\in A)$.
-  \end{enumerate}
-\end{defn}
-
-\begin{lem}\label{thm:creg-reg}
-  A completely regular space is regular.
-\end{lem}
-\begin{proof}
-  Given $x\ll A$, find $f$ as in complete regularity, and let $B = \setof{y|f(y)<\frac12}$ and $C = \setof{y|f(y)>\frac12}$.
-  Then $x\ll B$ by continuity of $f$ and the assumption $f(x)=0$, and clearly $B\cap C = \emptyset$.
-  For any $y$, we have either $f(y)>\frac12$ or $f(y)<1$.
-  In the former case, we have $y \ll C$ by continuity.
-  In the latter case, we have $y \ll \setof{z|f(z)<1}$ by continuity, hence $y\ll A$ by isotony and the assumption on $f$.
-\end{proof}
-
-\begin{thm}
-  A regular space is both locally decomposable and strongly $R_0$.
-\end{thm}
-\begin{proof}
-  Local decomposability is clear since $B\cap C=\emptyset$ means that $y\ll C \implies y\notin B$.
-  For strong $R_0$, suppose $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$, i.e.\ $x\ll \cpl{\singleton{y}}$.
-  By regularity we have $B,C$ with $x\ll B$, $B\cap C = \emptyset$, and $\forall z, (z\ll \cpl{\singleton{y}} \lor z\ll C)$.
-  Since $y\not\ll \cpl{\singleton{y}}$, we have $y\ll C$; but $x\notin C$ so $C\subseteq \cpl{\singleton{x}}$.
-  Thus $y\ll\cpl{\singleton{x}}$ by isotony, so $y\oapt x$.
-\end{proof}
-
-\begin{thm}\label{thm:sympmet-reg}
-  If $X$ is a locally decomposable uniform space (such as a symmetric Dedekind prometric space), then its underlying topology is regular.
-\end{thm}
-\begin{proof}
-  TODO: Write in the uniform case.
-  
-  Given $x\ll A$, we have $d_1,\ep$ such that $\forall y, (d_1(x,y)<\ep \implies y\in A)$.
-  Let $d_2$ be as in prometric transitivity for $d_1$, and define $B = \setof{y|d_2(x,y)<\hfep}$ and $C = \setof{y|d_2(x,y)>\hfep}$.
-  Then clearly $x\ll B$ and $B\cap C = \emptyset$.
-
-  Now for any $y$, we have either $d_2(x,y)<\frac{2\ep}3$ or $d_2(x,y)>\hfep$.
-  First suppose $d_2(x,y)<\frac{2\ep}3$; we claim $y\ll A$.
-  Suppose $z$ is such that $d_2(y,z)<\frac{\ep}{3}$; then $d_1(x,z) \le d_2(x,y)+d_2(y,z) < \frac{2\ep}{3} + \frac{\ep}{3} = \ep$.
-  Hence, by assumption, $z\in A$.
-  Thus $\forall z, (d_2(y,z)<\frac{\ep}{3} \implies z\in A)$, so $y\ll A$.
-
-  Now suppose $d_2(x,y)>\hfep$; we claim $y\ll C$.
-  Let $0<\ep' < d_2(x,y)-\hfep$, let $d_3$ be as in prometric transitivity for $d_2$, and let $d_4$ be as in prometric symmetry for $d_3$.
-  Suppose $z$ is such that $d_4(y,z)<\ep'$; then $d_3(z,y)<\ep'$.
-  Moreover, $d_2(x,y) \le d_3(x,z) + d_3(z,y) < d_3(x,z) + \ep'$, so $d_3(x,z) > d_2(x,y) - \ep' > \hfep$.
-  Thus $z\in C$.
-  Therefore $\forall z, (d_4(y,z)<\ep' \implies z\in C)$, so $y\ll C$.
-\end{proof}
-
-Classically, every uniform space, and hence every symmetric prometric space, is completely regular.
-However, constructively we can only seem to show this in the gauge case.
-
-\begin{thm}\label{thm:symgauge-creg}
-  If $X$ is a (symmetric) Dedekind gauge space, then its underlying topology is completely regular.
-\end{thm}
-\begin{proof}
-  Given $x\ll A$, we have a gauging distance $d$ and an $\eta>0$ such that $\forall y, (d(x,y)<\eta \implies y\in A)$.
-  Let $f(y) = \frac1{\eta} d(x,y)$; it clearly suffices to show that $f$ is continuous.
-  In fact we will show that $f$ is uniformly continuous.
-  Thus, suppose given $\ep$; we must find a gauging distance $d'$ and a $\de>0$ such that for any $y,z\in X$, if $d'(y,z)<\de$ then $|f(y)-f(z)|<\ep$.
-  Let $d'$ be a gauging distance such that $d(u,v)\le d'(u,v)$ and also $d(v,u) \le d'(u,v)$ for all $u,v\in X$, which exists by symmetry and binary filtration, and let $\de = \eta\ep$.
-  Suppose $d'(y,z)< \de= \eta\ep$; then by the triangle inequality we have
-  \begin{gather*}
-    d(x,z) \le d(x,y)+d(y,z) < d(x,y) + d'(y,z) < d(x,y)+\eta\ep\\
-    d(x,y) \le d(x,z)+d(z,y) < d(x,z) + d'(y,z) < d(x,z)+\eta\ep
-  \end{gather*}
-  Thus
-  \[ |f(y)-f(z)| = |\textstyle\frac1{\eta}d(x,y) - \frac1{\eta}d(x,z)| < \ep \]
-  as desired.
-\end{proof}
-
-Of course, \cref{thm:sympmet-reg} and \cref{thm:symgauge-creg} do depend crucially on symmetry; we have seen that every topological neighborhood space can be given a quasi-uniform structure and hence an (upper) prometric.
-
-TODO: More about uniform regularity, as discussed on the nLab and nForum.
-
 
 \subsection{Comparing definitions}
 \label{sec:top-compare}
@@ -1816,6 +1846,93 @@ However, it is easy to check that if $X$ is a locally decomposable apartness spa
 \end{rmk}
 
 
+\section{Interlude: Regularity and complete regularity}
+\label{sec:regularity}
+
+We define these only for neighborhood spaces, since as we will see below they both imply local decomposability.
+
+\begin{defn}
+  Let $X$ be a topological neighborhood space.
+  \begin{enumerate}
+  \item $X$ is \textbf{regular} if whenever $x\ll A$, there are a $B$ and $C$ such that $x\ll B$, $B\cap C = \emptyset$, and $\forall y, (y\ll A \lor y\ll C)$.
+  \item $X$ is \textbf{completely regular} if whenever $x\ll A$, there is a continuous function $f:X\to \R$ such that $f(x)=0$ and $\forall y, (f(y)<1 \implies y\in A)$.
+  \end{enumerate}
+\end{defn}
+
+\begin{lem}\label{thm:creg-reg}
+  A completely regular space is regular.
+\end{lem}
+\begin{proof}
+  Given $x\ll A$, find $f$ as in complete regularity, and let $B = \setof{y|f(y)<\frac12}$ and $C = \setof{y|f(y)>\frac12}$.
+  Then $x\ll B$ by continuity of $f$ and the assumption $f(x)=0$, and clearly $B\cap C = \emptyset$.
+  For any $y$, we have either $f(y)>\frac12$ or $f(y)<1$.
+  In the former case, we have $y \ll C$ by continuity.
+  In the latter case, we have $y \ll \setof{z|f(z)<1}$ by continuity, hence $y\ll A$ by isotony and the assumption on $f$.
+\end{proof}
+
+\begin{thm}
+  A regular space is both locally decomposable and strongly $R_0$.
+\end{thm}
+\begin{proof}
+  Local decomposability is clear since $B\cap C=\emptyset$ means that $y\ll C \implies y\notin B$.
+  For strong $R_0$, suppose $x\oapt y$, i.e.\ $x\bowtie \singleton{y}$, i.e.\ $x\ll \cpl{\singleton{y}}$.
+  By regularity we have $B,C$ with $x\ll B$, $B\cap C = \emptyset$, and $\forall z, (z\ll \cpl{\singleton{y}} \lor z\ll C)$.
+  Since $y\not\ll \cpl{\singleton{y}}$, we have $y\ll C$; but $x\notin C$ so $C\subseteq \cpl{\singleton{x}}$.
+  Thus $y\ll\cpl{\singleton{x}}$ by isotony, so $y\oapt x$.
+\end{proof}
+
+\begin{thm}\label{thm:sympmet-reg}
+  If $X$ is a locally decomposable uniform space (such as a symmetric Dedekind prometric space), then its underlying topology is regular.
+\end{thm}
+\begin{proof}
+  TODO: Write in the uniform case.
+  
+  Given $x\ll A$, we have $d_1,\ep$ such that $\forall y, (d_1(x,y)<\ep \implies y\in A)$.
+  Let $d_2$ be as in prometric transitivity for $d_1$, and define $B = \setof{y|d_2(x,y)<\hfep}$ and $C = \setof{y|d_2(x,y)>\hfep}$.
+  Then clearly $x\ll B$ and $B\cap C = \emptyset$.
+
+  Now for any $y$, we have either $d_2(x,y)<\frac{2\ep}3$ or $d_2(x,y)>\hfep$.
+  First suppose $d_2(x,y)<\frac{2\ep}3$; we claim $y\ll A$.
+  Suppose $z$ is such that $d_2(y,z)<\frac{\ep}{3}$; then $d_1(x,z) \le d_2(x,y)+d_2(y,z) < \frac{2\ep}{3} + \frac{\ep}{3} = \ep$.
+  Hence, by assumption, $z\in A$.
+  Thus $\forall z, (d_2(y,z)<\frac{\ep}{3} \implies z\in A)$, so $y\ll A$.
+
+  Now suppose $d_2(x,y)>\hfep$; we claim $y\ll C$.
+  Let $0<\ep' < d_2(x,y)-\hfep$, let $d_3$ be as in prometric transitivity for $d_2$, and let $d_4$ be as in prometric symmetry for $d_3$.
+  Suppose $z$ is such that $d_4(y,z)<\ep'$; then $d_3(z,y)<\ep'$.
+  Moreover, $d_2(x,y) \le d_3(x,z) + d_3(z,y) < d_3(x,z) + \ep'$, so $d_3(x,z) > d_2(x,y) - \ep' > \hfep$.
+  Thus $z\in C$.
+  Therefore $\forall z, (d_4(y,z)<\ep' \implies z\in C)$, so $y\ll C$.
+\end{proof}
+
+Classically, every uniform space, and hence every symmetric prometric space, is completely regular.
+However, constructively we can only seem to show this in the gauge case.
+
+\begin{thm}\label{thm:symgauge-creg}
+  If $X$ is a (symmetric) Dedekind gauge space, then its underlying topology is completely regular.
+\end{thm}
+\begin{proof}
+  Given $x\ll A$, we have a gauging distance $d$ and an $\eta>0$ such that $\forall y, (d(x,y)<\eta \implies y\in A)$.
+  Let $f(y) = \frac1{\eta} d(x,y)$; it clearly suffices to show that $f$ is continuous.
+  In fact we will show that $f$ is uniformly continuous.
+  Thus, suppose given $\ep$; we must find a gauging distance $d'$ and a $\de>0$ such that for any $y,z\in X$, if $d'(y,z)<\de$ then $|f(y)-f(z)|<\ep$.
+  Let $d'$ be a gauging distance such that $d(u,v)\le d'(u,v)$ and also $d(v,u) \le d'(u,v)$ for all $u,v\in X$, which exists by symmetry and binary filtration, and let $\de = \eta\ep$.
+  Suppose $d'(y,z)< \de= \eta\ep$; then by the triangle inequality we have
+  \begin{gather*}
+    d(x,z) \le d(x,y)+d(y,z) < d(x,y) + d'(y,z) < d(x,y)+\eta\ep\\
+    d(x,y) \le d(x,z)+d(z,y) < d(x,z) + d'(y,z) < d(x,z)+\eta\ep
+  \end{gather*}
+  Thus
+  \[ |f(y)-f(z)| = |\textstyle\frac1{\eta}d(x,y) - \frac1{\eta}d(x,z)| < \ep \]
+  as desired.
+\end{proof}
+
+Of course, \cref{thm:sympmet-reg} and \cref{thm:symgauge-creg} do depend crucially on symmetry; we have seen that every topological neighborhood space can be given a quasi-uniform structure and hence an (upper) prometric.
+
+TODO: More about uniform regularity, as discussed on the nLab and nForum.
+
+
+
 \section{Set-set relations: proximity}
 \label{sec:set-set}
 \label{sec:proximity}
@@ -1882,6 +1999,9 @@ We now proceed to axiomatize these relations.
 \label{sec:syntopogeny}
 
 
+\section{A localic viewpoint}
+\label{sec:locales}
+
 
 % \section{Located subspaces}
 % \label{sec:located}
@@ -1915,7 +2035,7 @@ When there is only one prometric space $X$, we assume that the letter $d$ ranges
 For metric spaces in classical mathematics, it suffices to consider convergent and Cauchy \emph{sequences}.
 However, in the gauge and prometric cases we must deal with filters (or nets); and constructively (specifically, in the absence of both excluded middle and countable choice) this is true even for metric spaces.
 For instance, the completion of the metric space $\mathbb{Q}$ under limits of Cauchy sequences (the ``Cauchy real numbers'') is potentially much smaller than its full completion under limits of Cauchy filters (the Dedekind real numbers $\R$).
-In fact, there may not even be ``enough'' Cauchy filters, so that the completion is properly a non-spatial locale; we will return to this in \cref{sec:completion}.
+In fact, there may not even be ``enough'' Cauchy filters, so that the completion is properly a non-spatial locale.
 
 Note also that the above definitions of Cauchy filter and complete space are only really sensible in the symmetric case.
 We will also return to this later.\fxnote{Do that}
