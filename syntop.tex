@@ -329,7 +329,7 @@ Whenever a definition involves $\Rp$, it is actually four definitions, one for e
 \end{defn}
 
 Most of the above terminology is so well-established that we have not attempted to depart from it, but despite their derogatory-sounding name it is really the extended quasi-pseudo-metric spaces that are the fundamental notion.
-The additional requirements imposed on a pseudo-metric or metric space are really \emph{separation axioms}, and experience in general topology has shown that a better category is obtained by only imposing separation axioms when necessary rather than including them in definitions.
+Symmetry and separation are really \emph{separation axioms}, and experience in general topology has shown that a better category is obtained by only imposing separation axioms when necessary rather than including them in definitions.
 And allowing infinite distances is arguably of little import topologically.
 Moreover, Lawvere~\cite{lawvere:metric-spaces} exhibited \eqp-metric spaces as categories enriched over $(\Rp,\ge,+)$, placing them in a wider context.\fxnote{Should we mention the enriched-multicategory approach to other topological structures?}
 
@@ -415,6 +415,7 @@ The most important types of morphism between prometric spaces are the following.
 \end{proof}
 
 For \emph{lower} prometric spaces, we use the same definition of short maps, but the other four should be modified as follows:
+\fxnote{Should these have `anti-' on them?  Or should we distinguish by saying ``continuous in the lower sense''?}
 
 \begin{defn}\label{def:pmetl-maps}
   Let $X$ and $Y$ be lower prometric spaces and $f:X\to Y$ a function.
@@ -483,6 +484,7 @@ The triangle inequality follows since
 Intuitively, it seems as though these functors should have adjoints $\low{(-)}$.
 But since $\low{(-)}:\Reu \to \Rel$ is is only \emph{lax} monoidal, it does not preserve the triangle inequality, so we cannot apply it to an upper prometric to produce a lower prometric.
 Nevertheless, the above functors \emph{do} have adjoints, albeit impredicative ones.
+To construct these, we first observe the following.
 
 \begin{thm}\label{thm:pmet-topconcrete}
   The category $\PMet$ (for any kind of real number) is topological over $\Set$, i.e.\ its forgetful functor to $\Set$ has initial lifts for all sources and (hence) final lifts for all sinks.
@@ -503,7 +505,7 @@ Nevertheless, the above functors \emph{do} have adjoints, albeit impredicative o
   (In the lower case, the argument runs in reverse, with largeness of $\max(d^X_1,\dots,d^X_n)$ implying that of some $d_j^Y$, hence of some $d^Z_j$, and thus of $d^Z$.)
 \end{proof}
 
-Note that if each $Y_i$ is a metric space \emph{and} there are finitely many of them, then $X$ has a maximal metric and hence is isomorphic in $\PMet$ to a metric space; but in general $\Met$ is not closed under initial lifts.
+Note that if each $Y_i$ is a metric space \emph{and} there are finitely many of them, then $X$ has a maximal metric and hence is isomorphic in $\PMet$ to a metric space; but in general $\Met$ is not closed in $\PMet$ under initial lifts.
 
 Now we use the following standard fact:
 
@@ -519,7 +521,7 @@ In particular, $\upp{(-)} : \PMetl \to\PMetu$ has a left adjoint.
 (Note that this is indeed the sort of adjoint that we would hope to get from $\low{(-)}$, even though $\low{(-)}:\Reu \to \Rel$  is \emph{right} adjoint to $\upp{(-)}$, since when viewing (pro)metric spaces as enriched categories the ordering on $\Rp$ is the opposite of the usual one.)
 
 Similarly, the inclusion $\QGau\into\PMet$ also has a left adjoint, making $\QGau$ is a reflective subcategory.
-The quasi-gauge reflection of a prometric space $X$ has as gauging distances all \eqp-metrics $d$ on the set $X$ such that $d\le d'$ for some distance in the prometric of $X$.
+The quasi-gauge reflection of a prometric space $X$ has as gauging distances all \eqp-metrics $d$ on the set $X$ such that $d\le d'$ for some distance $d'$ in the prometric of $X$.
 
 % \begin{rmk}
 %   Since upper and lower reals both have a strict order, all the notions in \cref{def:pmet-maps} also technically make sense for lower prometric spaces, and similarly those in \cref{def:pmetl-maps} also technically make sense for upper prometric spaces.
@@ -547,7 +549,7 @@ Of course, Dedekind metric spaces are ubiquitous in mathematics and well-trusted
   It is always symmetric and $T_1$.
   (This is a special case of \cref{thm:preord-pmetu}.)
 
-  Combining this with the previous example, we find that \emph{prodiscrete spaces} are naturally upper prometric spaces.
+  Combining this with the previous example, we find that \emph{prodiscrete spaces} are naturally upper prometric spaces (and indeed upper gauge spaces).
 \end{eg}
 
 \begin{eg}
@@ -593,7 +595,7 @@ From a rigid category-theoretic perspective, one might argue that this removal o
 However, the fact that it is nevertheless present in the ``internal structure'' of a prometric space can interfere with our intuition and make abstraction and generalization more difficult.
 At the technical level, it means that if we want to treat prometric spaces ``topologically'' (for instance), we have the obligation to verify at every step that our constructions respect (iso)morphisms in $\PMetTop$.
 
-Formally, the problem is that $\PMet$ and its supercategories are not \emph{amnestic}, meaning that their fibers over a given set $X$ are only preorders and not partial orders.
+Formally, this problem is that $\PMet$ and its supercategories are not \emph{amnestic}, meaning that their fibers over a given set $X$ are only preorders and not partial orders.
 In other words, two very different-looking prometrics on the same space might nevertheless be equivalent, i.e.\ isomorphic by the identity function.
 
 In the case of $\PMet$ itself, this can be remedied quite easily: we simply require the prometric to be an ideal rather than an ideal base.
@@ -608,7 +610,7 @@ Moreover, any prometric space $X$ is isomorphic in $\PMet$ to a saturated one: l
 This is a prometric, since if $d\le d'$ with $d'$ a distance of $X$, there is a distance $d''$ of $X$ with $d(x,z) \le d'(x,z) \le d''(x,y)+d''(y,z)$.
 And $\sat{X}$ is saturated since if $d\le d' \le d''$ with $d''$ a distance of $X$ then $d\le d''$, while the identity function $X\to \sat{X}$ is an isomorphism in $\PMet$.
 
-In fact this solution can be extended to all the supercategories of $\PMet$ as well.
+In fact this solution can be extended to all the supercategories of $\PMet$ from \cref{def:pmet-maps} as well.
 Note that all the continuity conditions on maps $f:X\to Y$ between prometric spaces can be rephrased to be of the form ``for any $d_Y$, the function defined by $d_X(x,y) = d_Y(f(x),f(y))$ has some property''.
 Thus, it is natural to simply demand a stronger form of saturation, that any function with the relevant property is a distance on $X$.
 
@@ -1622,8 +1624,8 @@ Likewise, uniform local decomposability seems strictly stronger than topological
   By definition, $x\bowtie A$ in the former means that there is a set $B$ such that $e\bowtie B$ and $\forall y, (y\in A \implies x\aent B y)$, and the latter is to say $A\subseteq x B$.
   But $e\bowtie B$ implies $x \bowtie x B$ by continuity of multiplication, hence $A\subseteq x B$ implies $x\bowtie A$ by isotony; and conversely, if $x\bowtie A$, we can take $B = x\inv A$.
 
-  Note that transitivity of the original structure comes for free.
-  This is not anything special about apartness, though: a pretopological neighborhood group is automatically topological as well.
+  Note that right transitivity of the original structure comes for free, by \cref{thm:aunif-atop}.
+  This is not anything special about apartness: a pretopological neighborhood group is automatically topological as well.
 
   Note that if $G$ is topologically locally decomposable, then it is also uniformly so; and in that case, this construction agrees with the standard one for topological neighborhood spaces and uniform spaces mentioned in \cref{eg:unif-topgp}.
   However, there are also interesting non-locally-decomposable examples.
