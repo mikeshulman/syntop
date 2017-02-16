@@ -1,4 +1,5 @@
 \documentclass{article}
+\newif\ifcref\creftrue
 \input{decls}
 \usepackage[status=draft]{fixme}
 \title{Unifying constructive general topology}
@@ -223,7 +224,7 @@ Thus $\Rem$ and $\Red$ are ordered abelian groups.
 Finally, we note that the union of any number of upper real numbers (as subsets of $\Q$) is again such.
 Thus, $\Reu$ is a complete lattice under $\le$, with infima constructed as unions.
 Its therefore also has suprema, though these are not set-theoretic intersections but rather their interiors:
-\[ \bigvee U_i = \setof{ y\in\Q | \exists x\in\Q, (x<y \land \forall i, x\in U_i}\]
+\[ \bigvee U_i = \setof{ y\in\Q | \exists x\in\Q, (x<y \land \forall i, x\in U_i)}\]
 Similarly, $\Rel$ has suprema constructed as unions and infima as the interiors of intersections.
 
 Since $\Rem$ is a coreflective sub-poset of $\Reu$ and a reflective sub-poset of $\Rel$, it is closed under suprema in $\Reu$ and infima in $\Rel$.
@@ -715,10 +716,13 @@ When we say a ``prometric space'' we mean one whose distances take values in any
   \end{itemize}
 \end{defn}
 
-Since $\neg(a<b)$ is equivalent to $b\le a$ for MacNeille real numbers, in a MacNeille prometric space we have
+Recall that $\neg(a<b)$ is equivalent to $b\le a$ for MacNeille real numbers.
+Although this fails for upper and lower real numbers in general, it is true for lower reals if $a$ is rational and for upper reals if $b$ is rational, since rational numbers satisfy trichotomy.
+Therefore, taking $a=0$, we see that in any \emph{lower} prometric space we have:
 \begin{equation}
   (x\leapx y) \iff \neg(x\oapt y).\label{eq:leapx-oapt}
 \end{equation}
+(In an upper prometric space, $\oapt$ is arguably not a reasonable thing to define.)
 However, $\oapt$ cannot constructively be expressed in terms of $\leapx$; to say $x\oapt y$ is stronger than $x\neq y$ or even $x\not\leapx y$.
 
 The abstract structure possessed by $\leapx$ is obvious and well-known.
@@ -746,13 +750,13 @@ For reasons that will become clear later, we first define a weaker notion and th
 \begin{defn}\label{def:anti-preorder}
   A binary relation $\oapt$ on a set $X$ is:
   \begin{enumerate}
-  \item \textbf{irreflexive} if $\neg(x\oapt x)$ for all $x$ (irreflexivity).
+  \item \textbf{irreflexive} if $\neg(x\oapt x)$ for all $x$.
   \item a \textbf{left anti-preorder} if it is irreflexive and whenever $x\oapt z$ and $\neg(y\oapt z)$ we have $(x\oapt y)$ (left transitivity).
   \item a \textbf{right anti-preorder} if it is irreflexive and whenever $x\oapt z$ and $\neg(x\oapt y)$ we have $(y\oapt z)$ (right transitivity).
   \item a \textbf{quasi-apartness} if it is irreflexive and whenever $x\oapt z$, then for any $y$ we have $x\oapt y$ or $y\oapt z$ (comparison).
-  \item \textbf{symmetric} if $x\oapt y$ implies $y\oapt x$ (symmetry).
+  \item \textbf{symmetric} if $x\oapt y$ implies $y\oapt x$.
   \item an \textbf{inequality} if it is symmetric and irreflexive.
-  \item an \textbf{anti-equivalence-relation} if it is a symmetric left anti-preorder (hence also a right anti-preorder).
+  \item an \textbf{anti-equivalence-relation} if it is a symmetric left (hence also a right) anti-preorder.
   \item an \textbf{apartness} (usually written $\apart$) if it is a symmetric quasi-apartness.
   \item \textbf{connected} if $(\neg(x\oapt y)\land \neg(y\oapt x))\implies x=y$.
   \item \textbf{tight} if $\neg(x\oapt y) \implies x=y$.
@@ -777,9 +781,12 @@ For instance, we have:
   Let $X$ be a prometric space.
   \begin{enumerate}
   \item The relation $\oapt$ is a left and right anti-preorder.
-  \item If $X$ is a lower prometric space (including MacNeille and Dedekind), then $\oapt$ is a quasi-apartness.
   \item If $X$ is symmetric, then $\oapt$ is an anti-equivalence-relation.
-  \item If $X$ is symmetric and lower, then $\oapt$ is an apartness relation.
+  \end{enumerate}
+  If $X$ is a lower prometric space (including MacNeille and Dedekind), then
+  \begin{enumerate}[resume]
+  \item The relation $\oapt$ is a quasi-apartness.
+  \item If $X$ is symmetric, then $\oapt$ is an apartness relation.
   \item $X$ is $T_0$ if and only if $\oapt$ is connected.
   \item $X$ is $T_1$ if and only if $\oapt$ is tight.
   \end{enumerate}
@@ -800,7 +807,7 @@ For instance, we have:
   Symmetry is obvious, and the last two statements follow from~\eqref{eq:leapx-oapt} and \cref{thm:pmet-preord}.
 \end{proof}
 
-In particular, the equality relation of a $T_0$ prometric space is (like that of any set with a connected irreflexive relation) \nn-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)\land \neg(y\oapt x)$, hence $x=y$.
+In particular, the equality relation of a $T_0$ lower prometric space is (like that of any set with a connected irreflexive relation) \nn-stable, for $\neg\neg(x=y)$ implies $\neg(x\oapt y)\land \neg(y\oapt x)$, hence $x=y$.
 We mention one further example of anti-preorders:
 
 \begin{eg}
@@ -811,18 +818,22 @@ We mention one further example of anti-preorders:
 
   The symmetrization of this $\oapt$ is an anti-equivalence-relation on $\wp(Y)$, equivalently expressed by saying that $A\apart B$ whenever the \emph{symmetric difference} $A \mathbin{\triangle} B$ is inhabited.
   In particular, we have $A\apart \emptyset$ whenever $A$ is inhabited.
+
+  Note that when $Y=1$, its power set $\wp(1)$ is the set of truth values.
+  Thus we also have a natural left anti-preorder on the latter set, for which $P\oapt Q$ means $P\land \neg Q$.
+  Since $\top \oapt \bot$ and $(P\oapt \bot)\leftrightarrow P$ and $(\top\oapt P) \leftrightarrow \neg P$, if this is a quasi-apartness then excluded middle holds.
 \end{eg}
 
 Preorders and anti-preorders are closely related.
 In fact, in classical mathematics they are entirely equivalent notions.
-To state the corresponding constructive fact, we first define the appropriate categories.
+Constructively, we have instead an \emph{adjunction} between the following categories.
 
 \begin{defn}
   Let $f:X\to Y$ be a function.
   \begin{enumerate}
   \item If $X$ and $Y$ are preorders, then $f$ is \textbf{monotone} if $x\leapx y \implies f(x)\leapx f(y)$ for all $x,y\in X$.
     We write $\Preord$ for the category of preorders and monotone maps.
-  \item If $X$ and $Y$ are left or right xanti-preorders, then $f$ is \textbf{monotone}, or \textbf{strongly extensional}, if $f(x)\oapt f(y) \implies x\oapt y$ for all $x,y\in X$.
+  \item If $X$ and $Y$ are irreflexive, then $f$ is \textbf{monotone}, or \textbf{strongly extensional}, if $f(x)\oapt f(y) \implies x\oapt y$ for all $x,y\in X$.\fxnote{``Anti-monotone'' would be natural, but is unfortunately also used for an order-reversing map.}
     We write $\LAPreord$, $\RAPreord$, and $\QApt$ for the categories of left and right anti-preorders and quasi-apartnesses, respectively, and monotone maps.
   \end{enumerate}
 \end{defn}
@@ -853,23 +864,25 @@ To state the corresponding constructive fact, we first define the appropriate ca
   In our case, this follows from the fact that $\neg P \iff \neg\neg\neg P$ for any truth value $P$.
 \end{proof}
 
-\cref{thm:ord-le-apt} gives some partial justification for defining the notion of anti-preorder using our weak transitivity axioms instead of comparison, since there seems no general way to make a quasi-apartness by negating a preorder.
-Further justification will have to wait for \cref{thm:top-ord} and \cref{sec:syntopogeny}.
+\cref{thm:ord-le-apt} gives some additional justification for defining the notion of anti-preorder using our weak transitivity axioms instead of comparison, since the negation of a preorder need not be a quasi-apartness.
+However, like $\upp{(-)}:\PMetl \to \PMetu$, the functor $\neigh : \QApt \to \Preord$ does have an impredicative left adjoint, and for the same reason: its domain and codomain are both topological over $\Set$ and it preserves initial lifts.
+In particular, if we apply this left adjoint to the equality relation of a set, we see that any set admits a largest quasi-apartness and similarly a largest apartness (not in general tight).
 
 Any idempotent adjunction restricts to an equivalence between the full images of the right and left adjoints.
 Thus, preorders that are \textbf{\nn-stable} (i.e.\ $\neg\neg(x\leapx y) \implies x\leapx y$) are equivalent to anti-preorders that are \nn-stable.
 (In particular, a \nn-stable left anti-preorder is also a right anti-preorder, and dually.)
 
 \begin{thm}\label{thm:macneille-preord}
-  If $X$ is a MacNeille prometric space, then its underlying preorder is obtained from its underlying anti-preorder by the functor $\neigh$ of \cref{thm:ord-le-apt}.
+  If $X$ is a lower prometric space, then its underlying preorder is obtained from its underlying anti-preorder by the functor $\neigh$ of \cref{thm:ord-le-apt}.
   In particular, it is \nn-stable.
 \end{thm}
 \begin{proof}
   This is just~\eqref{eq:leapx-oapt} above.
 \end{proof}
 
+However, even if $X$ is Dedekind, its underlying anti-preorder is not generally the negation of its underlying preorder.
 This is an instance of the fact that constructively, it is often better to work with anti-preorders (such as apartness relations) than preorders (such as equivalence relations), since many preorders are the dual of some anti-preorder but not conversely.
-However, this seems to be due mainly to the impoverished nature of a single binary relation; in later sections we will see that for more refined topological structures we can impose natural conditions (satisfied by any prometric space) to make the ``closeness'' and ``apartness'' notions coincide.
+However, in this particular case it seems to be due mainly to the impoverished nature of a single binary relation; for more refined topological structures, the MacNeille or Dedekind condition on a prometric space will be sufficient to make the ``closeness'' and ``apartness'' structures determine each other.
 
 Finally, we show that preorders and anti-preorders capture exactly the ``order-theoretic'' information in upper and lower prometric spaces, respectively.
 
@@ -895,7 +908,7 @@ Finally, we show that preorders and anti-preorders capture exactly the ``order-t
   Now the underlying preorder of this prometric, according to \cref{thm:pmet-preord}, is precisely the one we started with.
   Moreover, by \cref{def:pmet-maps}, a function $f:X\to Y$ lies in $\PMetOrdu$ if and only if it is monotone for the underlying preorders.
   Thus we have another fully faithful functor $\PMetOrdu \to \Preord$, which it is easy to see defines an inverse to the above.
-  The remaining statements are clear from \cref{thm:up} and \cref{thm:macneille-preord}.
+  The remaining statements are clear from \cref{thm:up,thm:macneille-preord}.
 \end{proof}
 
 \begin{thm}\label{thm:qapt-pmetl}
@@ -1006,7 +1019,7 @@ Note that local decomposability implies \nn-stability (use the same $\al$ and $\
   If $X$ is a quasi-uniform space and $A$ is any set, then every entourage $\al$ of $X$ induces a relation on the function set $X^A$ defined by
   \[ f \ent\al g \iff \forall a\in A, (f(a)\ent\al g(a)) \]
   This is a base for a quasi-uniformity on $X^A$ called the \emph{quasi-uniformity of uniform convergence}; it is symmetric if $X$ is.
-  In general we cannot prove it to be locally decomposable, even if $X$ is, unless $A$ is finite (in which case it coincides with the product quasi-uniformity $\prod_{a\in A} X$.
+  In general we cannot prove it to be locally decomposable, even if $X$ is, unless $A$ is finite (in which case it coincides with the product quasi-uniformity $\prod_{a\in A} X$).
 \end{eg}
 
 \begin{eg}\label{eg:unif-topgp}
@@ -1130,11 +1143,11 @@ As in that case, using the weaker sort of anti-uniform transitivity, rather than
 \end{proof}
 
 \begin{eg}
-  The functors of \cref{thm:unif-ord} and \cref{thm:aunif-ord} commute with the functors $\anti$ and $\neigh$ from \cref{thm:qunif-aqunif} and \cref{thm:ord-le-apt}.
+  The functors of \cref{thm:unif-ord,thm:aunif-ord} commute with the functors $\anti$ and $\neigh$ from \cref{thm:qunif-aqunif,thm:ord-le-apt}.
 \end{eg}
 
 \begin{eg}
-  If $X$ is an anti-quasi-uniform space, then the structures of uniform convergence from \cref{eg:unif-uconv} and \cref{eg:aunif-uconv} satisfy
+  If $X$ is an anti-quasi-uniform space, then the structures of uniform convergence from \cref{eg:unif-uconv,eg:aunif-uconv} satisfy
   \[ \neigh(X^A) = \neigh(X)^A, \]
   essentially since $\neg\exists = \forall\neg$.
   However, since $\neg\forall \neq \exists\neg$, the dual fails: if $X$ is a quasi-uniform space, then we cannot prove $\anti(X^A) = \anti(X)^A$.
@@ -1161,7 +1174,7 @@ Now we establish the relation of uniform structures to prometrics.
     \PMetUnifu \ar[r] & \QUnif } \]
   \item If $X$ is a MacNeille prometric space, then its underlying quasi-uniformity and quasi-uniform apartness are \nn-stable, and correspond to each other under the adjunction of \cref{thm:qunif-aqunif}.
   \item If $X$ is a Dedekind prometric space, then its underlying (anti-)quasi-uniformity is locally decomposable.
-  \item The composites $\PMetUnifu \to \QUnif \to \Preord$ and $\PMetUnifl \to \QUnifApt \to \QApt$, of the functors defined above with the right adjoints from \cref{thm:unif-ord} and \cref{thm:aunif-ord}, are equal to the functors of \cref{sec:point-point}.
+  \item The composites $\PMetUnifu \to \QUnif \to \Preord$ and $\PMetUnifl \to \QUnifApt \to \QApt$, of the functors defined above with the right adjoints from \cref{thm:unif-ord,thm:aunif-ord}, are equal to the functors of \cref{sec:point-point}.
   \end{enumerate}
 \end{thm}
 \begin{proof}
@@ -1177,7 +1190,7 @@ Now we establish the relation of uniform structures to prometrics.
   By trichotomy for rationals, we must have either $\ep_1 \ge \fep12$ or $\ep_2\ge \fep12$.
   Thus, either $d'(x,y)>\hfep$ or $d'(y,z)>\hfep$.
 
-  Functoriality and full-faithfulness in both cases is immediate from the definitions of uniform continuity in \cref{def:pmet-maps} and \cref{def:pmetl-maps}.
+  Functoriality and full-faithfulness in both cases is immediate from the definitions of uniform continuity in \cref{def:pmet-maps,def:pmetl-maps}.
 
   If $X$ is a lower prometric space, recall that in $\upp{X}$ we have distances defined by $\upp{d}(x,y) = \upp{d(x,y)}$.
   By definition, this means that $\upp{d}(x,y)<\ep$ is equivalent to $\exists \eta, (\eta<\ep \land \neg(d(x,y)>\eta))$.
@@ -1195,7 +1208,7 @@ Now we establish the relation of uniform structures to prometrics.
 \end{proof}
 
 \begin{eg}
-  If $X$ is an upper prometric space, then the Hausdorff (quasi-)uniformity from \cref{eg:unif-haus} is the underlying (quasi-)uniformity of the Hausdorff prometric from \cref{eg:haus}.
+  If $X$ is an upper prometric space, then the Hausdorff \mbox{(quasi-)}\allowbreak uniformity from \cref{eg:unif-haus} is the underlying (quasi-)uniformity of the Hausdorff prometric from \cref{eg:haus}.
 \end{eg}
 
 \begin{eg}
@@ -1233,7 +1246,7 @@ Thus, quasi-uniform spaces and quasi-uniform apartness spaces capture exactly th
 
 Of course, a given quasi-uniform (apartness) space can be represented by many different prometrics (i.e.\ non-isomorphic objects of $\PMet$).
 Indeed, there is even more than one full embedding $\QUnif \to \PMetu$ or $\QUnifApt \to \PMetl$.
-The constructions of \cref{thm:pmet-unif} and \cref{thm:pmet-aunif} give one pair of such embeddings, but different embeddings are obtained by composing them with the uniform coreflections from \cref{thm:pmet-coref}.
+The constructions of \cref{thm:pmet-unif,thm:pmet-aunif} give one pair of such embeddings, but different embeddings are obtained by composing them with the uniform coreflections from \cref{thm:pmet-coref}.
 
 The questions of which (anti-)quasi-uniform spaces constructively admit a MacNeille or Dedekind prometric, or a quasi-gauge of any sort, is less clear.
 Of course, a MacNeille prometric has a \nn-stable uniformity and a Dedekind prometric has a locally decomposable one, but it is unclear whether these conditions are sufficient.
@@ -1301,9 +1314,9 @@ There are three fundamental relations between a point and a set that can be defi
   \end{enumerate}
 \end{defn}
 
-All three definitions technically make sense in any kind of prometric space, but unsurprisingly neighborhoods are best-behaved for upper prometrics, apartness is best-behaved for lower prometrics, and closeness is not generally well-behaved at all.
-
-We will say no more about $\approx$, and proceed to axiomatize the basic properties of $\ll$ and $\bowtie$.
+All three make sense in any kind of prometric space, but neighborhoods are best-behaved for upper prometrics, apartness is best-behaved for lower prometrics, and closeness is not constructively well-behaved at all.
+To be more precise, $\approx$ is certainly reasonable to study, but it doesn't seem possible to axiomatize it in a way that captures \emph{all} the desired topological information; its natural ``binary additivity'' axiom is not constructively provable.
+Thus, we will say little more about $\approx$, and proceed to axiomatize the basic properties of $\ll$ and $\bowtie$.
 Our treatment is strongly inspired by that of~\cite{bridges-vita}, but we make some minor choices differently, in order to obtain better category-theoretic properties and to relate better to our general frameworks (such as prometric spaces and syntopogenous spaces).
 In \cref{sec:top-compare} we will compare our definitions to theirs.
 
@@ -1311,7 +1324,7 @@ In \cref{sec:top-compare} we will compare our definitions to theirs.
 \subsection{Neighborhood and apartness spaces}
 \label{sec:top}
 
-In contrast to \cref{sec:point-point}, here we will also consider structures that lack transitivity.
+In contrast to \cref{sec:point-point,sec:uniformity}, here we will also consider structures that lack transitivity.
 We write $\cpl{A} = X\setminus A = \setof{x\in X | x\notin A}$ for the relative complement of a subset $A\subseteq X$.
 
 \begin{defn}
@@ -1371,7 +1384,7 @@ As in previous cases, a locally decomposable pretopological apartness space is b
 This is obvious for right transitivity; for the dual we note that left transitivity can equivalently be expressed as ``whenever $x\bowtie A$, there exists $B$ such that $x\bowtie B$ and $\forall y, (y\not\bowtie A \implies y\in B)$.
 Similarly, in classical mathematics any left or right topological apartness space is locally decomposable.
 
-Moreover, any left topological apartness space is \nn-stable, since $\cpl{\cpl{A}}\subseteq \setof{ y | y \not\bowtie A }$ by the contrapositive of reflexivity.
+Moreover, any \emph{left} topological apartness space is \nn-stable, since $\cpl{\cpl{A}}\subseteq \setof{ y | y \not\bowtie A }$ by the contrapositive of reflexivity.
 
 A relation between points and subsets can equivalently be defined in terms of an operation taking each subset to the subset of points related to it.
 For instance, in a topological neighborhood space, the \textbf{interior} of a set $A$ is
@@ -1451,7 +1464,9 @@ It is less natural to rephrase the axioms of $\bowtie$ in terms of $\ext$, howev
 \end{proof}
 
 The close similarity between the proofs for $\bowtie$ and $\ll$ is one reason we have chosen to work with $\ll$ rather than open sets.
-For the relationship between neighborhood and apartness spaces, we have the following analogue of \cref{thm:ord-le-apt}:
+For the relationship between neighborhood and apartness spaces, we have the following analogue of \cref{thm:ord-le-apt}.
+Note, though, that in this case the two functors $\anti$ and $\neigh$ each only behave well with respect to \emph{one} of the weak transitivity axioms for topological apartness: $\anti$ produces left transitivity from neighborhood transitivity, while $\neigh$ produces neighborhood transitivity from \emph{right} transitivity.
+Thus, to get an adjunction we need to generalize to pretopological spaces or restrict to locally decomposable ones (obtaining an equivalence in the latter case).
 
 \begin{thm}\label{thm:top-ll-bowtie}
   If $X$ is a pretopological neighborhood space, define $x\bowtie A$ to mean $x\ll \cpl{A}$; this is a pretopological apartness space $\anti(X)$.
@@ -1887,7 +1902,7 @@ We define these only for neighborhood spaces, since as we will see below they bo
   If $X$ is a locally decomposable uniform space (such as a symmetric Dedekind prometric space), then its underlying topology is regular.
 \end{thm}
 \begin{proof}
-  TODO: Write in the uniform case.
+  TODO: Write in the uniform case; what follows is the Dedekind prometric space.
   
   Given $x\ll A$, we have $d_1,\ep$ such that $\forall y, (d_1(x,y)<\ep \implies y\in A)$.
   Let $d_2$ be as in prometric transitivity for $d_1$, and define $B = \setof{y|d_2(x,y)<\hfep}$ and $C = \setof{y|d_2(x,y)>\hfep}$.
@@ -1929,7 +1944,7 @@ However, constructively we can only seem to show this in the gauge case.
   as desired.
 \end{proof}
 
-Of course, \cref{thm:sympmet-reg} and \cref{thm:symgauge-creg} do depend crucially on symmetry; we have seen that every topological neighborhood space can be given a quasi-uniform structure and hence an (upper) prometric.
+Of course, \cref{thm:sympmet-reg,thm:symgauge-creg} do depend crucially on symmetry; we have seen that every topological neighborhood space can be given a quasi-uniform structure and hence an (upper) prometric.
 
 TODO: More about uniform regularity, as discussed on the nLab and nForum.
 
@@ -1952,7 +1967,8 @@ In the prometric case, the relevant relations are:
   \end{enumerate}
 \end{defn}
 
-We now proceed to axiomatize these relations.
+As in the topological case, the relation $\approx$ is interesting but not constructively axiomatizable to capture all the desired information.
+Thus, we say little more about it, and proceed to axiomatize the relations $\ll$ and $\bowtie$.
 
 \begin{defn}
   A \textbf{pre-quasi-proximal neighborhood space} is a set $X$ with a binary relation $\ll$ on subsets such that
@@ -1992,10 +2008,6 @@ We now proceed to axiomatize these relations.
   \textbf{proximally continuous}
 \end{defn}
 
-\begin{defn}
-  \textbf{quasi-proximal closeness space}
-\end{defn}
-
 
 \section{Families of set-set relations: syntopogeny}
 \label{sec:syntopogeny}
@@ -2019,31 +2031,31 @@ We now proceed to axiomatize these relations.
 % However, constructively there are ``wild'' subsets such as $\setof{x\in X | P}$, for some undecidable proposition $P$, that cannot be shown to be located in general.
 % \fxnote{Mention some theorems about located subsets.}
 
-\section{Completeness}
-\label{sec:completeness}
+% \section{Completeness}
+% \label{sec:completeness}
 
-Among the notions that are invariants of continuity or uniform continuity are convergence and completeness.
-When there is only one prometric space $X$, we assume that the letter $d$ ranges over distances on $X$.
+% Among the notions that are invariants of continuity or uniform continuity are convergence and completeness.
+% When there is only one prometric space $X$, we assume that the letter $d$ ranges over distances on $X$.
 
-\begin{itemize}
-\item $X$ is \textbf{totally bounded} if for all $d$ and $\ep>0$ there is a finite set $F\subseteq X$ such that for all $y\in X$ there is an $x\in F$ such that $d(x,y)<\ep$.
-\item A sequence $\{x_n\}$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $N$ such that for any $n$, if $n>N$ then $d(x,x_n)<\ep$.
-\item More generally, a filter $\F$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $y\in A$ we have $d(x,y)<\ep$.
-\item A sequence $\{x_n\}$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $N$ such that for any $n,m$, if $n,m>N$ then $d(x_n,x_m)<\ep$.
-\item A filter $\F$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $x,y\in A$ we have $d(x,y)<\ep$.
-\item $X$ is \textbf{complete} if every Cauchy filter converges to some point.
-\end{itemize}
+% \begin{itemize}
+% \item $X$ is \textbf{totally bounded} if for all $d$ and $\ep>0$ there is a finite set $F\subseteq X$ such that for all $y\in X$ there is an $x\in F$ such that $d(x,y)<\ep$.
+% \item A sequence $\{x_n\}$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $N$ such that for any $n$, if $n>N$ then $d(x,x_n)<\ep$.
+% \item More generally, a filter $\F$ in $X$ \textbf{converges} to $x\in X$ if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $y\in A$ we have $d(x,y)<\ep$.
+% \item A sequence $\{x_n\}$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $N$ such that for any $n,m$, if $n,m>N$ then $d(x_n,x_m)<\ep$.
+% \item A filter $\F$ in $X$ is \textbf{Cauchy} if for every $d$ and $\ep>0$ there is an $A\in\F$ such that for all $x,y\in A$ we have $d(x,y)<\ep$.
+% \item $X$ is \textbf{complete} if every Cauchy filter converges to some point.
+% \end{itemize}
 
-For metric spaces in classical mathematics, it suffices to consider convergent and Cauchy \emph{sequences}.
-However, in the gauge and prometric cases we must deal with filters (or nets); and constructively (specifically, in the absence of both excluded middle and countable choice) this is true even for metric spaces.
-For instance, the completion of the metric space $\mathbb{Q}$ under limits of Cauchy sequences (the ``Cauchy real numbers'') is potentially much smaller than its full completion under limits of Cauchy filters (the Dedekind real numbers $\R$).
-In fact, there may not even be ``enough'' Cauchy filters, so that the completion is properly a non-spatial locale.
+% For metric spaces in classical mathematics, it suffices to consider convergent and Cauchy \emph{sequences}.
+% However, in the gauge and prometric cases we must deal with filters (or nets); and constructively (specifically, in the absence of both excluded middle and countable choice) this is true even for metric spaces.
+% For instance, the completion of the metric space $\mathbb{Q}$ under limits of Cauchy sequences (the ``Cauchy real numbers'') is potentially much smaller than its full completion under limits of Cauchy filters (the Dedekind real numbers $\R$).
+% In fact, there may not even be ``enough'' Cauchy filters, so that the completion is properly a non-spatial locale.
 
-Note also that the above definitions of Cauchy filter and complete space are only really sensible in the symmetric case.
-We will also return to this later.\fxnote{Do that}
+% Note also that the above definitions of Cauchy filter and complete space are only really sensible in the symmetric case.
+% We will also return to this later.\fxnote{Do that}
 
-In classical mathematics, a metric space is \emph{compact} if and only if it is complete and totally bounded.
-Constructively, this is not so; thus one generally either uses ``complete and totally bounded'' as a replacement for ``compact'', or passes to locales instead of spaces (see \cref{sec:locales}).
+% In classical mathematics, a metric space is \emph{compact} if and only if it is complete and totally bounded.
+% Constructively, this is not so; thus one generally either uses ``complete and totally bounded'' as a replacement for ``compact'', or passes to locales instead of spaces (see \cref{sec:locales}).
 
 % Classically, one can \emph{complete} a metric space by equipping a set of equivalence classes of Cauchy sequences with a metric.
 
